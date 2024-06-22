@@ -17,7 +17,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background: linear-gradient(to bottom, #0000bd, #add8e6, #0000bd);
             display: flex;
             justify-content: center;
             align-items: center;

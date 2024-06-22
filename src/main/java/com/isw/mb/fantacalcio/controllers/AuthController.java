@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthController {
 
+    private final AllenatoreService allenatoreService;
+
     @Autowired
-    private AllenatoreService allenatoreService;
+    public AuthController(AllenatoreService allenatoreService) {
+        this.allenatoreService = allenatoreService;
+    }
 
     //PAGINA DI LOGIN
     @GetMapping("/")
@@ -36,10 +40,7 @@ public class AuthController {
 
     //PAGINA DI REGISTRAZIONE
     @GetMapping("/registerView")
-    public String registerView(Model model, @RequestParam(value = "error", required = false) Boolean error) {
-        if (Boolean.TRUE.equals(error)) {
-            model.addAttribute("errorMessage", "Username, email o telefono già in uso");
-        }
+    public String registerView(Model model) {
         return "registerView";
     }
 
@@ -95,7 +96,9 @@ public class AuthController {
             setCookie(response, "username", registered.getUsername());
             return "redirect:/headerView";
         } catch (DuplicateEntityException e) {
-            return "redirect:/registerView?error=true";
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("allenatore", allenatore);
+            return "registerView";
         }
     }
 

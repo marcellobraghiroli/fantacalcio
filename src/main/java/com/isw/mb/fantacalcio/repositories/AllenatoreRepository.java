@@ -9,4 +9,6 @@ public interface AllenatoreRepository extends JpaRepository<Allenatore, Integer>
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
+
+    boolean existsByTelefono(String telefono);
 }

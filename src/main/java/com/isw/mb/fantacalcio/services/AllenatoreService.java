@@ -20,12 +20,27 @@ public class AllenatoreService {
 
     @Transactional
     public Allenatore register(Allenatore allenatore) throws DuplicateEntityException {
-
+        /*
         try {
             return allenatoreRepository.save(allenatore);
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateEntityException("Username, email o telefono già in uso");
         }
+
+         */
+
+        if (allenatoreRepository.existsByUsername(allenatore.getUsername())) {
+            throw new DuplicateEntityException("Username già in uso");
+        }
+        if (allenatoreRepository.existsByEmail(allenatore.getEmail())) {
+            throw new DuplicateEntityException("Email già in uso");
+        }
+        if (allenatore.getTelefono() != null && allenatoreRepository.existsByTelefono(allenatore.getTelefono())) {
+            throw new DuplicateEntityException("Telefono già in uso");
+        }
+
+        return allenatoreRepository.save(allenatore);
+
     }
 
 }
