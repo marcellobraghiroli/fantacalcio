@@ -1,13 +1,16 @@
 package com.isw.mb.fantacalcio.controllers;
 
+import com.isw.mb.fantacalcio.exceptions.DuplicateEntityException;
 import com.isw.mb.fantacalcio.models.Allenatore;
 import com.isw.mb.fantacalcio.services.AllenatoreService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,7 +24,7 @@ public class AuthController {
     //PAGINA DI LOGIN
     @GetMapping("/")
     public String loginView(Model model, @RequestParam(value = "error", required = false) Boolean error,
-    @RequestParam(value = "loggedOut", required = false) Boolean loggedOut) {
+                            @RequestParam(value = "loggedOut", required = false) Boolean loggedOut) {
         if (Boolean.TRUE.equals(error)) {
             model.addAttribute("errorMessage", "Username o password errati");
         }
@@ -31,50 +34,83 @@ public class AuthController {
         return "loginView";
     }
 
+    //PAGINA DI REGISTRAZIONE
     @GetMapping("/registerView")
-    public String registerView(Model model) {
+    public String registerView(Model model, @RequestParam(value = "error", required = false) Boolean error) {
+        if (Boolean.TRUE.equals(error)) {
+            model.addAttribute("errorMessage", "Username, email o telefono già in uso");
+        }
         return "registerView";
     }
 
-    @GetMapping("/header")
-    public String header(Model model) {
-        return "header";
+    //HOME
+    @GetMapping("/headerView")
+    public String headerView(Model model, HttpServletRequest request) {
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) {
+                    model.addAttribute("username", cookie.getValue());
+                }
+            }
+        }
+
+        return "headerView";
     }
 
+    //LOGIN
     @PostMapping("login")
-    public String login(String username, String password, HttpServletResponse response) {
+    public String login(@RequestParam String username, @RequestParam String password, HttpServletResponse response) {
+
 
         Allenatore allenatore = allenatoreService.findByUsernameAndPassword(username, password);
         if (allenatore != null) {
-            Cookie idCookie = new Cookie("idAllenatore", String.valueOf(allenatore.getId()));
-            Cookie usernameCookie = new Cookie("username", allenatore.getUsername());
-            idCookie.setPath("/");
-            usernameCookie.setPath("/");
-            response.addCookie(idCookie);
-            response.addCookie(usernameCookie);
-            return "redirect:/header"; // redirect to home page
+            setCookie(response, "idAllenatore", String.valueOf(allenatore.getId()));
+            setCookie(response, "username", allenatore.getUsername());
+            return "redirect:/headerView"; // redirect to home page
         } else {
             return "redirect:/?error=true"; // redirect back to login page with error message
         }
+
     }
 
+    //LOGOUT
     @GetMapping("logout")
     public String logout(HttpServletResponse response) {
-        Cookie idCookie = new Cookie("idAllenatore", "");
-        Cookie usernameCookie = new Cookie("username", "");
-        idCookie.setMaxAge(0);
-        usernameCookie.setMaxAge(0);
-        idCookie.setPath("/");
-        usernameCookie.setPath("/");
-        response.addCookie(idCookie);
-        response.addCookie(usernameCookie);
+        removeCookie(response, "idAllenatore");
+        removeCookie(response, "username");
         return "redirect:/?loggedOut=true"; // redirect to login page
     }
 
+    //REGISTRAZIONE
     @PostMapping("register")
-    public String register() {
-        System.out.println("reegister");
-        return "";
+    public String register(@ModelAttribute Allenatore allenatore, Model model, HttpServletResponse response) {
+        try {
+            if(allenatore.getTelefono().equals("")){
+                allenatore.setTelefono(null);
+            }
+            Allenatore registered = allenatoreService.register(allenatore);
+            setCookie(response, "idAllenatore", String.valueOf(registered.getId()));
+            setCookie(response, "username", registered.getUsername());
+            return "redirect:/headerView";
+        } catch (DuplicateEntityException e) {
+            return "redirect:/registerView?error=true";
+        }
+    }
+
+    //METODI PER GESTIRE I COOKIE
+    private void setCookie(HttpServletResponse response, String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+
+    private void removeCookie(HttpServletResponse response, String name) {
+        Cookie cookie = new Cookie(name, "");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 
 

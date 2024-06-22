@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -37,7 +40,7 @@ public class Allenatore {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "ts_creazione", nullable = false)
-    private Instant tsCreazione;
+    private LocalDateTime tsCreazione = LocalDateTime.now();
 
     @Column(name = "telefono", length = 45)
     private String telefono;
@@ -47,7 +50,7 @@ public class Allenatore {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
 
     @OneToMany(mappedBy = "allenatore")
     private Set<Amministra> amministrazioni = new LinkedHashSet<>();

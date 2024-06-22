@@ -60,17 +60,20 @@
 </head>
 <body>
 <main>
+    <c:if test="${not empty errorMessage}">
+        <p style="color: red; text-align: center">${errorMessage}</p>
+    </c:if>
     <form action="register" method="post">
         <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required autocomplete="off">
+        <input type="text" id="name" name="nome" required autocomplete="off">
         <label for="surname">Cognome:</label>
-        <input type="text" id="surname" name="surname" required autocomplete="off">
+        <input type="text" id="surname" name="cognome" required autocomplete="off">
         <label for="birthdate">Data di nascita:</label>
-        <input type="date" id="birthdate" name="birthdate" required>
+        <input type="date" id="birthdate" name="dataNascita" required>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required autocomplete="off">
         <label for="phone">Telefono:</label>
-        <input type="tel" id="phone" name="phone">
+        <input type="tel" id="phone" name="telefono">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required autocomplete="off">
         <label for="password">Password:</label>

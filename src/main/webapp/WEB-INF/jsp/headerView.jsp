@@ -23,5 +23,9 @@
     </ul>
   </nav>
 </header>
+<main>
+  <h1>Benvenuto ${username}!</h1>
+  <p>Benvenuto nel fantastico mondo di FantaFoot!</p>
+</main>
 </body>
 </html>
