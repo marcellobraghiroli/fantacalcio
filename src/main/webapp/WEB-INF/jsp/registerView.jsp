@@ -13,7 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+
             margin: 0;
         }
         main {
@@ -77,13 +77,26 @@
             }
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('submitButton').addEventListener('click', function(event) {
+                var password = document.getElementById('password').value;
+                var confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (password !== confirmPassword) {
+                    event.preventDefault();
+                    alert('Le password non corrispondono');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 <main>
     <c:if test="${not empty errorMessage}">
         <p style="color: red; text-align: center; margin: 0 auto 10px auto;">${errorMessage}</p>
     </c:if>
-    <form action="register" method="post">
+    <form id="registerForm" action="register" method="post">
         <label for="name">Nome:</label>
         <input type="text" id="name" name="nome" value="${allenatore.nome}" required autocomplete="off">
         <label for="surname">Cognome:</label>
@@ -98,10 +111,11 @@
         <input type="text" id="username" name="username" value = "${allenatore.username}" required autocomplete="off">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" value = "${allenatore.password}" required>
-        <input type="submit" value="Registrati">
+        <label for="confirmPassword">Conferma password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" value = "${allenatore.password}" required>
+        <input id="submitButton" type="submit" value="Registrati">
     </form>
     <a href="/" class="back-button">Torna al login</a>
-
 </main>
 </body>
 </html>
