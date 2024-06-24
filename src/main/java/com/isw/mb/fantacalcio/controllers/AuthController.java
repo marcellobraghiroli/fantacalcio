@@ -3,6 +3,7 @@ package com.isw.mb.fantacalcio.controllers;
 import com.isw.mb.fantacalcio.exceptions.DuplicateEntityException;
 import com.isw.mb.fantacalcio.models.Allenatore;
 import com.isw.mb.fantacalcio.services.AllenatoreService;
+import com.isw.mb.fantacalcio.utils.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -67,8 +68,8 @@ public class AuthController {
 
         Allenatore allenatore = allenatoreService.findByUsernameAndPassword(username, password);
         if (allenatore != null) {
-            setCookie(response, "idAllenatore", String.valueOf(allenatore.getId()));
-            setCookie(response, "username", allenatore.getUsername());
+            CookieUtils.setCookie(response, "idAllenatore", String.valueOf(allenatore.getId()));
+            CookieUtils.setCookie(response, "username", allenatore.getUsername());
             return "redirect:/headerView"; // redirect to home page
         } else {
             return "redirect:/?error=true"; // redirect back to login page with error message
@@ -79,8 +80,8 @@ public class AuthController {
     //LOGOUT
     @GetMapping("logout")
     public String logout(HttpServletResponse response) {
-        removeCookie(response, "idAllenatore");
-        removeCookie(response, "username");
+        CookieUtils.removeCookie(response, "idAllenatore");
+        CookieUtils.removeCookie(response, "username");
         return "redirect:/?loggedOut=true"; // redirect to login page
     }
 
@@ -92,8 +93,8 @@ public class AuthController {
                 allenatore.setTelefono(null);
             }
             Allenatore registered = allenatoreService.register(allenatore);
-            setCookie(response, "idAllenatore", String.valueOf(registered.getId()));
-            setCookie(response, "username", registered.getUsername());
+            CookieUtils.setCookie(response, "idAllenatore", String.valueOf(registered.getId()));
+            CookieUtils.setCookie(response, "username", registered.getUsername());
             return "redirect:/headerView";
         } catch (DuplicateEntityException e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -102,19 +103,7 @@ public class AuthController {
         }
     }
 
-    //METODI PER GESTIRE I COOKIE
-    private void setCookie(HttpServletResponse response, String name, String value) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-    }
 
-    private void removeCookie(HttpServletResponse response, String name) {
-        Cookie cookie = new Cookie(name, "");
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-    }
 
 
 }

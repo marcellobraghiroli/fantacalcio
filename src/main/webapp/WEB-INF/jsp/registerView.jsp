@@ -1,3 +1,4 @@
+<%@ page session="false"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -13,7 +14,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-
             margin: 0;
         }
         main {
