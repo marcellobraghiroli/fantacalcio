@@ -4,7 +4,6 @@ import com.isw.mb.fantacalcio.exceptions.DuplicateEntityException;
 import com.isw.mb.fantacalcio.models.Allenatore;
 import com.isw.mb.fantacalcio.services.AllenatoreService;
 import com.isw.mb.fantacalcio.utils.CookieUtils;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,29 +35,32 @@ public class AuthController {
         if (Boolean.TRUE.equals(loggedOut)) {
             model.addAttribute("loggedOutMessage", "Logout effettuato con successo");
         }
+        model.addAttribute("logged", false);
         return "loginView";
     }
 
     //PAGINA DI REGISTRAZIONE
     @GetMapping("/registerView")
     public String registerView(Model model) {
+        model.addAttribute("logged", false);
         return "registerView";
     }
 
     //HOME
-    @GetMapping("/headerView")
+    @GetMapping("/homeView")
     public String headerView(Model model, HttpServletRequest request) {
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("username")) {
-                    model.addAttribute("username", cookie.getValue());
-                }
-            }
-        }
+        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
+        String username = CookieUtils.getCookie(request, "username");
 
-        return "headerView";
+        Allenatore allenatoreLoggato = new Allenatore();
+        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
+        allenatoreLoggato.setUsername(username);
+
+        model.addAttribute("allenatoreLoggato", allenatoreLoggato);
+        model.addAttribute("logged", true);
+
+        return "homeView";
     }
 
     //LOGIN
@@ -67,10 +69,11 @@ public class AuthController {
 
 
         Allenatore allenatore = allenatoreService.findByUsernameAndPassword(username, password);
+
         if (allenatore != null) {
             CookieUtils.setCookie(response, "idAllenatore", String.valueOf(allenatore.getId()));
             CookieUtils.setCookie(response, "username", allenatore.getUsername());
-            return "redirect:/headerView"; // redirect to home page
+            return "redirect:/homeView"; // redirect to home page
         } else {
             return "redirect:/?error=true"; // redirect back to login page with error message
         }
@@ -87,18 +90,21 @@ public class AuthController {
 
     //REGISTRAZIONE
     @PostMapping("register")
-    public String register(@ModelAttribute Allenatore allenatore, Model model, HttpServletResponse response) {
+    public String register(@ModelAttribute Allenatore allenatoreForm, Model model, HttpServletResponse response) {
         try {
-            if(allenatore.getTelefono().equals("")){
-                allenatore.setTelefono(null);
+            if(allenatoreForm.getTelefono().equals("")){
+                allenatoreForm.setTelefono(null);
             }
-            Allenatore registered = allenatoreService.register(allenatore);
+            Allenatore registered = allenatoreService.register(allenatoreForm);
             CookieUtils.setCookie(response, "idAllenatore", String.valueOf(registered.getId()));
             CookieUtils.setCookie(response, "username", registered.getUsername());
-            return "redirect:/headerView";
+            return "redirect:/homeView";
         } catch (DuplicateEntityException e) {
+
             model.addAttribute("errorMessage", e.getMessage());
-            model.addAttribute("allenatore", allenatore);
+
+            model.addAttribute("allenatoreForm", allenatoreForm);
+            model.addAttribute("logged", false);
             return "registerView";
         }
     }

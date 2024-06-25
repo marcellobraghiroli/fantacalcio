@@ -1,12 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: marcellobraghiroli
-  Date: 21/06/24
-  Time: 17:28
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page session="false"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -91,14 +85,14 @@
 
     <form action="login" method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required autocomplete="off">
+        <input type="text" id="username" name="username" required autocomplete="off" maxlength="45">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required autocomplete="off">
+        <input type="password" id="password" name="password" required autocomplete="off" maxlength="45">
         <input type="submit" value="Login">
     </form>
 
     <div class="options">
-        <a href="/forgot-password">Password dimenticata?</a> | <a href="/registerView">Registrati</a>
+        <a>Password dimenticata?</a> | <a href="/registerView">Registrati</a>
     </div>
 </main>
 

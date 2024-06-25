@@ -1,6 +1,7 @@
 package com.isw.mb.fantacalcio.utils;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class CookieUtils {
@@ -17,5 +18,18 @@ public class CookieUtils {
         cookie.setPath("/");
         response.addCookie(cookie);
     }
+
+    public static String getCookie(HttpServletRequest request, String cookieName) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(cookieName)) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
 
 }

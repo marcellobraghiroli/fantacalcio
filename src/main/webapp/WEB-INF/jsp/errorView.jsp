@@ -5,7 +5,9 @@
   Time: 10:21
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page session="false"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang = "it">
 <head>
     <title>Error</title>
@@ -37,7 +39,6 @@
     <h1>Ci scusiamo per il disagio</h1>
     <h2>I nostri serivizi non sono attualmente disponibili</h2>
     <p>${errorMessage}</p>
-    <a href="/">Torna al login</a>
 </main>
 
 </body>

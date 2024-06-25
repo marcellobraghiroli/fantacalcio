@@ -1,5 +1,6 @@
 <%@ page session="false"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -15,6 +16,7 @@
             justify-content: center;
             align-items: center;
             margin: 0;
+            padding: 0;
         }
         main {
             background-color: white;
@@ -98,21 +100,21 @@
     </c:if>
     <form id="registerForm" action="register" method="post">
         <label for="name">Nome:</label>
-        <input type="text" id="name" name="nome" value="${allenatore.nome}" required autocomplete="off">
+        <input type="text" id="name" name="nome" value="${allenatoreForm.nome}" required autocomplete="off" maxlength="45">
         <label for="surname">Cognome:</label>
-        <input type="text" id="surname" name="cognome" value = "${allenatore.cognome}" required autocomplete="off">
+        <input type="text" id="surname" name="cognome" value = "${allenatoreForm.cognome}" required autocomplete="off" maxlength="45">
         <label for="birthdate">Data di nascita:</label>
-        <input type="date" id="birthdate" name="dataNascita" value = "${allenatore.dataNascita}" required>
+        <input type="date" id="birthdate" name="dataNascita" value = "${allenatoreForm.dataNascita}" required>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value = "${allenatore.email}" required autocomplete="off">
+        <input type="email" id="email" name="email" value = "${allenatoreForm.email}" required autocomplete="off" maxlength="45">
         <label for="phone">Telefono:</label>
-        <input type="tel" id="phone" name="telefono" value = "${allenatore.telefono}">
+        <input type="tel" id="phone" name="telefono" value = "${allenatoreForm.telefono}" maxlength="45">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value = "${allenatore.username}" required autocomplete="off">
+        <input type="text" id="username" name="username" value = "${allenatoreForm.username}" required autocomplete="off" maxlength="45">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value = "${allenatore.password}" required>
+        <input type="password" id="password" name="password" value = "${allenatoreForm.password}" required maxlength="45">
         <label for="confirmPassword">Conferma password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" value = "${allenatore.password}" required>
+        <input type="password" id="confirmPassword" name="confirmPassword" value = "${allenatoreForm.password}" required maxlength="45">
         <input id="submitButton" type="submit" value="Registrati">
     </form>
     <a href="/" class="back-button">Torna al login</a>
