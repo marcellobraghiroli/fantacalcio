@@ -77,6 +77,7 @@
 
     #social a:hover, #info a:hover {
       text-decoration: underline;
+      cursor: pointer;
     }
 
     @media (max-width: 600px) {
@@ -121,19 +122,19 @@
   <section id="social">
     <h4>Social</h4>
     <article>
-      <a href="https://www.facebook.com" target="_blank">Facebook</a> |
-      <a href="https://www.twitter.com" target="_blank">Twitter</a> |
-      <a href="https://www.instagram.com" target="_blank">Instagram</a> |
-      <a href="https://www.tiktok.com" target="_blank">TikTok</a>
+      <a>Facebook</a> |
+      <a>Twitter</a> |
+      <a>Instagram</a> |
+      <a>TikTok</a>
     </article>
   </section>
   <section id="info">
     <h4>Informazioni</h4>
     <article>
-      <a href="/privacy">Privacy Policy</a> |
-      <a href="/cookie">Cookie Policy</a> |
-      <a href="/terms">Termini e condizioni</a> |
-      <a href="/legal">Area legale</a>
+      <a>Privacy Policy</a> |
+      <a>Cookie Policy</a> |
+      <a>Termini e condizioni</a> |
+      <a>Area legale</a>
     </article>
   </section>
   <section id="copyright">
