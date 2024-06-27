@@ -96,7 +96,7 @@
 </head>
 <body>
 
-<%@include file="../include/header.inc"%>
+<%@include file="../../include/header.inc"%>
 
 <main>
     <section class="register-box">
@@ -127,7 +127,7 @@
     </section>
 </main>
 
-<%@include file="../include/footer.inc"%>
+<%@include file="../../include/footer.inc"%>
 
 </body>
 </html>

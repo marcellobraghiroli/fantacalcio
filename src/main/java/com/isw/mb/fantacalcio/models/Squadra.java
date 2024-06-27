@@ -72,7 +72,7 @@ public class Squadra {
     @JoinColumn(name = "id_allenatore", nullable = false)
     private Allenatore allenatore;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_lega", nullable = false)
     private Lega lega;

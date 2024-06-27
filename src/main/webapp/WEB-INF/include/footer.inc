@@ -19,10 +19,10 @@
   <section id="info">
     <h4>Informazioni</h4>
     <article>
-      <a>Accessibilità</a> |
+      <a>Accessibility</a> |
       <a>Privacy Policy</a> |
       <a>Cookie Policy</a> |
-      <a>Termini e condizioni</a>
+      <a>Terms and conditions</a>
     </article>
   </section>
   <section id="copyright">

@@ -18,6 +18,7 @@ public class AllenatoreService {
         this.allenatoreRepository = allenatoreRepository;
     }
 
+    @Transactional
     public Allenatore findByUsernameAndPassword(String username, String password) {
         return allenatoreRepository.findByUsernameAndPassword(username, password);
     }

@@ -4,8 +4,14 @@ body {
     padding: 0;
 }
 
+main {
+    background: linear-gradient(to bottom, #fff, #658ff1, #fff);
+}
+
 header {
-    background-color: #fff;
+    font-family: Arial, sans-serif;
+    /*background-color: #fff;*/
+    background: linear-gradient(to bottom, #c5c5c5, #fff, #fff, #fff);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -41,7 +47,8 @@ header h2 {
 }
 
 footer {
-    background-color: #fff;
+    /*background-color: #fff;*/
+    background: linear-gradient(to top, #c5c5c5, #fff, #fff, #fff);
     display: flex;
     flex-direction: column;
     align-items: center;

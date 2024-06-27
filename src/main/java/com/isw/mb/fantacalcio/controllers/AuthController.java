@@ -36,31 +36,14 @@ public class AuthController {
             model.addAttribute("loggedOutMessage", "Logout effettuato con successo");
         }
         model.addAttribute("logged", false);
-        return "loginView";
+        return "auth/loginView";
     }
 
     //PAGINA DI REGISTRAZIONE
     @GetMapping("/registerView")
     public String registerView(Model model) {
         model.addAttribute("logged", false);
-        return "registerView";
-    }
-
-    //HOME
-    @GetMapping("/homeView")
-    public String headerView(Model model, HttpServletRequest request) {
-
-        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
-        String username = CookieUtils.getCookie(request, "username");
-
-        Allenatore allenatoreLoggato = new Allenatore();
-        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
-        allenatoreLoggato.setUsername(username);
-
-        model.addAttribute("allenatoreLoggato", allenatoreLoggato);
-        model.addAttribute("logged", true);
-
-        return "homeView";
+        return "auth/registerView";
     }
 
     //LOGIN
@@ -73,7 +56,7 @@ public class AuthController {
         if (allenatore != null) {
             CookieUtils.setCookie(response, "idAllenatore", String.valueOf(allenatore.getId()));
             CookieUtils.setCookie(response, "username", allenatore.getUsername());
-            return "redirect:/homeView"; // redirect to home page
+            return "redirect:/legheView"; // redirect to home page
         } else {
             return "redirect:/?error=true"; // redirect back to login page with error message
         }
@@ -98,14 +81,14 @@ public class AuthController {
             Allenatore registered = allenatoreService.register(allenatoreForm);
             CookieUtils.setCookie(response, "idAllenatore", String.valueOf(registered.getId()));
             CookieUtils.setCookie(response, "username", registered.getUsername());
-            return "redirect:/homeView";
+            return "redirect:/legheView";
         } catch (DuplicateEntityException e) {
 
             model.addAttribute("errorMessage", e.getMessage());
 
             model.addAttribute("allenatoreForm", allenatoreForm);
             model.addAttribute("logged", false);
-            return "registerView";
+            return "auth/registerView";
         }
     }
 
