@@ -32,6 +32,14 @@ public class Amministra {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
+
+    public Amministra(Allenatore allenatore, Lega lega) {
+        this.allenatore = allenatore;
+        this.lega = lega;
+        this.id = new AmministraId(allenatore.getId(), lega.getId());
+    }
+
+    public Amministra() {}
 
 }

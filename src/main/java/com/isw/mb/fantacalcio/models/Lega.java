@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -34,11 +35,14 @@ public class Lega {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "ts_creazione", nullable = false)
-    private Instant tsCreazione;
+    private LocalDateTime tsCreazione = LocalDateTime.now();
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
+
+    @Column(name = "codice_invito", nullable = false, columnDefinition = "CHAR(6)")
+    private String codiceInvito;
 
     @OneToMany(mappedBy = "lega")
     private Set<Amministra> amministrazioni = new LinkedHashSet<>();

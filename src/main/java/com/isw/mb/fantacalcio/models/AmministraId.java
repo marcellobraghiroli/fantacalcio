@@ -20,6 +20,13 @@ public class AmministraId implements Serializable {
     @Column(name = "id_lega", nullable = false)
     private Integer lega;
 
+    public AmministraId() {}
+
+    public AmministraId(Integer allenatore, Integer lega) {
+        this.allenatore = allenatore;
+        this.lega = lega;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

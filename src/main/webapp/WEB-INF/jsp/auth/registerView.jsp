@@ -101,29 +101,29 @@
 <main>
     <section class="register-box">
         <h1 style="text-align: center;">Registrati</h1>
-    <c:if test="${not empty errorMessage}">
-        <p style="color: red; text-align: center; margin: 0 auto 10px auto;">${errorMessage}</p>
-    </c:if>
-    <form id="registerForm" action="register" method="post">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="nome" value="${allenatoreForm.nome}" required autocomplete="off" maxlength="45">
-        <label for="surname">Cognome:</label>
-        <input type="text" id="surname" name="cognome" value = "${allenatoreForm.cognome}" required autocomplete="off" maxlength="45">
-        <label for="birthdate">Data di nascita:</label>
-        <input type="date" id="birthdate" name="dataNascita" value = "${allenatoreForm.dataNascita}" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value = "${allenatoreForm.email}" required autocomplete="off" maxlength="45">
-        <label for="phone">Telefono:</label>
-        <input type="tel" id="phone" name="telefono" value = "${allenatoreForm.telefono}" maxlength="45">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value = "${allenatoreForm.username}" required autocomplete="off" maxlength="45">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value = "${allenatoreForm.password}" required maxlength="45">
-        <label for="confirmPassword">Conferma password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" value = "${allenatoreForm.password}" required maxlength="45">
-        <input id="submitButton" type="submit" value="Registrati">
-    </form>
-    <a href="/" class="back-button">Torna al login</a>
+        <c:if test="${not empty errorMessage}">
+            <p style="color: red; text-align: center; margin: 0 auto 10px auto;">${errorMessage}</p>
+        </c:if>
+        <form id="registerForm" action="register" method="post">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="nome" value="${allenatoreForm.nome}" required autocomplete="off" maxlength="45">
+            <label for="surname">Cognome:</label>
+            <input type="text" id="surname" name="cognome" value = "${allenatoreForm.cognome}" required autocomplete="off" maxlength="45">
+            <label for="birthdate">Data di nascita:</label>
+            <input type="date" id="birthdate" name="dataNascita" value = "${allenatoreForm.dataNascita}" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value = "${allenatoreForm.email}" required autocomplete="off" maxlength="45">
+            <label for="phone">Telefono:</label>
+            <input type="tel" id="phone" name="telefono" value = "${allenatoreForm.telefono}" maxlength="45">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value = "${allenatoreForm.username}" required autocomplete="off" maxlength="45">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value = "${allenatoreForm.password}" required maxlength="45">
+            <label for="confirmPassword">Conferma password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" value = "${allenatoreForm.password}" required maxlength="45">
+            <input id="submitButton" type="submit" value="Registrati">
+        </form>
+        <a href="/" class="back-button">Torna al login</a>
     </section>
 </main>
 

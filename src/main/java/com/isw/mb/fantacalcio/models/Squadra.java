@@ -25,47 +25,47 @@ public class Squadra {
 
     @ColumnDefault("0")
     @Column(name = "crediti_spesi", nullable = false)
-    private Integer creditiSpesi;
+    private Integer creditiSpesi = 0;
 
     @ColumnDefault("0")
     @Column(name = "num_giocatori", nullable = false)
-    private Integer numGiocatori;
+    private Integer numGiocatori = 0;
 
     @ColumnDefault("1")
     @Column(name = "pos_class", nullable = false)
-    private Integer posClass;
+    private Integer posClass = 1;
 
     @ColumnDefault("0")
     @Column(name = "punti_class", nullable = false)
-    private Integer puntiClass;
+    private Integer puntiClass = 0;
 
     @ColumnDefault("0")
     @Column(name = "fantapunti", nullable = false)
-    private Float fantapunti;
+    private Float fantapunti = 0.0f;
 
     @ColumnDefault("0")
     @Column(name = "part_giocate", nullable = false)
-    private Integer partGiocate;
+    private Integer partGiocate = 0;
 
     @ColumnDefault("0")
     @Column(name = "part_vinte", nullable = false)
-    private Integer partVinte;
+    private Integer partVinte = 0;
 
     @ColumnDefault("0")
     @Column(name = "part_paregg", nullable = false)
-    private Integer partParegg;
+    private Integer partParegg = 0;
 
     @ColumnDefault("0")
     @Column(name = "part_perse", nullable = false)
-    private Integer partPerse;
+    private Integer partPerse = 0;
 
     @ColumnDefault("0")
     @Column(name = "goal_fatti", nullable = false)
-    private Integer goalFatti;
+    private Integer goalFatti = 0;
 
     @ColumnDefault("0")
     @Column(name = "goal_subiti", nullable = false)
-    private Integer goalSubiti;
+    private Integer goalSubiti = 0;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -79,7 +79,7 @@ public class Squadra {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
 
     @OneToMany(mappedBy = "squadra")
     private Set<ColoriSquadra> coloriSquadra = new LinkedHashSet<>();

@@ -71,22 +71,13 @@
 <%@include file="../../include/header.inc"%>
 
 <main>
-  <!--
-  <h1>Benvenuto ${allenatoreLoggato.username}!</h1>
-  <p>Benvenuto nel fantastico mondo di FantaFoot!</p>
-  <p>
-    ${allenatoreLoggato.id} <br>
-    ${allenatoreLoggato.username} <br>
-    ${logged}
-  </p>
-  -->
 
   <section class="main-section">
     <h1>Benvenuto ${allenatoreLoggato.username}</h1>
 
     <section class="buttons-section">
-      <a class="button">Crea una lega</a>
-      <a class="button">Entra in una lega</a>
+      <a href="createLegaView" class="button">Crea una lega</a>
+      <a href="joinLegaView" class="button">Entra in una lega</a>
     </section>
 
   </section>

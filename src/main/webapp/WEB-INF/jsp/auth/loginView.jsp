@@ -79,28 +79,27 @@
 <%@include file="../../include/header.inc"%>
 
 <main>
-
     <section class="login-box">
         <h1 style="text-align: center;">Login</h1>
 
-    <c:if test="${not empty errorMessage}">
-        <p style="color: red; text-align: center">${errorMessage}</p>
-    </c:if>
-    <c:if test="${not empty loggedOutMessage}">
-        <p style="color: green; text-align: center">${loggedOutMessage}</p>
-    </c:if>
+        <c:if test="${not empty errorMessage}">
+            <p style="color: red; text-align: center">${errorMessage}</p>
+        </c:if>
+        <c:if test="${not empty loggedOutMessage}">
+            <p style="color: green; text-align: center">${loggedOutMessage}</p>
+        </c:if>
 
-    <form action="login" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required autocomplete="off" maxlength="45">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required autocomplete="off" maxlength="45">
-        <input type="submit" value="Login">
-    </form>
+        <form action="login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required autocomplete="off" maxlength="45">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required autocomplete="off" maxlength="45">
+            <input type="submit" value="Login">
+        </form>
 
-    <div class="options">
-        <a>Password dimenticata?</a> | <a href="/registerView">Registrati</a>
-    </div>
+        <div class="options">
+            <a>Password dimenticata?</a> | <a href="/registerView">Registrati</a>
+        </div>
 
     </section>
 </main>
