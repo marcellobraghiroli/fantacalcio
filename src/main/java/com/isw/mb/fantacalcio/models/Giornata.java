@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,10 +17,10 @@ import java.util.Set;
 public class Giornata {
     @Id
     @Column(name = "numero", nullable = false)
-    private Integer id;
+    private Integer numero;
 
     @Column(name = "ts_inizio", nullable = false)
-    private Instant tsInizio;
+    private LocalDateTime tsInizio;
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)

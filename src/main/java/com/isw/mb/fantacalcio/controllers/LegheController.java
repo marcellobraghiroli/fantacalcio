@@ -89,7 +89,7 @@ public class LegheController {
 
     //ISCRZIONE A UNA LEGA
     @PostMapping("joinLega")
-    public String joinLega(@RequestParam String codiceInvito, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String joinLega(@RequestParam String codiceInvito, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
         String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
         Allenatore allenatoreLoggato = new Allenatore();
@@ -97,7 +97,11 @@ public class LegheController {
 
         try {
             Squadra squadra = squadraService.joinLegaAndCreateSquadra(codiceInvito, nomeSquadra, allenatoreLoggato);
-            return "redirect:/legheView";
+
+            CookieUtils.setCookie(response, "idLega", String.valueOf(squadra.getLega().getId()));
+            CookieUtils.setCookie(response, "nomeLega", squadra.getLega().getNome());
+
+            return "redirect:/homeLegaView";
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/joinLegaView?error=true";
@@ -107,7 +111,7 @@ public class LegheController {
 
     //CREAZIONE LEGA
     @PostMapping("createLega")
-    public String createLega(@ModelAttribute Lega lega, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String createLega(@ModelAttribute Lega lega, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
         String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
         Allenatore allenatoreLoggato = new Allenatore();
@@ -115,7 +119,11 @@ public class LegheController {
 
         try {
             Lega newLega = legaService.createLegaAndSetAdminAndCreateSquadra(lega, allenatoreLoggato, nomeSquadra);
-            return "redirect:/legheView";
+
+            CookieUtils.setCookie(response, "idLega", String.valueOf(newLega.getId()));
+            CookieUtils.setCookie(response, "nomeLega", newLega.getNome());
+
+            return "redirect:/homeLegaView";
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             redirectAttributes.addFlashAttribute("legaForm", lega);
@@ -125,5 +133,14 @@ public class LegheController {
 
     }
 
+    //PAGINA DI HOME LEGA
+    @PostMapping("homeLega")
+    public String homeLega(@RequestParam int idLega, @RequestParam String nomeLega, HttpServletResponse response) {
+
+        CookieUtils.setCookie(response, "idLega", String.valueOf(idLega));
+        CookieUtils.setCookie(response, "nomeLega", nomeLega);
+
+        return "redirect:/homeLegaView";
+    }
 
 }

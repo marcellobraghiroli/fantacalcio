@@ -33,8 +33,8 @@ public class SquadraService {
         Lega lega = legaService.findByCodiceInvito(codiceInvito);
         if (lega != null) {
 
-            List<Squadra> squadreAll = findSquadreByAllenatoreIdAndLegaId(allenatore.getId(), lega.getId());
-            if(!squadreAll.isEmpty()){
+            Squadra squadraAll = findSquadraByAllenatoreIdAndLegaId(allenatore.getId(), lega.getId());
+            if(squadraAll != null){
                 throw new IllegalArgumentException("Sei già iscritto a questa lega");
             }
 
@@ -49,8 +49,8 @@ public class SquadraService {
         }
     }
 
-    private List<Squadra> findSquadreByAllenatoreIdAndLegaId(Integer id, Integer id1) {
-        return squadraRepository.findSquadreByAllenatoreIdAndLegaId(id, id1);
+    public Squadra findSquadraByAllenatoreIdAndLegaId(Integer idAll, Integer idLega) {
+        return squadraRepository.findSquadraByAllenatoreIdAndLegaId(idAll, idLega);
     }
 
 }

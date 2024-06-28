@@ -71,7 +71,7 @@
 <main>
 
   <section class="main-section" style="margin-bottom: 40px;">
-    <h1>Benvenuto ${allenatoreLoggato.username}</h1>
+    <h1 style="color: darkred;">Benvenuto ${allenatoreLoggato.username}</h1>
 
     <section class="buttons-section">
       <a href="createLegaView" class="button">Crea una lega</a>
@@ -81,7 +81,7 @@
   </section>
 
   <section class="main-section">
-    <h1>Le tue leghe</h1>
+    <h1 style="color: darkred;">Le tue leghe</h1>
     <c:choose>
       <c:when test="${empty leghe}">
         <p>Non sei ancora iscritto a nessuna lega</p>
@@ -89,13 +89,19 @@
       <c:otherwise>
         <c:forEach var="lega" items="${leghe}">
 
-          <article class="lega-box">
+          <form action="homeLega" method="post" style="display: contents;">
 
-            <h1>${lega.nome}</h1>
-            <p><b>Numero partecipanti:</b> ${lega.numSquadre}<br><b>Crediti inziali:</b> ${lega.numCrediti}</p>
-            <p style="font-style: italic">${lega.descrizione}</p>
+            <input type="hidden" name="idLega" value="${lega.id}">
+            <input type="hidden" name="nomeLega" value="${lega.nome}">
 
-          </article>
+            <article class="lega-box" onclick="this.parentNode.submit();">
+
+              <h1>${lega.nome}</h1>
+              <p><b>Numero partecipanti:</b> ${lega.numSquadre}<br><b>Crediti inziali:</b> ${lega.numCrediti}</p>
+              <p style="font-style: italic">${lega.descrizione}</p>
+
+            </article>
+          </form>
 
         </c:forEach>
       </c:otherwise>

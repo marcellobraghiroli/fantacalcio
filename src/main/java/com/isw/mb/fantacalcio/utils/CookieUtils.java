@@ -4,6 +4,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 public final class CookieUtils {
 
     private CookieUtils() {
@@ -11,7 +15,7 @@ public final class CookieUtils {
     }
 
     public static void setCookie(HttpServletResponse response, String name, String value) {
-        Cookie cookie = new Cookie(name, value);
+        Cookie cookie = new Cookie(name, URLEncoder.encode(value, StandardCharsets.UTF_8));
         cookie.setPath("/");
         response.addCookie(cookie);
     }
@@ -28,7 +32,7 @@ public final class CookieUtils {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(cookieName)) {
-                    return cookie.getValue();
+                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
                 }
             }
         }

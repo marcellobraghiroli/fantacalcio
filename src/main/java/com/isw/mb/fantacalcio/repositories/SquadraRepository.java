@@ -8,5 +8,5 @@ import java.util.List;
 public interface SquadraRepository extends JpaRepository<Squadra, Integer> {
     List<Squadra> findSquadreByAllenatoreId(Integer idAllenatore);
 
-    List<Squadra> findSquadreByAllenatoreIdAndLegaId(Integer id, Integer id1);
+    Squadra findSquadraByAllenatoreIdAndLegaId(Integer id, Integer id1);
 }

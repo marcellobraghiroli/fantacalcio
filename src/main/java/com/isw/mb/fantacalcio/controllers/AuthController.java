@@ -68,6 +68,8 @@ public class AuthController {
     public String logout(HttpServletResponse response) {
         CookieUtils.removeCookie(response, "idAllenatore");
         CookieUtils.removeCookie(response, "username");
+        CookieUtils.removeCookie(response, "idLega");
+        CookieUtils.removeCookie(response, "nomeLega");
         return "redirect:/?loggedOut=true"; // redirect to login page
     }
 
