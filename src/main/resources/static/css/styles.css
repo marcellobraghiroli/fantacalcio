@@ -5,7 +5,9 @@ body {
 }
 
 main {
-    background: linear-gradient(to bottom, #fff, #658ff1, #fff);
+    background: linear-gradient(to bottom, #fff, #658ff1, #658ff1, #658ff1, #fff);
+    /*background-color: #007BFF;*/
+    padding: 50px;
 }
 
 header {

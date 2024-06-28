@@ -4,7 +4,11 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class CookieUtils {
+public final class CookieUtils {
+
+    private CookieUtils() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void setCookie(HttpServletResponse response, String name, String value) {
         Cookie cookie = new Cookie(name, value);

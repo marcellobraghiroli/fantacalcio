@@ -19,9 +19,7 @@
       background-color: white;
       padding: 20px;
       border-radius: 8px;
-      margin: 50px;
       box-shadow: 0px 2px 4px rgba(0,0,0,0.5), 0px -2px 4px rgba(0,0,0,0.5);
-
       display: flex;
       justify-content: center;
       align-items: center;
@@ -72,7 +70,7 @@
 
 <main>
 
-  <section class="main-section">
+  <section class="main-section" style="margin-bottom: 40px;">
     <h1>Benvenuto ${allenatoreLoggato.username}</h1>
 
     <section class="buttons-section">
@@ -94,7 +92,7 @@
           <article class="lega-box">
 
             <h1>${lega.nome}</h1>
-            <p>Numero partecipanti: ${lega.numSquadre} - Crediti inziali: ${lega.numCrediti}</p>
+            <p><b>Numero partecipanti:</b> ${lega.numSquadre}<br><b>Crediti inziali:</b> ${lega.numCrediti}</p>
             <p style="font-style: italic">${lega.descrizione}</p>
 
           </article>

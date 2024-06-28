@@ -1,9 +1,13 @@
 package com.isw.mb.fantacalcio.utils;
 
-public class InvitationCodeUtils {
+public final class InvitationCodeUtils {
 
     private static final String CHAR_ORDER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int BASE = CHAR_ORDER.length();
+
+    private InvitationCodeUtils() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static String generateCode(String lastCode) {
 
