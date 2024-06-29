@@ -4,7 +4,7 @@ import com.isw.mb.fantacalcio.models.Lega;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LegaRepository extends JpaRepository<Lega, Integer> {
-    Lega findByCodiceInvito(String codiceInvito);
+    Lega findByCodiceInvitoAndDeleted(String codiceInvito, Character deleted);
 
     boolean existsByNome(String nome);
 }

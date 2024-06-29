@@ -98,7 +98,7 @@
 
               <h1>${lega.nome}</h1>
               <p><b>Numero partecipanti:</b> ${lega.numSquadre}<br><b>Crediti inziali:</b> ${lega.numCrediti}</p>
-              <p style="font-style: italic">${lega.descrizione}</p>
+              <p style="font-style: italic; margin: 16px;">${lega.descrizione}</p>
 
             </article>
           </form>

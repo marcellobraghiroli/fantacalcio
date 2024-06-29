@@ -90,10 +90,10 @@ public class Squadra {
     @OneToMany(mappedBy = "squadra")
     private Set<GiocSquadra> giocatoriSquadra = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "squadraCasa")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "squadraCasa")
     private Set<Partita> partiteCasa = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "squadraTrasf")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "squadraTrasf")
     private Set<Partita> partiteTrasf = new LinkedHashSet<>();
 
 }

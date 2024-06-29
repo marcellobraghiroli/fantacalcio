@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SquadraRepository extends JpaRepository<Squadra, Integer> {
-    List<Squadra> findSquadreByAllenatoreId(Integer idAllenatore);
+    List<Squadra> findSquadreByAllenatoreIdAndDeleted(Integer idAllenatore, Character deleted);
 
-    Squadra findSquadraByAllenatoreIdAndLegaId(Integer id, Integer id1);
+    Squadra findSquadraByAllenatoreIdAndLegaIdAndDeleted(Integer id, Integer id1, Character deleted);
 }

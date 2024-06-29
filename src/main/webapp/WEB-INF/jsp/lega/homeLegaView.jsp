@@ -11,7 +11,7 @@
   <title>La tua lega</title>
 
   <style>
-    .info-section {
+    .form-section {
       background-color: white;
       padding: 20px;
       border-radius: 8px;
@@ -31,6 +31,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
 
     .formazione {
@@ -39,6 +40,7 @@
       color: #fff;
       border-radius: 4px;
       text-decoration: none;
+      margin: 10px;
     }
     .formazione:hover {
       background-color: #45a049;
@@ -63,37 +65,60 @@
       font-size: 2em;
     }
 
-    ul {
+    nav ul {
       list-style: none;
-      padding: 40px;
+      padding: 20px;
       margin: 0;
       display: flex;
-      justify-content: space-evenly;
-      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    ul li {
-      margin: 10px;
+    nav li {
+      margin: 0;
+      flex: 1;
     }
 
-    ul li a {
-      padding: 20px;
+    nav a {
+      display: inline-block;
+      padding: 20px 20px;
       background-color: #007BFF;
-      color: #fff;
-      border-radius: 4px;
+      color: white;
       text-decoration: none;
-      display: block;
+      border-radius: 4px;
+      text-align: center;
+      box-sizing: border-box;
+      font-size: 1.1em;
+      width: 140px;
     }
 
-    ul li a:hover {
+    nav a:hover {
       background-color: #0056b3;
     }
 
+    #back {
+        background-color: #f35d5d;
+    }
+    #back:hover {
+        background-color: #c86666;
+    }
+
     @media (max-width: 600px) {
-      ul {
+      nav ul {
         flex-direction: column;
+        align-items: center;
+      }
+
+      nav a {
+        min-width: 200px; /* Adattamento della larghezza minima per dispositivi mobili */
       }
     }
+
+
+
+
+
 
   </style>
 
@@ -147,30 +172,14 @@
 
 <main>
 
-  <section class="info-section" style="margin-bottom: 40px;">
+  <section class="nav-section" style="margin-bottom: 40px;">
 
     <h1>${legaCorrente.nome}</h1>
-    <h2>${squadraCorrente.nome}</h2>
-
-    <c:choose>
-      <c:when test="${not empty giornata}">
-        <h3 style="margin: 0; margin-top: 20px; padding: 10px;">Scadenza invio formazione</h3>
-        <div id="countdown">00:00:00:00</div>
-        <a href="formazione" class="formazione">Inserisci formazione</a>
-      </c:when>
-      <c:otherwise>
-        <p>Il calendario non è ancora stato generato</p>
-      </c:otherwise>
-    </c:choose>
-
-
-  </section>
-
-  <section class="nav-section">
+    <h2>${squadraCorrente}</h2>
 
     <nav>
       <ul>
-        <li><a href="backToLeghe">< Le tue leghe</a></li>
+        <li><a href="backToLeghe" id="back">Leghe</a></li>
         <li><a href="calendario">Calendario</a></li>
         <li><a href="classifica">Classifica</a></li>
         <li><a href="rose">Rose</a></li>
@@ -179,6 +188,22 @@
         </c:if>
       </ul>
     </nav>
+
+
+  </section>
+
+  <section class="form-section">
+
+    <c:choose>
+      <c:when test="${not empty giornata}">
+        <h3 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione</h3>
+        <div id="countdown">00:00:00:00</div>
+        <a href="formazione" class="formazione">Inserisci formazione</a>
+      </c:when>
+      <c:otherwise>
+        <h3 style="margin: 0; padding: 10px; color: darkred">Il calendario non è ancora stato generato</h3>
+      </c:otherwise>
+    </c:choose>
 
   </section>
 

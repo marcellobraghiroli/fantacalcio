@@ -20,7 +20,7 @@ public class AllenatoreService {
 
     @Transactional
     public Allenatore findByUsernameAndPassword(String username, String password) {
-        return allenatoreRepository.findByUsernameAndPassword(username, password);
+        return allenatoreRepository.findByUsernameAndPasswordAndDeleted(username, password, 'N');
     }
 
     @Transactional

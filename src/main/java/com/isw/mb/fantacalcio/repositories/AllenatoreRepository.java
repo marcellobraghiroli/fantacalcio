@@ -4,7 +4,7 @@ import com.isw.mb.fantacalcio.models.Allenatore;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AllenatoreRepository extends JpaRepository<Allenatore, Integer> {
-    Allenatore findByUsernameAndPassword(String username, String password);
+    Allenatore findByUsernameAndPasswordAndDeleted(String username, String password, Character deleted);
 
     boolean existsByUsername(String username);
 

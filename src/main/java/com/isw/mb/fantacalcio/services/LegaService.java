@@ -26,9 +26,8 @@ public class LegaService {
         this.codiceRepository = codiceRepository;
     }
 
-
     public Lega findByCodiceInvito(String codiceInvito) {
-        return legaRepository.findByCodiceInvito(codiceInvito);
+        return legaRepository.findByCodiceInvitoAndDeleted(codiceInvito, 'N');
     }
 
     @Transactional

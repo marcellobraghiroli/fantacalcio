@@ -25,7 +25,7 @@ public class SquadraService {
 
     @Transactional
     public List<Squadra> findSquadreByAllenatoreId(Integer idAllenatore) {
-        return squadraRepository.findSquadreByAllenatoreId(idAllenatore);
+        return squadraRepository.findSquadreByAllenatoreIdAndDeleted(idAllenatore, 'N');
     }
 
     @Transactional
@@ -49,8 +49,9 @@ public class SquadraService {
         }
     }
 
+    @Transactional
     public Squadra findSquadraByAllenatoreIdAndLegaId(Integer idAll, Integer idLega) {
-        return squadraRepository.findSquadraByAllenatoreIdAndLegaId(idAll, idLega);
+        return squadraRepository.findSquadraByAllenatoreIdAndLegaIdAndDeleted(idAll, idLega, 'N');
     }
 
 }

@@ -2,9 +2,11 @@ package com.isw.mb.fantacalcio.controllers;
 
 
 import com.isw.mb.fantacalcio.models.*;
+import com.isw.mb.fantacalcio.models.combined.SqGioAmm;
 import com.isw.mb.fantacalcio.services.AmministraService;
 import com.isw.mb.fantacalcio.services.GiornataService;
 import com.isw.mb.fantacalcio.services.SquadraService;
+import com.isw.mb.fantacalcio.services.combined.SqGioAmmService;
 import com.isw.mb.fantacalcio.utils.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,15 +20,11 @@ import java.util.Set;
 @Controller
 public class LegaController {
 
-    private final SquadraService squadraService;
-    private final GiornataService giornataService;
-    private final AmministraService amministraService;
+    private final SqGioAmmService sqGioAmmService;
 
     @Autowired
-    public LegaController(SquadraService squadraService, GiornataService giornataService, AmministraService amministraService) {
-        this.squadraService = squadraService;
-        this.giornataService = giornataService;
-        this.amministraService = amministraService;
+    public LegaController(SqGioAmmService sqGioAmmService) {
+        this.sqGioAmmService = sqGioAmmService;
     }
 
     @GetMapping("/homeLegaView")
@@ -45,21 +43,16 @@ public class LegaController {
         legaCorrente.setId(Integer.parseInt(idLega));
         legaCorrente.setNome(nomeLega);
 
-        //Squadra squadraCorrente = squadraService.findSquadraByAllenatoreIdAndLegaId(allenatoreLoggato.getId(), legaCorrente.getId());
+        SqGioAmm sqGioAmm = sqGioAmmService.getSqGioAmm(allenatoreLoggato, legaCorrente);
 
-        Giornata giornata = giornataService.findCurrentOrNextGiornata(allenatoreLoggato, legaCorrente);
-        Squadra squadraCorrente = squadraService.findSquadraByAllenatoreIdAndLegaId(allenatoreLoggato.getId(), legaCorrente.getId());
-
-        boolean isAdmin = amministraService.existsAmministra(allenatoreLoggato.getId(), legaCorrente.getId());
-
-        if(giornata != null) {
-            model.addAttribute("giornata", giornata);
+        if(sqGioAmm.getGiornata() != null) {
+            model.addAttribute("giornata", sqGioAmm.getGiornata());
         }
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
-        model.addAttribute("squadraCorrente", squadraCorrente);
+        model.addAttribute("squadraCorrente", sqGioAmm.getSquadraCorrente().getNome());
         model.addAttribute("logged", true);
-        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("isAdmin", sqGioAmm.isAdmin());
 
         return "/lega/homeLegaView";
     }
