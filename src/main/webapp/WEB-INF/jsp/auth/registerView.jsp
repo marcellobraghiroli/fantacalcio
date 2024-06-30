@@ -1,4 +1,4 @@
-<%@ page session="false"%>
+<%@ page session="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -21,7 +21,7 @@
             background-color: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
         }
 
         label {
@@ -39,6 +39,7 @@
             box-sizing: border-box;
             font-size: 15px;
         }
+
         input[type="submit"] {
             width: 100%;
             background-color: #4CAF50;
@@ -49,9 +50,11 @@
             cursor: pointer;
             font-size: 15px;
         }
+
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
         .back-button {
             display: block;
             background-color: #f35d5d;
@@ -71,6 +74,7 @@
         .back-button:hover {
             background-color: #c86666;
         }
+
         @media (max-width: 600px) {
             main {
                 width: 100%;
@@ -79,8 +83,8 @@
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('submitButton').addEventListener('click', function(event) {
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('submitButton').addEventListener('click', function (event) {
                 var password = document.getElementById('password').value;
                 var confirmPassword = document.getElementById('confirmPassword').value;
 
@@ -94,7 +98,7 @@
 </head>
 <body>
 
-<%@include file="../../include/header.inc"%>
+<%@include file="../../include/header.inc" %>
 
 <main>
     <section class="register-box">
@@ -104,28 +108,34 @@
         </c:if>
         <form id="registerForm" action="register" method="post">
             <label for="name">Nome:</label>
-            <input type="text" id="name" name="nome" value="${allenatoreForm.nome}" required autocomplete="off" maxlength="45">
+            <input type="text" id="name" name="nome" value="${allenatoreForm.nome}" required autocomplete="off"
+                   maxlength="45">
             <label for="surname">Cognome:</label>
-            <input type="text" id="surname" name="cognome" value = "${allenatoreForm.cognome}" required autocomplete="off" maxlength="45">
+            <input type="text" id="surname" name="cognome" value="${allenatoreForm.cognome}" required autocomplete="off"
+                   maxlength="45">
             <label for="birthdate">Data di nascita:</label>
-            <input type="date" id="birthdate" name="dataNascita" value = "${allenatoreForm.dataNascita}" required>
+            <input type="date" id="birthdate" name="dataNascita" value="${allenatoreForm.dataNascita}" required>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value = "${allenatoreForm.email}" required autocomplete="off" maxlength="45">
+            <input type="email" id="email" name="email" value="${allenatoreForm.email}" required autocomplete="off"
+                   maxlength="45">
             <label for="phone">Telefono:</label>
-            <input type="tel" id="phone" name="telefono" value = "${allenatoreForm.telefono}" maxlength="45">
+            <input type="tel" id="phone" name="telefono" value="${allenatoreForm.telefono}" maxlength="45">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value = "${allenatoreForm.username}" required autocomplete="off" maxlength="45">
+            <input type="text" id="username" name="username" value="${allenatoreForm.username}" required
+                   autocomplete="off" maxlength="45">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" value = "${allenatoreForm.password}" required maxlength="45">
+            <input type="password" id="password" name="password" value="${allenatoreForm.password}" required
+                   maxlength="45">
             <label for="confirmPassword">Conferma password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" value = "${allenatoreForm.password}" required maxlength="45">
+            <input type="password" id="confirmPassword" name="confirmPassword" value="${allenatoreForm.password}"
+                   required maxlength="45">
             <input id="submitButton" type="submit" value="Registrati">
         </form>
         <a href="/" class="back-button">Torna al login</a>
     </section>
 </main>
 
-<%@include file="../../include/footer.inc"%>
+<%@include file="../../include/footer.inc" %>
 
 </body>
 </html>

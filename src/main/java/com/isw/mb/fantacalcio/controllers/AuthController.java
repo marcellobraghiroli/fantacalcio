@@ -77,7 +77,7 @@ public class AuthController {
     @PostMapping("register")
     public String register(@ModelAttribute Allenatore allenatoreForm, Model model, HttpServletResponse response) {
         try {
-            if(allenatoreForm.getTelefono().equals("")){
+            if (allenatoreForm.getTelefono().equals("")) {
                 allenatoreForm.setTelefono(null);
             }
             Allenatore registered = allenatoreService.register(allenatoreForm);
@@ -93,8 +93,6 @@ public class AuthController {
             return "auth/registerView";
         }
     }
-
-
 
 
 }

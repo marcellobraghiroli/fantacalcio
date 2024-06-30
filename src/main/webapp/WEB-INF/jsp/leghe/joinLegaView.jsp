@@ -1,4 +1,4 @@
-<%@ page session="false"%>
+<%@ page session="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -22,7 +22,7 @@
             background-color: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
         }
 
         label {
@@ -40,6 +40,7 @@
             box-sizing: border-box;
             font-size: 15px;
         }
+
         input[type="submit"] {
             width: 100%;
             background-color: #4CAF50;
@@ -50,9 +51,11 @@
             cursor: pointer;
             font-size: 15px;
         }
+
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
         .back-button {
             display: block;
             background-color: #f35d5d;
@@ -77,7 +80,7 @@
 </head>
 <body>
 
-<%@include file="../../include/header.inc"%>
+<%@include file="../../include/header.inc" %>
 
 <main>
 
@@ -91,7 +94,9 @@
 
         <form action="joinLega" method="post">
             <label for="code">Codice di invito:</label>
-            <input type="text" id="code" name="codiceInvito" required autocomplete="off" pattern=".{6}" title="Il codice di invito deve essere di 6 caratteri" oninput="this.value = this.value.toUpperCase()">
+            <input type="text" id="code" name="codiceInvito" required autocomplete="off" pattern=".{6}"
+                   title="Il codice di invito deve essere di 6 caratteri"
+                   oninput="this.value = this.value.toUpperCase()">
             <label for="squadra">Nome squadra:</label>
             <input type="text" id="squadra" name="nomeSquadra" required autocomplete="off" maxlength="45">
             <input type="submit" value="Entra">
@@ -102,7 +107,7 @@
 
 </main>
 
-<%@include file="../../include/footer.inc"%>
+<%@include file="../../include/footer.inc" %>
 
 </body>
 </html>

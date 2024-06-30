@@ -10,7 +10,7 @@ import com.isw.mb.fantacalcio.exceptions.DuplicateEntityException;
 @Service
 public class AllenatoreService {
 
-    
+
     private final AllenatoreRepository allenatoreRepository;
 
     @Autowired

@@ -8,6 +8,7 @@ import com.isw.mb.fantacalcio.services.GiornataService;
 import com.isw.mb.fantacalcio.services.SquadraService;
 import com.isw.mb.fantacalcio.services.combined.SqGioAmmService;
 import com.isw.mb.fantacalcio.utils.CookieUtils;
+import com.oracle.wls.shaded.org.apache.xpath.operations.Mod;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +16,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 @Controller
 public class LegaController {
 
     private final SqGioAmmService sqGioAmmService;
+    private final SquadraService squadraService;
 
     @Autowired
-    public LegaController(SqGioAmmService sqGioAmmService) {
+    public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService) {
         this.sqGioAmmService = sqGioAmmService;
+        this.squadraService = squadraService;
     }
 
     @GetMapping("/homeLegaView")
@@ -45,7 +51,7 @@ public class LegaController {
 
         SqGioAmm sqGioAmm = sqGioAmmService.getSqGioAmm(allenatoreLoggato, legaCorrente);
 
-        if(sqGioAmm.getGiornata() != null) {
+        if (sqGioAmm.getGiornata() != null) {
             model.addAttribute("giornata", sqGioAmm.getGiornata());
         }
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
@@ -62,6 +68,61 @@ public class LegaController {
         CookieUtils.removeCookie(response, "idLega");
         CookieUtils.removeCookie(response, "nomeLega");
         return "redirect:/legheView";
+    }
+
+    @GetMapping("classificaView")
+    public String classificaView(HttpServletRequest request, Model model) {
+
+        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
+        String username = CookieUtils.getCookie(request, "username");
+        String idLega = CookieUtils.getCookie(request, "idLega");
+        String nomeLega = CookieUtils.getCookie(request, "nomeLega");
+
+        Allenatore allenatoreLoggato = new Allenatore();
+        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
+        allenatoreLoggato.setUsername(username);
+
+        Lega legaCorrente = new Lega();
+        legaCorrente.setId(Integer.parseInt(idLega));
+        legaCorrente.setNome(nomeLega);
+
+        Set<Squadra> squadreLega = squadraService.findSquadreByLegaId(legaCorrente.getId());
+        List<Squadra> squadre = new ArrayList<>(squadreLega);
+        squadre.sort(Comparator.comparing(Squadra::getPuntiClass).reversed());
+
+        model.addAttribute("allenatoreLoggato", allenatoreLoggato);
+        model.addAttribute("legaCorrente", legaCorrente);
+        model.addAttribute("squadre", squadre);
+        model.addAttribute("logged", true);
+
+        return "/lega/classificaView";
+    }
+
+    @GetMapping("roseView")
+    public String roseView(HttpServletRequest request, Model model) {
+
+        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
+        String username = CookieUtils.getCookie(request, "username");
+        String idLega = CookieUtils.getCookie(request, "idLega");
+        String nomeLega = CookieUtils.getCookie(request, "nomeLega");
+
+        Allenatore allenatoreLoggato = new Allenatore();
+        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
+        allenatoreLoggato.setUsername(username);
+
+        Lega legaCorrente = new Lega();
+        legaCorrente.setId(Integer.parseInt(idLega));
+        legaCorrente.setNome(nomeLega);
+
+        Set<Squadra> squadreLega = squadraService.findSquadreByLegaId(legaCorrente.getId());
+
+        model.addAttribute("allenatoreLoggato", allenatoreLoggato);
+        model.addAttribute("legaCorrente", legaCorrente);
+        model.addAttribute("squadre", squadreLega);
+        model.addAttribute("logged", true);
+
+        return "/lega/roseView";
+
     }
 
 }

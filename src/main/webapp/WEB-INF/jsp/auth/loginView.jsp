@@ -1,4 +1,4 @@
-<%@ page session="false"%>
+<%@ page session="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -22,7 +22,7 @@
             background-color: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.1);
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
         }
 
         label {
@@ -30,6 +30,7 @@
             margin-bottom: 10px;
             font-weight: bold;
         }
+
         input[type="text"], input[type="password"] {
             width: 100%;
             padding: 10px;
@@ -39,6 +40,7 @@
             box-sizing: border-box;
             font-size: 15px;
         }
+
         input[type="submit"] {
             width: 100%;
             background-color: #4CAF50;
@@ -49,21 +51,26 @@
             cursor: pointer;
             font-size: 15px;
         }
+
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+
         .options {
             text-align: center;
             margin-top: 20px;
         }
+
         .options a {
             color: #333;
             text-decoration: none;
         }
+
         .options a:hover {
             text-decoration: underline;
             cursor: pointer;
         }
+
         @media (max-width: 600px) {
             main {
                 width: 100%;
@@ -74,7 +81,7 @@
 </head>
 <body>
 
-<%@include file="../../include/header.inc"%>
+<%@include file="../../include/header.inc" %>
 
 <main>
     <section class="login-box">
@@ -102,7 +109,7 @@
     </section>
 </main>
 
-<%@include file="../../include/footer.inc"%>
+<%@include file="../../include/footer.inc" %>
 
 </body>
 </html>

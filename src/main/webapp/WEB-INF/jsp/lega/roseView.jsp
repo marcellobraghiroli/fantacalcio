@@ -1,0 +1,108 @@
+<%@ page session="false" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <title>Rose</title>
+
+    <style>
+
+        .rose-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .squadra-box {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            margin: 10px;
+            width: 50%;
+            text-align: center;
+        }
+
+        .squadra-box:hover {
+            background-color: #e8e8e8;
+            cursor: pointer;
+        }
+
+        article h1 {
+            font-size: 1.5em;
+            padding: 10px;
+            margin: 0;
+            color: darkred;
+        }
+
+        article p {
+            margin: 0;
+            padding: 10px;
+        }
+
+        .back-button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #f35d5d;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #c86666;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<%@include file="../../include/header.inc" %>
+
+<main>
+
+    <section class="rose-section">
+
+        <a href="homeLegaView" class="back-button">Torna alla lega</a>
+
+        <h1 style="color: darkred; font-size: 2em;">Rose ${legaCorrente.nome}</h1>
+
+        <c:forEach var="squadra" items="${squadre}">
+
+            <form action="rosa" method="post" style="display: contents;">
+
+                <input type="hidden" name="idSquadra" value="${squadra.id}">
+                <input type="hidden" name="nomeSquadra" value="${squadra.nome}">
+
+                <article class="squadra-box" onclick="this.parentNode.submit();">
+
+                    <h1>${squadra.nome}</h1>
+
+                    <p><b>Allenatore: </b>${squadra.allenatore.username}&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>Crediti: </b>${squadra.lega.numCrediti - squadra.creditiSpesi}</p>
+
+                </article>
+            </form>
+
+        </c:forEach>
+
+    </section>
+
+
+</main>
+
+<%@include file="../../include/footer.inc" %>
+
+</body>
+</html>

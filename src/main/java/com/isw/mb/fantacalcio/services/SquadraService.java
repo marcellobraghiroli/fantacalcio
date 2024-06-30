@@ -34,7 +34,7 @@ public class SquadraService {
         if (lega != null) {
 
             Squadra squadraAll = findSquadraByAllenatoreIdAndLegaId(allenatore.getId(), lega.getId());
-            if(squadraAll != null){
+            if (squadraAll != null) {
                 throw new IllegalArgumentException("Sei già iscritto a questa lega");
             }
 
@@ -54,4 +54,8 @@ public class SquadraService {
         return squadraRepository.findSquadraByAllenatoreIdAndLegaIdAndDeleted(idAll, idLega, 'N');
     }
 
+    @Transactional
+    public Set<Squadra> findSquadreByLegaId(Integer id) {
+        return squadraRepository.findSquadreByLegaIdAndDeleted(id, 'N');
+    }
 }

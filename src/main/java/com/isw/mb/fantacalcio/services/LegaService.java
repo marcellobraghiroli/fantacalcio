@@ -33,7 +33,7 @@ public class LegaService {
     @Transactional
     public Lega createLegaAndSetAdminAndCreateSquadra(Lega lega, Allenatore admin, String nomeSquadra) {
 
-        if(legaRepository.existsByNome(lega.getNome())) {
+        if (legaRepository.existsByNome(lega.getNome())) {
             throw new IllegalArgumentException("Nome lega già esistente");
         }
 

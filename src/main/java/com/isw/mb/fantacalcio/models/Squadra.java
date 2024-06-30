@@ -67,7 +67,7 @@ public class Squadra {
     @Column(name = "goal_subiti", nullable = false)
     private Integer goalSubiti = 0;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_allenatore", nullable = false)
     private Allenatore allenatore;
