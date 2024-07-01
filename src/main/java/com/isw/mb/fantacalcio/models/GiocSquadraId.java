@@ -20,6 +20,13 @@ public class GiocSquadraId implements Serializable {
     @Column(name = "id_squadra", nullable = false)
     private Integer squadra;
 
+    public GiocSquadraId() {}
+
+    public GiocSquadraId(Integer giocatore, Integer squadra) {
+        this.giocatore = giocatore;
+        this.squadra = squadra;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

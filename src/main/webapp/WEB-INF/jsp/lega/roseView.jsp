@@ -80,12 +80,18 @@
 
         <c:forEach var="squadra" items="${squadre}">
 
-            <form action="rosa" method="post" style="display: contents;">
+            <form action="rosaView" method="post" style="display: contents;">
 
-                <input type="hidden" name="idSquadra" value="${squadra.id}">
-                <input type="hidden" name="nomeSquadra" value="${squadra.nome}">
+                <input type="hidden" name="id" value="${squadra.id}">
+                <input type="hidden" name="nome" value="${squadra.nome}">
+                <input type="hidden" name="creditiSpesi" value="${squadra.creditiSpesi}">
+                <input type="hidden" name="creditiLega" value="${squadra.lega.numCrediti}">
+                <input type="hidden" name="nomeAll" value="${squadra.allenatore.username}">
 
-                <article class="squadra-box" onclick="this.parentNode.submit();">
+                <input type="hidden" name="idAllSq" value="${squadra.allenatore.id}">
+
+                <article class="squadra-box" onclick="this.parentNode.submit();" <c:if
+                        test="${squadra.allenatore.id == allenatoreLoggato.id}"> style="background-color: #d3d3d3;" onmouseout="this.style.backgroundColor='#d3d3d3';" onmouseover="this.style.backgroundColor='#bcbcbc';" </c:if>>
 
                     <h1>${squadra.nome}</h1>
 
