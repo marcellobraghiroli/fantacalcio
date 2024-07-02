@@ -80,11 +80,12 @@
 
         <c:forEach var="squadra" items="${squadre}">
 
-            <form action="rosaView" method="post" style="display: contents;">
+            <form action="goToRosaView" method="post" style="display: contents;">
 
                 <input type="hidden" name="id" value="${squadra.id}">
                 <input type="hidden" name="nome" value="${squadra.nome}">
                 <input type="hidden" name="creditiSpesi" value="${squadra.creditiSpesi}">
+
                 <input type="hidden" name="creditiLega" value="${squadra.lega.numCrediti}">
                 <input type="hidden" name="nomeAll" value="${squadra.allenatore.username}">
 

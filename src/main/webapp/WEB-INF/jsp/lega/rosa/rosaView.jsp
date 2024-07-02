@@ -102,7 +102,7 @@
 
     <section class="gioc-section">
 
-        <a href="roseView" class="back-button">Torna alle rose</a>
+        <a href="backToRose" class="back-button">Torna alle rose</a>
 
         <h1 style="color: darkred; font-size: 2em;">Rosa ${squadra.nome}</h1>
 
@@ -140,16 +140,6 @@
     <form name="removeForm" action="removeGioc" method="post" style="display: none;">
         <input type="hidden" name="idGioc">
         <input type="hidden" name="idSquadra" value="${squadra.id}">
-
-        <input type="hidden" name="id" value="${squadra.id}">
-        <input type="hidden" name="nome" value="${squadra.nome}">
-        <input type="hidden" name="creditiSpesi" value="${squadra.creditiSpesi}">
-
-        <input type="hidden" name="idAllSq" value="${idAllSq}">
-
-        <input type="hidden" name="creditiLega" value="${creditiLega}">
-
-        <input type="hidden" name="nomeAll" value="${nomeAll}">
     </form>
 
 

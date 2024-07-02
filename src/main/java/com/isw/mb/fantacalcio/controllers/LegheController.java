@@ -5,7 +5,9 @@ import com.isw.mb.fantacalcio.models.Lega;
 import com.isw.mb.fantacalcio.models.Squadra;
 import com.isw.mb.fantacalcio.services.LegaService;
 import com.isw.mb.fantacalcio.services.SquadraService;
-import com.isw.mb.fantacalcio.utils.CookieUtils;
+import com.isw.mb.fantacalcio.services.cookies.CookieService;
+import com.isw.mb.fantacalcio.services.cookies.impl.AllenatoreCookieService;
+import com.isw.mb.fantacalcio.services.cookies.impl.LegaCookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,30 +20,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class LegheController {
 
     private final LegaService legaService;
     private final SquadraService squadraService;
+    private final CookieService allenatoreCookieService, legaCookieService;
 
     @Autowired
-    public LegheController(LegaService legaService, SquadraService squadraService) {
+    public LegheController(LegaService legaService, SquadraService squadraService, AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService) {
         this.legaService = legaService;
         this.squadraService = squadraService;
+        //allenatoreCookieService = new AllenatoreCookieService();
+        this.allenatoreCookieService = allenatoreCookieService;
+        this.legaCookieService = legaCookieService;
     }
 
     //LEGHE
     @GetMapping("/legheView")
     public String legheView(Model model, HttpServletRequest request) {
 
-        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
-        String username = CookieUtils.getCookie(request, "username");
-
-        Allenatore allenatoreLoggato = new Allenatore();
-        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
-        allenatoreLoggato.setUsername(username);
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
         List<Squadra> squadre = squadraService.findSquadreByAllenatoreId(allenatoreLoggato.getId());
         List<Lega> leghe = squadre.stream().map(Squadra::getLega).toList();
@@ -57,12 +57,7 @@ public class LegheController {
     @GetMapping("joinLegaView")
     public String joinLegaView(Model model, HttpServletRequest request) {
 
-        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
-        String username = CookieUtils.getCookie(request, "username");
-
-        Allenatore allenatoreLoggato = new Allenatore();
-        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
-        allenatoreLoggato.setUsername(username);
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("logged", true);
@@ -74,12 +69,7 @@ public class LegheController {
     @GetMapping("createLegaView")
     public String createLegaView(Model model, HttpServletRequest request) {
 
-        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
-        String username = CookieUtils.getCookie(request, "username");
-
-        Allenatore allenatoreLoggato = new Allenatore();
-        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
-        allenatoreLoggato.setUsername(username);
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("logged", true);
@@ -91,15 +81,12 @@ public class LegheController {
     @PostMapping("joinLega")
     public String joinLega(@RequestParam String codiceInvito, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
-        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
-        Allenatore allenatoreLoggato = new Allenatore();
-        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
         try {
             Squadra squadra = squadraService.joinLegaAndCreateSquadra(codiceInvito, nomeSquadra, allenatoreLoggato);
 
-            CookieUtils.setCookie(response, "idLega", String.valueOf(squadra.getLega().getId()));
-            CookieUtils.setCookie(response, "nomeLega", squadra.getLega().getNome());
+            legaCookieService.create(response, List.of(squadra.getLega().getId(), squadra.getLega().getNome()));
 
             return "redirect:/homeLegaView";
         } catch (IllegalArgumentException e) {
@@ -113,15 +100,11 @@ public class LegheController {
     @PostMapping("createLega")
     public String createLega(@ModelAttribute Lega lega, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
-        String idAllenatore = CookieUtils.getCookie(request, "idAllenatore");
-        Allenatore allenatoreLoggato = new Allenatore();
-        allenatoreLoggato.setId(Integer.parseInt(idAllenatore));
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
         try {
             Lega newLega = legaService.createLegaAndSetAdminAndCreateSquadra(lega, allenatoreLoggato, nomeSquadra);
-
-            CookieUtils.setCookie(response, "idLega", String.valueOf(newLega.getId()));
-            CookieUtils.setCookie(response, "nomeLega", newLega.getNome());
+            legaCookieService.create(response, List.of(newLega.getId(), newLega.getNome()));
 
             return "redirect:/homeLegaView";
         } catch (IllegalArgumentException e) {
@@ -137,8 +120,7 @@ public class LegheController {
     @PostMapping("homeLega")
     public String homeLega(@RequestParam int idLega, @RequestParam String nomeLega, HttpServletResponse response) {
 
-        CookieUtils.setCookie(response, "idLega", String.valueOf(idLega));
-        CookieUtils.setCookie(response, "nomeLega", nomeLega);
+        legaCookieService.create(response, List.of(idLega, nomeLega));
 
         return "redirect:/homeLegaView";
     }

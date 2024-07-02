@@ -1,5 +1,6 @@
 <form action="giocView" method="post" style="display: contents;">
     <input type="hidden" name="idGioc" value="${gioc.giocatore.id}">
+
     <article class="gioc-box" onclick="this.parentNode.submit();">
         <section>
             <h1 style="text-align: center;">${gioc.giocatore.nome}</h1>
