@@ -15,4 +15,7 @@ public interface LegaRepository extends JpaRepository<Lega, Integer> {
 
     @Query("SELECT l FROM Squadra AS s join Lega AS l ON s.lega.id = l.id  WHERE s.allenatore.id = :idAll AND s.deleted = 'N' AND l.deleted = 'N' ORDER BY l.nome ASC")
     List<Lega> findLegheByAllenatoreId(@Param("idAll") Integer idAll);
+
+    @Query("SELECT l.codiceInvito FROM Lega l WHERE l.nome = :nomeLega")
+    String getCodiceInvitoByNomeLega(String nomeLega);
 }

@@ -183,7 +183,7 @@
                 <li><a href="classificaView">Classifica</a></li>
                 <li><a href="roseView">Rose</a></li>
                 <c:if test="${isAdmin}">
-                    <li><a href="areaAdmin">Area Admin</a></li>
+                    <li><a href="adminView">Area Admin</a></li>
                 </c:if>
             </ul>
         </nav>

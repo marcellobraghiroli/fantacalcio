@@ -1,11 +1,14 @@
 package com.isw.mb.fantacalcio.services;
 
 import com.isw.mb.fantacalcio.models.Allenatore;
+import com.isw.mb.fantacalcio.models.Lega;
 import com.isw.mb.fantacalcio.repositories.AllenatoreRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.isw.mb.fantacalcio.exceptions.DuplicateEntityException;
+
+import java.util.List;
 
 @Service
 public class AllenatoreService {
@@ -40,4 +43,8 @@ public class AllenatoreService {
 
     }
 
+    @Transactional
+    public List<Allenatore> findAllenatoriByLegaAndNotLogged(Lega legaCorrente, Allenatore allenatoreLoggato) {
+        return allenatoreRepository.findByLegaAndNotLogged(legaCorrente.getId(), allenatoreLoggato.getId());
+    }
 }
