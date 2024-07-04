@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LegaService {
 
@@ -62,6 +64,11 @@ public class LegaService {
 
         return lega;
 
+    }
+
+    @Transactional
+    public List<Lega> findLegheByAllenatoreId(Integer idAll) {
+        return legaRepository.findLegheByAllenatoreId(idAll);
     }
 
 

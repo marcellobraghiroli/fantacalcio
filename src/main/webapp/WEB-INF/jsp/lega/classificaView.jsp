@@ -20,15 +20,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
             flex-direction: column;
         }
 
+        table {
+            display: block;
+        }
+
         table, th, td {
-            border: 2px solid black;
+
             border-collapse: collapse;
             padding: 10px;
             text-align: center;
             caption-side: bottom;
+        }
+
+        th, td {
+            border: 2px solid black;
         }
 
         caption {
@@ -117,6 +126,7 @@
 
         <h1 style="color: darkred; font-size: 2em;">Classifica ${legaCorrente.nome}</h1>
 
+
         <table id="classifica">
             <caption>
                 Clicca sulle intestazioni per ordinare la classifica<br><br>
@@ -160,6 +170,7 @@
             </c:forEach>
             </tbody>
         </table>
+
 
     </section>
 

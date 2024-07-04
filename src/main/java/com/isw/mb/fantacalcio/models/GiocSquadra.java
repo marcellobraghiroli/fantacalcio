@@ -32,7 +32,7 @@ public class GiocSquadra {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
 
     public GiocSquadra(Giocatore giocatore, Squadra squadra) {
         this.giocatore = giocatore;

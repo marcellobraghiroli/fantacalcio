@@ -68,11 +68,11 @@ public class SquadraCookieService implements CookieService {
     public void update(HttpServletResponse response, HttpServletRequest request, List<?> objects) {
         try {
 
-            Integer prezzo = (Integer) objects.getFirst();
+            Integer crediti = (Integer) objects.getFirst();
 
             String encodedSquadra = CookieUtils.getCookie(request, COOKIE_NAME);
             String[] values = encodedSquadra.split("#");
-            values[2] = String.valueOf(Integer.parseInt(values[2]) - prezzo);
+            values[2] = String.valueOf(Integer.parseInt(values[2]) + crediti);
             encodedSquadra = String.join("#", values);
             CookieUtils.setCookie(response, COOKIE_NAME, encodedSquadra);
 

@@ -35,6 +35,19 @@
             background-color: #c86666;
         }
 
+        .insert-button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .insert-button:hover {
+            background-color: #0056b3;
+        }
+
         article h1 {
             font-size: 1.2em;
             padding: 10px;
@@ -106,10 +119,14 @@
 
         <h1 style="color: darkred; font-size: 2em;">Rosa ${squadra.nome}</h1>
 
-        <p style="text-align: center; margin-top: 0; font-size: 1.2em;">
-        <b>Allenatore: </b>${nomeAll}<br>
-        <b>Crediti: </b>${creditiLega - squadra.creditiSpesi}
+        <p style="text-align: center; margin-top: 0; margin-bottom: 5px; font-size: 1.2em;">
+        <b>Allenatore: </b>${squadra.allenatore.username}<br>
+        <b>Crediti: </b>${squadra.lega.numCrediti - squadra.creditiSpesi}
         </p>
+
+        <c:if test="${allowMod}">
+            <a href="insGiocView" class="insert-button">Inserisci giocatori</a>
+        </c:if>
 
         <h2 class="ruolo" style="color: #f09837;">Portieri</h2>
 

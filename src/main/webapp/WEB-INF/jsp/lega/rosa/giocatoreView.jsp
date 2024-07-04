@@ -43,10 +43,11 @@
             padding: 10px;
             margin: 10px;
             width: 50%;
-            display: flex;
+            text-align: center;
             justify-content: space-evenly;
             align-items: center;
             flex-direction: column;
+            overflow: auto;
         }
 
         article h1 {

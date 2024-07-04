@@ -14,14 +14,14 @@ public final class CookieUtils {
         throw new IllegalStateException("Utility class");
     }
 
-    public static void setCookie(HttpServletResponse response, String name, String value) {
-        Cookie cookie = new Cookie(name, URLEncoder.encode(value, StandardCharsets.UTF_8));
+    public static void setCookie(HttpServletResponse response, String cookieName, String value) {
+        Cookie cookie = new Cookie(cookieName, URLEncoder.encode(value, StandardCharsets.UTF_8));
         cookie.setPath("/");
         response.addCookie(cookie);
     }
 
-    public static void removeCookie(HttpServletResponse response, String name) {
-        Cookie cookie = new Cookie(name, "");
+    public static void removeCookie(HttpServletResponse response, String cookiName) {
+        Cookie cookie = new Cookie(cookiName, "");
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);

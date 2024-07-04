@@ -31,15 +31,13 @@ public class LegaController {
 
     private final SqGioAmmService sqGioAmmService;
     private final SquadraService squadraService;
-    private final GiocSquadraService giocSquadraService;
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
 
 
     @Autowired
-    public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService, GiocSquadraService giocSquadraService, AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService) {
+    public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService, AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService) {
         this.sqGioAmmService = sqGioAmmService;
         this.squadraService = squadraService;
-        this.giocSquadraService = giocSquadraService;
         this.allenatoreCookieService = allenatoreCookieService;
         this.legaCookieService = legaCookieService;
         this.squadraCookieService = squadraCookieService;
@@ -77,9 +75,7 @@ public class LegaController {
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-        Set<Squadra> squadreLega = squadraService.findSquadreByLegaId(legaCorrente.getId());
-        List<Squadra> squadre = new ArrayList<>(squadreLega);
-        squadre.sort(Comparator.comparing(Squadra::getPuntiClass).reversed());
+        List<Squadra> squadre = squadraService.findSquadreByLegaIdOrderByPuntiClassDesc(legaCorrente.getId());
 
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
@@ -95,7 +91,7 @@ public class LegaController {
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-        Set<Squadra> squadreLega = squadraService.findSquadreByLegaId(legaCorrente.getId());
+        List<Squadra> squadreLega = squadraService.findSquadreByLegaIdOrderByNome(legaCorrente.getId());
 
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);

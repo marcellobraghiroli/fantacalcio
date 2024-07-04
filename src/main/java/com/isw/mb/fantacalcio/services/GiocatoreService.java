@@ -4,7 +4,11 @@ import com.isw.mb.fantacalcio.models.Giocatore;
 import com.isw.mb.fantacalcio.repositories.GiocatoreRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GiocatoreService {
@@ -18,6 +22,11 @@ public class GiocatoreService {
 
     @Transactional
     public Giocatore findGiocatoreById(Integer idGioc) {
-        return giocatoreRepository.findById(idGioc).orElse(null);
+        return giocatoreRepository.findByIdAndDeleted(idGioc, 'N');
+    }
+
+    @Transactional
+    public List<Giocatore> findGiocatoriByRuoloOrderByNome(String ruolo) {
+        return giocatoreRepository.findGiocatoriByRuoloAndDeletedOrderByNome(ruolo, 'N');
     }
 }

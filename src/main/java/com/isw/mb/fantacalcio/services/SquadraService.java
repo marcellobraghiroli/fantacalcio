@@ -24,11 +24,6 @@ public class SquadraService {
     }
 
     @Transactional
-    public List<Squadra> findSquadreByAllenatoreId(Integer idAllenatore) {
-        return squadraRepository.findSquadreByAllenatoreIdAndDeleted(idAllenatore, 'N');
-    }
-
-    @Transactional
     public Squadra joinLegaAndCreateSquadra(String codiceInvito, String nomeSquadra, Allenatore allenatore) {
         Lega lega = legaService.findByCodiceInvito(codiceInvito);
         if (lega != null) {
@@ -55,7 +50,12 @@ public class SquadraService {
     }
 
     @Transactional
-    public Set<Squadra> findSquadreByLegaId(Integer id) {
-        return squadraRepository.findSquadreByLegaIdAndDeleted(id, 'N');
+    public List<Squadra> findSquadreByLegaIdOrderByNome(Integer id) {
+        return squadraRepository.findSquadreByLegaIdAndDeletedOrderByNome(id, 'N');
+    }
+
+    @Transactional
+    public List<Squadra> findSquadreByLegaIdOrderByPuntiClassDesc(Integer id) {
+        return squadraRepository.findSquadreByLegaIdAndDeletedOrderByPuntiClassDesc(id, 'N');
     }
 }
