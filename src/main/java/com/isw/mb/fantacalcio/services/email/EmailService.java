@@ -50,6 +50,7 @@ public class EmailService {
                 + "Lo staff di FantaFoot\n";
 
         message.setText(text);
+
         mailSender.send(message);
     }
 

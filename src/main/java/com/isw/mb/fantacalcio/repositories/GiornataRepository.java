@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface GiornataRepository extends JpaRepository<Giornata, Integer> {
     //Giornata findFirstByTsInizioLessThanEqualAndTsInizioGreaterThanEqual(LocalDateTime instant, LocalDateTime now);
@@ -15,4 +16,7 @@ public interface GiornataRepository extends JpaRepository<Giornata, Integer> {
     Giornata findFirstByTsInizioLessThanEqualAndTsInizioPlus48HoursGreaterThanEqual(@Param("now") LocalDateTime now, @Param("nowMinus48Hours") LocalDateTime nowMinus48Hours);
 
     Giornata findFirstByTsInizioGreaterThan(LocalDateTime now);
+
+    @Query("SELECT g FROM Giornata g ORDER BY g.numero")
+    List<Giornata> findAllOrderByNumero();
 }

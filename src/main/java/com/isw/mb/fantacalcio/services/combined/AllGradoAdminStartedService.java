@@ -7,6 +7,7 @@ import com.isw.mb.fantacalcio.models.combined.AllGradoAdminStarted;
 import com.isw.mb.fantacalcio.repositories.PartitaRepository;
 import com.isw.mb.fantacalcio.services.AllenatoreService;
 import com.isw.mb.fantacalcio.services.AmministraService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class AllGradoAdminStartedService {
         this.partitaRepository = partitaRepository;
     }
 
+    @Transactional
     public AllGradoAdminStarted getAllGradoAdminStarted(Lega legaCorrente, Allenatore allenatoreLoggato) {
 
         List<Allenatore> allenatori = allenatoreService.findAllenatoriByLegaAndNotLogged(legaCorrente, allenatoreLoggato);

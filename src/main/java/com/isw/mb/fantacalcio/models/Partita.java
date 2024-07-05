@@ -57,7 +57,7 @@ public class Partita {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
 
     @OneToMany(mappedBy = "partita")
     private Set<Formazione> formazioni = new LinkedHashSet<>();

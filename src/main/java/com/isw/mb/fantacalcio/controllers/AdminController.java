@@ -5,6 +5,7 @@ import com.isw.mb.fantacalcio.models.Amministra;
 import com.isw.mb.fantacalcio.models.Lega;
 import com.isw.mb.fantacalcio.models.combined.AllGradoAdminStarted;
 import com.isw.mb.fantacalcio.services.AmministraService;
+import com.isw.mb.fantacalcio.services.PartitaService;
 import com.isw.mb.fantacalcio.services.combined.AllGradoAdminStartedService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.AllenatoreCookieService;
@@ -12,6 +13,7 @@ import com.isw.mb.fantacalcio.services.cookies.impl.LegaCookieService;
 import com.isw.mb.fantacalcio.services.email.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +27,20 @@ public class AdminController {
     private final CookieService allenatoreCookieService, legaCookieService;
     private final AllGradoAdminStartedService allGradoAdminStartedService;
     private final AmministraService amministraService;
+    private final PartitaService partitaService;
 
     private final EmailService emailService;
 
 
     @Autowired
-    public AdminController(AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, AllGradoAdminStartedService allGradoAdminStartedService, EmailService emailService, AmministraService amministraService) {
+    public AdminController(AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, AllGradoAdminStartedService allGradoAdminStartedService,
+                           EmailService emailService, AmministraService amministraService, PartitaService partitaService) {
         this.allenatoreCookieService = allenatoreCookieService;
         this.legaCookieService = legaCookieService;
         this.allGradoAdminStartedService = allGradoAdminStartedService;
         this.emailService = emailService;
         this.amministraService = amministraService;
+        this.partitaService = partitaService;
     }
 
     @GetMapping("adminView")
@@ -65,6 +70,11 @@ public class AdminController {
 
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("invSuccess", false);
+            redirectAttributes.addFlashAttribute("errMessage", "Allenatore inesistente");
+        } catch (MailAuthenticationException e) {
+            redirectAttributes.addFlashAttribute("invSuccess", false);
+            redirectAttributes.addFlashAttribute("errMessage", "Impossibile inviare l'email");
+            System.out.println(e.getMessage());
         }
 
         return "redirect:/adminView";
@@ -81,6 +91,24 @@ public class AdminController {
 
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("proSuccess", false);
+        }
+
+        return "redirect:/adminView";
+    }
+
+    @PostMapping("generaCal")
+    public String generaCal(RedirectAttributes redirectAttributes, @RequestParam Integer idLega) {
+
+        try {
+
+            partitaService.generaCalendario(idLega);
+            redirectAttributes.addFlashAttribute("genSuccess", true);
+
+        } catch (IllegalArgumentException e) {
+
+            redirectAttributes.addFlashAttribute("genSuccess", false);
+            redirectAttributes.addFlashAttribute("errMessage", e.getMessage());
+
         }
 
         return "redirect:/adminView";

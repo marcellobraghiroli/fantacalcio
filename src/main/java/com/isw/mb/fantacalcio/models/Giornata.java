@@ -24,7 +24,7 @@ public class Giornata {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
 
     @OneToMany(mappedBy = "giornata")
     private Set<GiocGiornata> giocatoriGiorn = new LinkedHashSet<>();

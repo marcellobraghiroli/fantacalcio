@@ -107,19 +107,48 @@
 
         <!-- Gestione calendario -->
 
-        <section class="gest-calendario">
+        <section class="box">
             <c:choose>
                 <c:when test="${started}">
-                    <h2>La stagione è iniziata</h2>
+                    <h2 style="color: darkred; margin-top: 10px; margin-bottom: 20px;">La stagione è iniziata</h2>
 
-                    <h2>Calcola giornata</h2>
-                    <button>Calcola</button>
+                    <c:if test="${not empty genSuccess}">
+                        <c:if test="${genSuccess}">
+                            <p style="color: green; text-align: center; margin-top: 0; margin-bottom: 10px;">Calendario generato con successo</p>
+                        </c:if>
+                    </c:if>
+
+
+                    <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Calcola giornata</h2>
+                    <form action="calcGiornata" method="post">
+                        <input type="hidden" name="idLega" value="${legaCorrente.id}">
+
+                        <input type="submit" value="Calcola">
+
+                    </form>
 
                 </c:when>
                 <c:otherwise>
+                    <h2 style="color: darkred; margin-top: 10px; margin-bottom: 20px;">La stagione non è ancora
+                        iniziata</h2>
                     <c:if test="${gradoAdmin == 'super'}">
-                        <h2>Genera calendario e inizia la stagione</h2>
-                        <button>Genera</button>
+
+                        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Genera
+                            calendario</h2>
+
+                        <c:if test="${not empty genSuccess}">
+                            <c:if test="${!genSuccess}">
+                                <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errMessage}</p>
+                            </c:if>
+                        </c:if>
+
+                        <form action="generaCal" method="post">
+                            <input type="hidden" name="idLega" value="${legaCorrente.id}">
+
+                            <input type="submit" value="Genera">
+
+                        </form>
+
                     </c:if>
                 </c:otherwise>
             </c:choose>
@@ -130,7 +159,8 @@
 
         <section class="box">
 
-            <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Invita un allenatore nella lega</h2>
+            <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Invita un allenatore
+                nella lega</h2>
 
             <c:if test="${not empty invSuccess}">
                 <c:choose>
@@ -139,8 +169,7 @@
                             successo</p>
                     </c:when>
                     <c:otherwise>
-                        <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">Allenatore
-                            inesistente</p>
+                        <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errMessage}</p>
                     </c:otherwise>
                 </c:choose>
             </c:if>
@@ -164,15 +193,18 @@
         <c:if test="${gradoAdmin == 'super'}">
             <section class="box">
 
-                <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Promuovi ad admin</h2>
+                <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Promuovi ad
+                    admin</h2>
 
                 <c:if test="${not empty proSuccess}">
                     <c:choose>
                         <c:when test="${proSuccess}">
-                            <p style="color: green; text-align: center; margin: 0 auto 10px auto;">Allenatore promosso con successo</p>
+                            <p style="color: green; text-align: center; margin: 0 auto 10px auto;">Allenatore promosso
+                                con successo</p>
                         </c:when>
                         <c:otherwise>
-                            <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">L'allenatore è già un admin</p>
+                            <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">L'allenatore
+                                è già un admin</p>
                         </c:otherwise>
                     </c:choose>
                 </c:if>
