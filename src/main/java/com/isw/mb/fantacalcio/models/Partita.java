@@ -20,15 +20,16 @@ public class Partita {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "risultato", length = 7)
-    private String risultato;
+    @ColumnDefault("NAG")
+    @Column(name = "risultato", length = 7, nullable = false)
+    private String risultato = "NAG";
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_lega", nullable = false)
     private Lega lega;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_squadra_casa", nullable = false)
     private Squadra squadraCasa;
@@ -39,7 +40,7 @@ public class Partita {
     @Column(name = "goal_casa")
     private Integer goalCasa;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_squadra_trasf", nullable = false)
     private Squadra squadraTrasf;

@@ -161,6 +161,21 @@
                 document.getElementById('countdown').innerHTML = "00:00:00:00";
             }
         };
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var giornata = '${giornata}';
+            if(!giornata) {
+                var calLink = document.querySelector('a[href="calendarioView"]');
+                calLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                });
+                calLink.style.cursor = 'default';
+            }
+
+
+        });
+
     </script>
 
 
@@ -179,7 +194,7 @@
         <nav>
             <ul>
                 <li><a href="backToLeghe" id="back">Leghe</a></li>
-                <li><a href="calendario">Calendario</a></li>
+                <li><a href="calendarioView">Calendario</a></li>
                 <li><a href="classificaView">Classifica</a></li>
                 <li><a href="roseView">Rose</a></li>
                 <c:if test="${isAdmin}">

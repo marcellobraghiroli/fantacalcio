@@ -3,6 +3,7 @@ package com.isw.mb.fantacalcio.controllers;
 
 import com.isw.mb.fantacalcio.models.*;
 import com.isw.mb.fantacalcio.models.combined.SqGioAmm;
+import com.isw.mb.fantacalcio.repositories.PartitaRepository;
 import com.isw.mb.fantacalcio.services.*;
 import com.isw.mb.fantacalcio.services.combined.SqGioAmmService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
@@ -26,21 +27,29 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.oracle.wls.shaded.org.apache.xalan.lib.ExsltSets.distinct;
+
 @Controller
 public class LegaController {
 
     private final SqGioAmmService sqGioAmmService;
     private final SquadraService squadraService;
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
+    private final PartitaService partitaService;
+    private final GiornataService giornataService;
 
 
     @Autowired
-    public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService, AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService) {
+    public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService,
+                          AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService,
+                          PartitaService partitaService, GiornataService giornataService) {
         this.sqGioAmmService = sqGioAmmService;
         this.squadraService = squadraService;
         this.allenatoreCookieService = allenatoreCookieService;
         this.legaCookieService = legaCookieService;
         this.squadraCookieService = squadraCookieService;
+        this.partitaService = partitaService;
+        this.giornataService = giornataService;
     }
 
     @GetMapping("/homeLegaView")
@@ -110,6 +119,30 @@ public class LegaController {
         return "redirect:/rosaView";
     }
 
+    @GetMapping("calendarioView")
+    public String calendarioView(HttpServletRequest request, Model model) {
+
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
+
+        List<Partita> partite = partitaService.findPartiteByLegaId(legaCorrente.getId());
+        Giornata giornataCorrente = giornataService.findCurrentOrNextGiornata(legaCorrente);
+
+        List<Integer> numeriGiornate = partite.stream()
+                .map(Partita::getGiornata)
+                .map(Giornata::getNumero)
+                .distinct()
+                .toList();
+
+        model.addAttribute("allenatoreLoggato", allenatoreLoggato);
+        model.addAttribute("legaCorrente", legaCorrente);
+        model.addAttribute("logged", true);
+        model.addAttribute("partite", partite);
+        model.addAttribute("giornataCorrente", giornataCorrente);
+        model.addAttribute("numeriGiornate", numeriGiornate);
+
+        return "lega/calendarioView";
+    }
 
 
 }
