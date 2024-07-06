@@ -147,19 +147,24 @@
 
         <section class="partite" id="listaPartite">
             <c:forEach var="partita" items="${partite}">
-                <article class="partita" data-giornata="${partita.giornata.numero}">
-                    <p class="casa">
-                        <b>${partita.squadraCasa.nome}</b>
-                        <br>
-                        ${partita.puntiCasa}
-                    </p>
-                    <p class="risultato">${partita.risultato}</p>
-                    <p class="trasferta">
-                        <b>${partita.squadraTrasf.nome}</b>
-                        <br>
-                        ${partita.puntiTrasf}
-                    </p>
-                </article>
+                <form action="partitaView" method="post" style="display: contents;">
+
+                    <input type="hidden" name="idPartita" value="${partita.id}">
+
+                    <article class="partita" data-giornata="${partita.giornata.numero}" onclick="this.parentNode.submit();">
+                        <p class="casa">
+                            <b>${partita.squadraCasa.nome}</b>
+                            <br>
+                                ${partita.puntiCasa}
+                        </p>
+                        <p class="risultato">${partita.risultato}</p>
+                        <p class="trasferta">
+                            <b>${partita.squadraTrasf.nome}</b>
+                            <br>
+                                ${partita.puntiTrasf}
+                        </p>
+                    </article>
+                </form>
             </c:forEach>
         </section>
 

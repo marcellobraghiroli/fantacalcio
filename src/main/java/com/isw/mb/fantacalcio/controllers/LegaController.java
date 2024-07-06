@@ -144,5 +144,20 @@ public class LegaController {
         return "lega/calendarioView";
     }
 
+    @PostMapping("partitaView")
+    public String partitaView(HttpServletRequest request, Model model, @RequestParam Integer idPartita) {
+
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
+
+        model.addAttribute("idPartita", idPartita);
+        model.addAttribute("allenatoreLoggato", allenatoreLoggato);
+        model.addAttribute("legaCorrente", legaCorrente);
+        model.addAttribute("logged", true);
+
+
+        return "lega/partitaView";
+    }
+
 
 }
