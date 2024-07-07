@@ -113,20 +113,17 @@
 
         }
 
-        .gioc-casa .info-gioc {
+        .gioc-casa .info-gioc, .gioc-trasf .voto {
             text-align: left;
         }
 
-        .gioc-casa .voto {
+        .gioc-casa .voto, .gioc-trasf .info-gioc {
             text-align: right;
         }
 
-        .gioc-trasf .info-gioc {
-            text-align: right;
-        }
-
-        .gioc-trasf .voto {
-            text-align: left;
+        article p {
+            line-height: 1.5;
+            margin: 10px;
         }
 
     </style>
@@ -187,7 +184,44 @@
                                                 ${giocCasa.giocatore.ruolo}</span> - ${giocCasa.giocatore.nome}
                                         </b>
                                         <br>
-
+                                        <c:forEach begin="1" end="${giocCasa.giocatore.giocGiornata.goalFatti}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/goal.png" alt="Goal"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocCasa.giocatore.giocGiornata.assist}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/assist.png" alt="Assist"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocCasa.giocatore.giocGiornata.rigParati}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/save.png" alt="Rigore parato"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocCasa.giocatore.giocGiornata.rigSbagliati}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/rigoresbagliato.png" alt="Rigore sbagliato"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocCasa.giocatore.giocGiornata.goalSubiti}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/goal_subito.png" alt="Goal subito"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocCasa.giocatore.giocGiornata.autogoal}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/autogoal.png" alt="Autogoal"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:if test="${giocCasa.giocatore.giocGiornata.ammonito.toString() == 'Y'}">
+                                            <img src="images/statsIcons/yellowcard.png" alt="Cartellino giallo"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:if>
+                                        <c:if test="${giocCasa.giocatore.giocGiornata.espulso.toString() == 'Y'}">
+                                            <img src="images/statsIcons/redcard.png" alt="Cartellino rosso"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:if>
                                     </p>
                                     <p class="voto">
                                             ${giocCasa.giocatore.giocGiornata.voto}
@@ -226,7 +260,44 @@
                                               giocTrasf.giocatore.ruolo == 'ATT' ? 'color: #9c2224;' : ''}">
                                                 ${giocTrasf.giocatore.ruolo}</span></b>
                                         <br>
-
+                                        <c:if test="${giocTrasf.giocatore.giocGiornata.espulso.toString() == 'Y'}">
+                                            <img src="images/statsIcons/redcard.png" alt="Cartellino rosso"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:if>
+                                        <c:if test="${giocTrasf.giocatore.giocGiornata.ammonito.toString() == 'Y'}">
+                                            <img src="images/statsIcons/yellowcard.png" alt="Cartellino giallo"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:if>
+                                        <c:forEach begin="1" end="${giocTrasf.giocatore.giocGiornata.autogoal}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/autogoal.png" alt="Autogoal"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocTrasf.giocatore.giocGiornata.goalSubiti}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/goal_subito.png" alt="Goal subito"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocTrasf.giocatore.giocGiornata.rigSbagliati}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/rigoresbagliato.png" alt="Rigore sbagliato"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocTrasf.giocatore.giocGiornata.rigParati}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/save.png" alt="Rigore parato"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocTrasf.giocatore.giocGiornata.assist}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/assist.png" alt="Assist"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
+                                        <c:forEach begin="1" end="${giocTrasf.giocatore.giocGiornata.goalFatti}"
+                                                   var="goal">
+                                            <img src="images/statsIcons/goal.png" alt="Goal"
+                                                 style="width: 20px; height: 20px;">
+                                        </c:forEach>
                                     </p>
                                 </article>
                             </c:when>

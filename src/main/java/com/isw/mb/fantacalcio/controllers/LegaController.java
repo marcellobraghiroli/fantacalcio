@@ -67,7 +67,7 @@ public class LegaController {
 
         if (sqGioAmm.getGiornata() != null) {
             model.addAttribute("giornata", sqGioAmm.getGiornata());
-            System.out.println("Giornata: " + sqGioAmm.getGiornata().getNumero() + " - " + sqGioAmm.getGiornata().getTsInizio());
+            //System.out.println("Giornata: " + sqGioAmm.getGiornata().getNumero() + " - " + sqGioAmm.getGiornata().getTsInizio());
         }
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
