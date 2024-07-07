@@ -42,7 +42,7 @@ public class Formazione {
     @Column(name = "deleted", nullable = false)
     private Character deleted;
 
-    @OneToMany(mappedBy = "formazione")
+    @OneToMany(mappedBy = "formazione", fetch = FetchType.EAGER)
     private Set<FormGioc> formGiocatori = new LinkedHashSet<>();
 
 }

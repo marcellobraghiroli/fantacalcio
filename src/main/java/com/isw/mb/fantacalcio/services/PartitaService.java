@@ -156,4 +156,9 @@ public class PartitaService {
     public List<Partita> findPartiteByLegaId(Integer idLega) {
         return partitaRepository.findPartiteByLegaIdAndDeletedOrderByGiornataAscIdAsc(idLega, 'N');
     }
+
+    @Transactional
+    public Partita findPartitaById(Integer idPartita) {
+        return partitaRepository.findById(idPartita).get();
+    }
 }

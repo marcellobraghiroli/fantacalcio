@@ -2,9 +2,11 @@ package com.isw.mb.fantacalcio.controllers;
 
 
 import com.isw.mb.fantacalcio.models.*;
+import com.isw.mb.fantacalcio.models.combined.PartForm;
 import com.isw.mb.fantacalcio.models.combined.SqGioAmm;
 import com.isw.mb.fantacalcio.repositories.PartitaRepository;
 import com.isw.mb.fantacalcio.services.*;
+import com.isw.mb.fantacalcio.services.combined.PartFormService;
 import com.isw.mb.fantacalcio.services.combined.SqGioAmmService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.AllenatoreCookieService;
@@ -37,12 +39,14 @@ public class LegaController {
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
     private final PartitaService partitaService;
     private final GiornataService giornataService;
+    private final PartFormService partFormService;
 
 
     @Autowired
     public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService,
                           AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService,
-                          PartitaService partitaService, GiornataService giornataService) {
+                          PartitaService partitaService, GiornataService giornataService,
+                          PartFormService partFormService) {
         this.sqGioAmmService = sqGioAmmService;
         this.squadraService = squadraService;
         this.allenatoreCookieService = allenatoreCookieService;
@@ -50,6 +54,7 @@ public class LegaController {
         this.squadraCookieService = squadraCookieService;
         this.partitaService = partitaService;
         this.giornataService = giornataService;
+        this.partFormService = partFormService;
     }
 
     @GetMapping("/homeLegaView")
@@ -62,6 +67,7 @@ public class LegaController {
 
         if (sqGioAmm.getGiornata() != null) {
             model.addAttribute("giornata", sqGioAmm.getGiornata());
+            System.out.println("Giornata: " + sqGioAmm.getGiornata().getNumero() + " - " + sqGioAmm.getGiornata().getTsInizio());
         }
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
@@ -145,15 +151,37 @@ public class LegaController {
     }
 
     @PostMapping("partitaView")
-    public String partitaView(HttpServletRequest request, Model model, @RequestParam Integer idPartita) {
+    public String partitaView(HttpServletRequest request, Model model, @RequestParam Integer idPartita, @RequestParam Integer idSqCasa, @RequestParam Integer idSqTrasf, @RequestParam Integer numGiornata) {
 
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-        model.addAttribute("idPartita", idPartita);
-        model.addAttribute("allenatoreLoggato", allenatoreLoggato);
-        model.addAttribute("legaCorrente", legaCorrente);
+
+        PartForm partForm = partFormService.getPartForm(idPartita, idSqCasa, idSqTrasf, numGiornata);
+
+        Partita partita = partForm.getPartita();
+        Formazione formCasa = partForm.getFormCasa();
+        Formazione formTrasf = partForm.getFormTrasf();
+
+        Set<FormGioc> giocatoriCasa = formCasa.getFormGiocatori();
+        List<FormGioc> giocatoriCasaList = giocatoriCasa.stream()
+                .sorted(Comparator.comparing(FormGioc::getOrdine))
+                .toList();
+
+        Set<FormGioc> giocatoriTrasf = formTrasf.getFormGiocatori();
+        List<FormGioc> giocatoriTrasfList = giocatoriTrasf.stream()
+                .sorted(Comparator.comparing(FormGioc::getOrdine))
+                .toList();
+
+
+        //model.addAttribute("allenatoreLoggato", allenatoreLoggato);
+        //model.addAttribute("legaCorrente", legaCorrente);
         model.addAttribute("logged", true);
+        model.addAttribute("partita", partita);
+        model.addAttribute("formCasa", formCasa);
+        model.addAttribute("formTrasf", formTrasf);
+        model.addAttribute("giocatoriCasa", giocatoriCasaList);
+        model.addAttribute("giocatoriTrasf", giocatoriTrasfList);
 
 
         return "lega/partitaView";

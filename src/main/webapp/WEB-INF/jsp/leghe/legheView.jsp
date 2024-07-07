@@ -72,8 +72,8 @@
 
 <main>
 
-    <section class="main-section" style="margin-bottom: 40px;">
-        <h1 style="color: darkred; font-size: 2em;">Benvenuto ${allenatoreLoggato.username}</h1>
+    <section class="main-section" style="margin-bottom: 40px; padding: 40px;">
+        <h1 style="color: darkred; font-size: 2em; margin-top: 0;">Benvenuto ${allenatoreLoggato.username}</h1>
 
         <section class="buttons-section">
             <a href="createLegaView" class="button">Crea una lega</a>

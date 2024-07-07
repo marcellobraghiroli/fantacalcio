@@ -82,9 +82,6 @@ public class Squadra {
     private Character deleted = 'N';
 
     @OneToMany(mappedBy = "squadra")
-    private Set<ColoriSquadra> coloriSquadra = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "squadra")
     private Set<Formazione> formazioni = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "squadra")

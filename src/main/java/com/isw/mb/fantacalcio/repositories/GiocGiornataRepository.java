@@ -5,4 +5,5 @@ import com.isw.mb.fantacalcio.models.GiocGiornataId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GiocGiornataRepository extends JpaRepository<GiocGiornata, GiocGiornataId> {
+    GiocGiornata findGiocGiornataByGiocatoreIdAndGiornataNumeroAndDeleted(Integer id, Integer numGiornata, Character deleted);
 }

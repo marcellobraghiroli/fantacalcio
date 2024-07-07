@@ -150,6 +150,9 @@
                 <form action="partitaView" method="post" style="display: contents;">
 
                     <input type="hidden" name="idPartita" value="${partita.id}">
+                    <input type="hidden" name="idSqCasa" value="${partita.squadraCasa.id}">
+                    <input type="hidden" name="idSqTrasf" value="${partita.squadraTrasf.id}">
+                    <input type="hidden" name="numGiornata" value="${partita.giornata.numero}">
 
                     <article class="partita" data-giornata="${partita.giornata.numero}" onclick="this.parentNode.submit();">
                         <p class="casa">

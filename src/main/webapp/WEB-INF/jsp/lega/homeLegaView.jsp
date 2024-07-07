@@ -125,14 +125,20 @@
         function startCountdown(tsInizio) {
             const countdownElement = document.getElementById('countdown');
             const endTime = new Date(tsInizio).getTime();
+            const formLink = document.getElementById('formLink');
 
             function updateCountdown() {
                 const now = new Date().getTime();
-                //const now = new Date(2024, 7, 7, 11, 0, 0).getTime();
+                //const date = new Date(now);
+                //date.setDate(date.getDate() + 7);
+                //const now2 = date.getTime();
                 const distance = endTime - now;
+                //console.log(distance);
 
                 if (distance < 0) {
-                    countdownElement.innerHTML = "00:00:00:00";
+                    console.log('countdown ended');
+                    countdownElement.innerHTML = "00 d : 00 h : 00 m : 00 s";
+                    formLink.style.display = 'none';
                     clearInterval(interval);
                     return;
                 }
@@ -143,10 +149,10 @@
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 countdownElement.innerHTML =
-                    (days < 10 ? '0' : '') + days + ":" +
-                    (hours < 10 ? '0' : '') + hours + ":" +
-                    (minutes < 10 ? '0' : '') + minutes + ":" +
-                    (seconds < 10 ? '0' : '') + seconds;
+                    (days < 10 ? '0' : '') + days + " d : " +
+                    (hours < 10 ? '0' : '') + hours + " h : " +
+                    (minutes < 10 ? '0' : '') + minutes + " m : " +
+                    (seconds < 10 ? '0' : '') + seconds + " s";
             }
 
             updateCountdown();
@@ -158,7 +164,7 @@
             if (tsInizio) {
                 startCountdown(tsInizio);
             } else {
-                document.getElementById('countdown').innerHTML = "00:00:00:00";
+                document.getElementById('countdown').innerHTML = "00 d : 00 h : 00 m : 00 s";
             }
         };
 
@@ -211,8 +217,8 @@
         <c:choose>
             <c:when test="${not empty giornata}">
                 <h3 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione</h3>
-                <div id="countdown">00:00:00:00</div>
-                <a href="formazione" class="formazione">Inserisci formazione</a>
+                <div id="countdown">00 d : 00 m : 00 h : 00 s</div>
+                <a href="formazione" class="formazione" id="formLink">Inserisci formazione</a>
             </c:when>
             <c:otherwise>
                 <h3 style="margin: 0; padding: 10px; color: darkred">Il calendario non è ancora stato generato</h3>

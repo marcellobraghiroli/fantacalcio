@@ -34,7 +34,7 @@ public class GiornataService {
         if (calendarioGenerato) {
 
             LocalDateTime now = LocalDateTime.now();
-            //LocalDateTime now = LocalDateTime.of(2024, 7, 21, 10, 0, 0);
+            //LocalDateTime now = LocalDateTime.of(2024, 7, 14, 11, 0, 0);
             LocalDateTime nowMinus48Hours = now.minusHours(48);
 
             Giornata currentGiornata = giornataRepository.findFirstByTsInizioLessThanEqualAndTsInizioPlus48HoursGreaterThanEqual(now, nowMinus48Hours);

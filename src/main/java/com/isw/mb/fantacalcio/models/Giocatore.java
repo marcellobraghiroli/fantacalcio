@@ -84,4 +84,7 @@ public class Giocatore {
     @OneToMany(mappedBy = "giocatore")
     private Set<GiocSquadra> giocSquadre = new LinkedHashSet<>();
 
+    @Transient
+    private GiocGiornata giocGiornata;
+
 }

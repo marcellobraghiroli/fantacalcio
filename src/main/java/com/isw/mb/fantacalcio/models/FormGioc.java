@@ -22,15 +22,12 @@ public class FormGioc {
     private Formazione formazione;
 
     @MapsId("giocatore")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_giocatore", nullable = false)
     private Giocatore giocatore;
 
-    @Column(name = "titolare", nullable = false)
-    private Character titolare;
-
-    @Column(name = "ordine")
+    @Column(name = "ordine", nullable = false)
     private Integer ordine;
 
     @ColumnDefault("'N'")

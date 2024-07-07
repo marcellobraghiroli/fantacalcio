@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>Calendario</title>
+    <title>Partita</title>
 
     <style>
         .partita-section {
@@ -35,6 +35,100 @@
         .back-button:hover {
             background-color: #c86666;
         }
+
+        .partita {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+            width: 75%;
+        }
+
+        .info-partita {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 1.5em;
+        }
+
+        .casa, .trasferta, .risultato {
+            flex: 1;
+            text-align: center;
+            padding: 5px 10px;
+            line-height: 1.5;
+        }
+
+        .risultato {
+            margin: auto;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .info-giocatori {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .gioc-casa {
+            flex: 1;
+            text-align: center;
+            padding: 5px 20px;
+            line-height: 1.5;
+            width: 50%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+
+        }
+
+        .gioc-trasf {
+            flex: 1;
+            text-align: center;
+            padding: 5px 20px;
+            line-height: 1.5;
+            width: 50%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .gioc-casa .info-gioc {
+            text-align: left;
+        }
+
+        .gioc-casa .voto {
+            text-align: right;
+        }
+
+        .gioc-trasf .info-gioc {
+            text-align: right;
+        }
+
+        .gioc-trasf .voto {
+            text-align: left;
+        }
+
     </style>
 
 
@@ -49,7 +143,120 @@
 
         <a href="calendarioView" class="back-button">Torna al calendario</a>
 
-        <h1 style="color: darkred; font-size: 2em;">${idPartita}</h1>
+        <h1 style="color: darkred; font-size: 2em;">Dettaglio Partita</h1>
+
+
+        <section class="partita">
+
+            <article class="info-partita">
+                <p class="casa">
+                    <b>${partita.squadraCasa.nome}</b>
+                    <br>
+                    ${partita.puntiCasa}
+                    <br>
+                    <b>${formCasa.modulo}</b>
+                </p>
+                <p class="risultato">${partita.risultato}</p>
+                <p class="trasferta">
+                    <b>${partita.squadraTrasf.nome}</b>
+                    <br>
+                    ${partita.puntiTrasf}
+                    <br>
+                    <b>${formTrasf.modulo}</b>
+                </p>
+            </article>
+
+            <c:if test="${not empty giocatoriCasa || not empty giocatoriTrasf}">
+
+                <c:forEach var="i" begin="0" end="10" varStatus="status">
+
+                    <c:set var="giocCasa" value="${giocatoriCasa[status.index]}"/>
+                    <c:set var="giocTrasf" value="${giocatoriTrasf[status.index]}"/>
+
+                    <section class="info-giocatori">
+
+                        <c:choose>
+                            <c:when test="${not empty giocatoriCasa}">
+                                <article class="gioc-casa">
+
+                                    <p class="info-gioc">
+                                        <b><span style="${giocCasa.giocatore.ruolo == 'POR' ? 'color: #f09837;' :
+                                              giocCasa.giocatore.ruolo == 'DIF' ? 'color: #357a23;' :
+                                              giocCasa.giocatore.ruolo == 'CEN' ? 'color: #448bbb;' :
+                                              giocCasa.giocatore.ruolo == 'ATT' ? 'color: #9c2224;' : ''}">
+                                                ${giocCasa.giocatore.ruolo}</span> - ${giocCasa.giocatore.nome}
+                                        </b>
+                                        <br>
+
+                                    </p>
+                                    <p class="voto">
+                                            ${giocCasa.giocatore.giocGiornata.voto}
+                                        <br>
+                                        <b>${giocCasa.giocatore.giocGiornata.fantavoto}</b>
+                                    </p>
+                                </article>
+                            </c:when>
+                            <c:otherwise>
+
+                                <c:choose>
+                                    <c:when test="${status.index == 0}">
+                                        <p style="font-weight: bold; font-size: 1.2em; width: 50%; height: 100%; text-align: center;">
+                                            Formazione non schierata</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p style="font-weight: bold; font-size: 1.2em; width: 50%; height: 0; text-align: center;"></p>
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </c:otherwise>
+                        </c:choose>
+
+                        <c:choose>
+                            <c:when test="${not empty giocatoriTrasf}">
+                                <article class="gioc-trasf">
+                                    <p class="voto">
+                                            ${giocTrasf.giocatore.giocGiornata.voto}
+                                        <br>
+                                        <b>${giocTrasf.giocatore.giocGiornata.fantavoto}</b>
+                                    </p>
+                                    <p class="info-gioc">
+                                        <b>${giocTrasf.giocatore.nome} - <span style="${giocTrasf.giocatore.ruolo == 'POR' ? 'color: #f09837;' :
+                                              giocTrasf.giocatore.ruolo == 'DIF' ? 'color: #357a23;' :
+                                              giocTrasf.giocatore.ruolo == 'CEN' ? 'color: #448bbb;' :
+                                              giocTrasf.giocatore.ruolo == 'ATT' ? 'color: #9c2224;' : ''}">
+                                                ${giocTrasf.giocatore.ruolo}</span></b>
+                                        <br>
+
+                                    </p>
+                                </article>
+                            </c:when>
+                            <c:otherwise>
+
+                                <c:choose>
+                                    <c:when test="${status.index == 0}">
+                                        <p style="font-weight: bold; font-size: 1.2em; width: 50%; height: 100%; text-align: center;">
+                                            Formazione non schierata</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p style="font-weight: bold; font-size: 1.2em; width: 50%; height: 0; text-align: center;"></p>
+                                    </c:otherwise>
+                                </c:choose>
+
+
+                            </c:otherwise>
+                        </c:choose>
+
+                    </section>
+
+                </c:forEach>
+
+            </c:if>
+
+            <c:if test="${empty giocatoriCasa && empty giocatoriTrasf}">
+                <p style="font-weight: bold; font-size: 1.2em;">Formazioni non schierate</p>
+            </c:if>
+
+        </section>
 
 
     </section>

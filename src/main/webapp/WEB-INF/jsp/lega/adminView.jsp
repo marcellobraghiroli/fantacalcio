@@ -103,14 +103,14 @@
 
         <a href="homeLegaView" class="back-button">Torna alla lega</a>
 
-        <h1 style="color: darkred; font-size: 2em;">Area Admin</h1>
+        <h1 style="color: darkred; font-size: 2em; margin-top: 20px; margin-bottom: 10px;">Area Admin</h1>
 
         <!-- Gestione calendario -->
 
         <section class="box">
             <c:choose>
                 <c:when test="${started}">
-                    <h2 style="color: darkred; margin-top: 10px; margin-bottom: 20px;">La stagione è iniziata</h2>
+                    <h2 style="margin-top: 10px; margin-bottom: 20px;">La stagione è iniziata</h2>
 
                     <c:if test="${not empty genSuccess}">
                         <c:if test="${genSuccess}">
@@ -119,7 +119,7 @@
                     </c:if>
 
 
-                    <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Calcola giornata</h2>
+                    <h2 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px;">Calcola giornata</h2>
                     <form action="calcGiornata" method="post">
                         <input type="hidden" name="idLega" value="${legaCorrente.id}">
 
@@ -129,11 +129,11 @@
 
                 </c:when>
                 <c:otherwise>
-                    <h2 style="color: darkred; margin-top: 10px; margin-bottom: 20px;">La stagione non è ancora
+                    <h2 style="margin-top: 10px; margin-bottom: 20px;">La stagione non è ancora
                         iniziata</h2>
                     <c:if test="${gradoAdmin == 'super'}">
 
-                        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Genera
+                        <h2 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px;">Genera
                             calendario</h2>
 
                         <c:if test="${not empty genSuccess}">
