@@ -38,6 +38,9 @@ public class AllenatoreService {
         if (allenatore.getTelefono() != null && allenatoreRepository.existsByTelefono(allenatore.getTelefono())) {
             throw new DuplicateEntityException("Telefono già in uso");
         }
+        if (allenatore.getUsername().equals("admin")) {
+            throw new DuplicateEntityException("Username non valido");
+        }
 
         return allenatoreRepository.save(allenatore);
 

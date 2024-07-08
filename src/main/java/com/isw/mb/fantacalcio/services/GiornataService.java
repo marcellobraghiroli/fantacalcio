@@ -49,5 +49,8 @@ public class GiornataService {
         return null;
     }
 
-
+    @Transactional
+    public List<Giornata> findGiornate() {
+        return giornataRepository.findGiornate();
+    }
 }

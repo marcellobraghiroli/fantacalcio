@@ -19,4 +19,7 @@ public interface GiornataRepository extends JpaRepository<Giornata, Integer> {
 
     @Query("SELECT g FROM Giornata g ORDER BY g.numero")
     List<Giornata> findAllOrderByNumero();
+
+    @Query("SELECT g FROM Giornata g WHERE g.deleted = 'N' ORDER BY g.numero")
+    List<Giornata> findGiornate();
 }
