@@ -36,6 +36,23 @@
             background-color: #c86666;
         }
 
+        .send-button {
+            margin: 20px 10px 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: pointer;
+        }
+
+        .send-button:hover {
+            background-color: #45a049;
+        }
+
         label {
             display: block;
             margin-bottom: 10px;
@@ -143,7 +160,6 @@
             });
         }
 
-
         function aggiornaModulo() {
 
             const modulo = document.getElementById('moduloSelector').value;
@@ -208,7 +224,6 @@
             select.required = true;
             select.setAttribute('ordine', ordine);
 
-
             const emptyOption = document.createElement('option');
             emptyOption.value = '';
             emptyOption.textContent = ruolo + '...';
@@ -226,6 +241,50 @@
             return select;
         }
 
+        function submitFormazione() {
+
+            const form = document.querySelector('form[action="sendFormazione"]');
+
+            var modulo = document.getElementById('moduloSelector').value;
+
+            form.elements['modulo'].value = modulo;
+
+            //var inputs = [];
+            var idGiocatori = [];
+
+            for(let i = 1; i <= 11; i++) {
+                const select = document.querySelector('select[ordine="' + i + '"]');
+                var idGioc = select.value;
+                if(idGioc === '') {
+                    alert('Seleziona tutti i giocatori');
+                    return;
+                }
+                //var input = document.createElement('input');
+                //input.type = 'hidden';
+                //input.name = 'idGioc' + i;
+                //input.value = idGioc;
+                //form.appendChild(input);
+                //inputs.push(input);
+                idGiocatori.push(idGioc);
+            }
+
+            //inputs.forEach(input => form.appendChild(input));
+
+            //Stampo tutti i campi input del form
+            //console.log(form.elements);
+
+            var idGiocatoriString = idGiocatori.join(',');
+
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'idGiocatori';
+            input.value = idGiocatoriString;
+            form.appendChild(input);
+
+            form.submit();
+
+        }
+
 
     </script>
 
@@ -239,7 +298,9 @@
 
     <section class="formazione-section">
 
-        <a href="homeLegaView" class="back-button">Torna alla lega</a>
+        <a href="homeLegaView" class="back-button"
+           onclick="return confirm('Sei sicuro di voler tornare alla lega?\n\nEventuali modifiche non salvate andranno perse');">Torna
+            alla lega</a>
 
         <h1 style="color: darkred; font-size: 2em; margin-top: 20px; margin-bottom: 10px;">Inserisci formazione -
             Giornata ${prossGiornata.numero}</h1>
@@ -274,16 +335,22 @@
 
         </section>
 
+        <button class="send-button" onclick="submitFormazione()">Invia formazione</button>
+
+
     </section>
 
-    <form action="inviaFormazione" method="post" style="display: none;">
+    <form action="sendFormazione" method="post" style="display: none;">
 
         <c:if test="${not empty giocatoriForm}">
-            <input type="hidden" name="idForm" value="${giocatoriForm[0].formazione.id}">
+            <input type="hidden" name="idFormazione" value="${giocatoriForm[0].formazione.id}">
         </c:if>
 
         <input type="hidden" name="modulo">
 
+        <input type="hidden" name="idSquadra" value="${squadra.id}">
+
+        <input type="hidden" name="numGiornata" value="${prossGiornata.numero}">
 
     </form>
 

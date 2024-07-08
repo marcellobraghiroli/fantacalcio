@@ -6,8 +6,10 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Where;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -31,7 +33,7 @@ public class Formazione {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "ts_schierata", nullable = false)
-    private Instant tsSchierata;
+    private LocalDateTime tsSchierata = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -40,9 +42,10 @@ public class Formazione {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
 
     @OneToMany(mappedBy = "formazione", fetch = FetchType.EAGER)
+    //@Where(clause = "deleted = 'N'")
     private Set<FormGioc> formGiocatori = new LinkedHashSet<>();
 
 }

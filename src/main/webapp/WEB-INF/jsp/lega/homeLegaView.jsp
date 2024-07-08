@@ -171,7 +171,7 @@
         document.addEventListener('DOMContentLoaded', function () {
 
             var giornata = '${giornata}';
-            if(!giornata) {
+            if (!giornata) {
                 var calLink = document.querySelector('a[href="calendarioView"]');
                 calLink.addEventListener('click', function (event) {
                     event.preventDefault();
@@ -216,9 +216,24 @@
 
         <c:choose>
             <c:when test="${not empty giornata}">
-                <h3 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione - Giornata ${giornata.numero}</h3>
+                <h3 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione -
+                    Giornata ${giornata.numero}</h3>
                 <div id="countdown">00 d : 00 m : 00 h : 00 s</div>
-                <a href="#" class="formazione" id="formLink" onclick="event.preventDefault(); document.getElementById('formazioneForm').submit();">Inserisci formazione</a>
+
+                <c:if test="${not empty formSuccess}">
+                    <c:choose>
+                        <c:when test="${formSuccess}">
+                            <p style="color: green; text-align: center; padding: 10px; margin: 0;">Formazione inviata con successo</p>
+                        </c:when>
+                        <c:otherwise>
+                            <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errorMessage}</p>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+
+                <a href="#" class="formazione" id="formLink"
+                   onclick="event.preventDefault(); document.getElementById('formazioneForm').submit();">Inserisci
+                    formazione</a>
             </c:when>
             <c:otherwise>
                 <h3 style="margin: 0; padding: 10px; color: darkred">Il calendario non è ancora stato generato</h3>

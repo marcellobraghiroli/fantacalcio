@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -44,6 +45,7 @@ public class LegaController {
     private final PartFormService partFormService;
     private final GiocSquadraService giocSquadraService;
     private final FormGiocatoriService formGiocatoriService;
+    private final FormazioneService formazioneService;
 
 
     @Autowired
@@ -51,7 +53,7 @@ public class LegaController {
                           AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService,
                           PartitaService partitaService, GiornataService giornataService,
                           PartFormService partFormService, GiocSquadraService giocSquadraService,
-                          FormGiocatoriService formGiocatoriService) {
+                          FormGiocatoriService formGiocatoriService, FormazioneService formazioneService) {
         this.sqGioAmmService = sqGioAmmService;
         this.squadraService = squadraService;
         this.allenatoreCookieService = allenatoreCookieService;
@@ -62,6 +64,7 @@ public class LegaController {
         this.partFormService = partFormService;
         this.giocSquadraService = giocSquadraService;
         this.formGiocatoriService = formGiocatoriService;
+        this.formazioneService = formazioneService;
     }
 
     @GetMapping("/homeLegaView")
@@ -170,12 +173,12 @@ public class LegaController {
         Formazione formCasa = partForm.getFormCasa();
         Formazione formTrasf = partForm.getFormTrasf();
 
-        Set<FormGioc> giocatoriCasa = formCasa.getFormGiocatori();
+        Set<FormGioc> giocatoriCasa = formCasa.getFormGiocatori().stream().filter(g -> 'N' == g.getDeleted()).collect(Collectors.toSet());
         List<FormGioc> giocatoriCasaList = giocatoriCasa.stream()
                 .sorted(Comparator.comparing(FormGioc::getOrdine))
                 .toList();
 
-        Set<FormGioc> giocatoriTrasf = formTrasf.getFormGiocatori();
+        Set<FormGioc> giocatoriTrasf = formTrasf.getFormGiocatori().stream().filter(g -> 'N' == g.getDeleted()).collect(Collectors.toSet());
         List<FormGioc> giocatoriTrasfList = giocatoriTrasf.stream()
                 .sorted(Comparator.comparing(FormGioc::getOrdine))
                 .toList();
@@ -218,7 +221,7 @@ public class LegaController {
         if (formazione != null) {
 
             String moduloForm = formazione.getModulo();
-            Set<FormGioc> giocatoriFormazione = formazione.getFormGiocatori();
+            Set<FormGioc> giocatoriFormazione = formazione.getFormGiocatori().stream().filter(giocatore -> 'N' == giocatore.getDeleted()).collect(Collectors.toSet());
             List<FormGioc> giocatoriForm = giocatoriFormazione.stream().sorted(Comparator.comparing(FormGioc::getOrdine)).toList();
 
             model.addAttribute("moduloForm", moduloForm);
@@ -238,6 +241,28 @@ public class LegaController {
         //model.addAttribute("formazione", formazione);
 
         return "lega/formazioneView";
+    }
+
+    @PostMapping("sendFormazione")
+    public String sendFormazione(RedirectAttributes redirectAttributes,
+                                 @RequestParam(required = false) Integer idFormazione, @RequestParam String modulo,
+                                 @RequestParam Integer idSquadra, @RequestParam Integer numGiornata, @RequestParam String idGiocatori) {
+
+
+        try {
+
+            formazioneService.saveFormazione(idFormazione, modulo, idSquadra, numGiornata, idGiocatori);
+
+            redirectAttributes.addFlashAttribute("formSuccess", true);
+
+        } catch (Exception e) {
+            //System.out.println("Errore");
+            redirectAttributes.addFlashAttribute("formSuccess", false);
+            redirectAttributes.addFlashAttribute("errorMessage", "Qualcosa è andato storto, la formazione non è stata inviata");
+        }
+
+
+        return "redirect:/homeLegaView";
     }
 
 }

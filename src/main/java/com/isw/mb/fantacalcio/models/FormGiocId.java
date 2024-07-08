@@ -20,6 +20,13 @@ public class FormGiocId implements Serializable {
     @Column(name = "id_giocatore", nullable = false)
     private Integer giocatore;
 
+    public FormGiocId() {}
+
+    public FormGiocId(Integer formazione, Integer giocatore) {
+        this.formazione = formazione;
+        this.giocatore = giocatore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

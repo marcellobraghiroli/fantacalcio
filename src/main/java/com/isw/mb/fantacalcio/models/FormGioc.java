@@ -32,6 +32,14 @@ public class FormGioc {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
+
+    public FormGioc(Formazione formazione, Giocatore giocatore) {
+        this.formazione = formazione;
+        this.giocatore = giocatore;
+        this.id = new FormGiocId(formazione.getId(), giocatore.getId());
+    }
+
+    public FormGioc() {}
 
 }
