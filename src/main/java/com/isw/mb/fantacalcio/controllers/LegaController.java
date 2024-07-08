@@ -2,10 +2,12 @@ package com.isw.mb.fantacalcio.controllers;
 
 
 import com.isw.mb.fantacalcio.models.*;
+import com.isw.mb.fantacalcio.models.combined.FormGiocatori;
 import com.isw.mb.fantacalcio.models.combined.PartForm;
 import com.isw.mb.fantacalcio.models.combined.SqGioAmm;
 import com.isw.mb.fantacalcio.repositories.PartitaRepository;
 import com.isw.mb.fantacalcio.services.*;
+import com.isw.mb.fantacalcio.services.combined.FormGiocatoriService;
 import com.isw.mb.fantacalcio.services.combined.PartFormService;
 import com.isw.mb.fantacalcio.services.combined.SqGioAmmService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
@@ -40,13 +42,16 @@ public class LegaController {
     private final PartitaService partitaService;
     private final GiornataService giornataService;
     private final PartFormService partFormService;
+    private final GiocSquadraService giocSquadraService;
+    private final FormGiocatoriService formGiocatoriService;
 
 
     @Autowired
     public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService,
                           AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService,
                           PartitaService partitaService, GiornataService giornataService,
-                          PartFormService partFormService) {
+                          PartFormService partFormService, GiocSquadraService giocSquadraService,
+                          FormGiocatoriService formGiocatoriService) {
         this.sqGioAmmService = sqGioAmmService;
         this.squadraService = squadraService;
         this.allenatoreCookieService = allenatoreCookieService;
@@ -55,6 +60,8 @@ public class LegaController {
         this.partitaService = partitaService;
         this.giornataService = giornataService;
         this.partFormService = partFormService;
+        this.giocSquadraService = giocSquadraService;
+        this.formGiocatoriService = formGiocatoriService;
     }
 
     @GetMapping("/homeLegaView")
@@ -71,7 +78,7 @@ public class LegaController {
         }
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
-        model.addAttribute("squadraCorrente", sqGioAmm.getSquadraCorrente().getNome());
+        model.addAttribute("squadraCorrente", sqGioAmm.getSquadraCorrente());
         model.addAttribute("logged", true);
         model.addAttribute("isAdmin", sqGioAmm.isAdmin());
 
@@ -187,5 +194,50 @@ public class LegaController {
         return "lega/partitaView";
     }
 
+    @PostMapping("formazioneView")
+    public String formazioneView(Model model, @RequestParam Integer idSquadra, @RequestParam Integer numGiornata) {
+
+        //Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
+        //Lega legaCorrente = (Lega) legaCookieService.get(request);
+
+        Giornata prossGiornata = new Giornata();
+        prossGiornata.setNumero(numGiornata);
+
+        Squadra squadra = new Squadra();
+        squadra.setId(idSquadra);
+
+        FormGiocatori formGiocatori = formGiocatoriService.getFormGiocatori(squadra, prossGiornata);
+        Set<GiocSquadra> giocatori = formGiocatori.getGiocatori();
+        Formazione formazione = formGiocatori.getFormazione();
+
+        List<GiocSquadra> portieri = giocatori.stream().filter(g -> g.getGiocatore().getRuolo().equals("POR")).sorted(Comparator.comparing(g -> g.getGiocatore().getNome())).toList();
+        List<GiocSquadra> difensori = giocatori.stream().filter(g -> g.getGiocatore().getRuolo().equals("DIF")).sorted(Comparator.comparing(g -> g.getGiocatore().getNome())).toList();
+        List<GiocSquadra> centrocampisti = giocatori.stream().filter(g -> g.getGiocatore().getRuolo().equals("CEN")).sorted(Comparator.comparing(g -> g.getGiocatore().getNome())).toList();
+        List<GiocSquadra> attaccanti = giocatori.stream().filter(g -> g.getGiocatore().getRuolo().equals("ATT")).sorted(Comparator.comparing(g -> g.getGiocatore().getNome())).toList();
+
+        if (formazione != null) {
+
+            String moduloForm = formazione.getModulo();
+            Set<FormGioc> giocatoriFormazione = formazione.getFormGiocatori();
+            List<FormGioc> giocatoriForm = giocatoriFormazione.stream().sorted(Comparator.comparing(FormGioc::getOrdine)).toList();
+
+            model.addAttribute("moduloForm", moduloForm);
+            model.addAttribute("giocatoriForm", giocatoriForm);
+
+        }
+
+        //model.addAttribute("allenatoreLoggato", allenatoreLoggato);
+        //model.addAttribute("legaCorrente", legaCorrente);
+        model.addAttribute("logged", true);
+        model.addAttribute("prossGiornata", prossGiornata);
+        model.addAttribute("squadra", squadra);
+        model.addAttribute("portieri", portieri);
+        model.addAttribute("difensori", difensori);
+        model.addAttribute("centrocampisti", centrocampisti);
+        model.addAttribute("attaccanti", attaccanti);
+        //model.addAttribute("formazione", formazione);
+
+        return "lega/formazioneView";
+    }
 
 }

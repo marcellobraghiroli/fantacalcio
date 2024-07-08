@@ -195,7 +195,7 @@
     <section class="nav-section" style="margin-bottom: 40px;">
 
         <h1>${legaCorrente.nome}</h1>
-        <h2>${squadraCorrente}</h2>
+        <h2>${squadraCorrente.nome}</h2>
 
         <nav>
             <ul>
@@ -216,9 +216,9 @@
 
         <c:choose>
             <c:when test="${not empty giornata}">
-                <h3 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione</h3>
+                <h3 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione - Giornata ${giornata.numero}</h3>
                 <div id="countdown">00 d : 00 m : 00 h : 00 s</div>
-                <a href="formazione" class="formazione" id="formLink">Inserisci formazione</a>
+                <a href="#" class="formazione" id="formLink" onclick="event.preventDefault(); document.getElementById('formazioneForm').submit();">Inserisci formazione</a>
             </c:when>
             <c:otherwise>
                 <h3 style="margin: 0; padding: 10px; color: darkred">Il calendario non è ancora stato generato</h3>
@@ -226,6 +226,11 @@
         </c:choose>
 
     </section>
+
+    <form action="formazioneView" method="post" id="formazioneForm">
+        <input type="hidden" name="idSquadra" value="${squadraCorrente.id}">
+        <input type="hidden" name="numGiornata" value="${giornata.numero}">
+    </form>
 
 </main>
 
