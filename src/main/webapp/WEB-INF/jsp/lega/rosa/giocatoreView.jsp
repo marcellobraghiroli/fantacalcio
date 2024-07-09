@@ -1,6 +1,7 @@
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -121,11 +122,11 @@
                 <tr>
                     <td colspan="3">
                         <h1>Media</h1>
-                        <p>${giocatore.media}</p>
+                        <p><fmt:formatNumber value="${giocatore.media}" maxFractionDigits="2"/></p>
                     </td>
                     <td colspan="3">
                         <h1>Fantamedia</h1>
-                        <p>${giocatore.fantamedia}</p>
+                        <p><fmt:formatNumber value="${giocatore.fantamedia}" maxFractionDigits="2"/></p>
                     </td>
                 </tr>
                 <tr>

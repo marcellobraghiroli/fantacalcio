@@ -5,7 +5,7 @@
         <section>
             <h1 style="text-align: center;">${gioc.giocatore.nome}</h1>
             <p style="padding-top: 0;">
-                <b>Prezzo: </b>${gioc.prezzo}<br><b>Squadra: </b>${gioc.giocatore.squadraReale}<br><b>Media: </b>${gioc.giocatore.media} <b>Fantamedia: </b>${gioc.giocatore.fantamedia}
+                <b>Prezzo: </b>${gioc.prezzo}<br><b>Squadra: </b>${gioc.giocatore.squadraReale}<br><b>Media: </b><fmt:formatNumber value="${gioc.giocatore.media}" maxFractionDigits="2"/> <b>Fantamedia: </b><fmt:formatNumber value="${gioc.giocatore.fantamedia}" maxFractionDigits="2"/>
             </p>
         </section>
         <c:if test="${allowMod}">

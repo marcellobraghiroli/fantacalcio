@@ -20,6 +20,13 @@ public class GiocGiornataId implements Serializable {
     @Column(name = "num_giornata", nullable = false)
     private Integer giornata;
 
+    public GiocGiornataId() {}
+
+    public GiocGiornataId(Integer giocatore, Integer giornata) {
+        this.giocatore = giocatore;
+        this.giornata = giornata;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

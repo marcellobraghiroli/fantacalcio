@@ -67,6 +67,14 @@ public class GiocGiornata {
 
     @ColumnDefault("'N'")
     @Column(name = "deleted", nullable = false)
-    private Character deleted;
+    private Character deleted = 'N';
+
+    public GiocGiornata(Giocatore giocatore, Giornata giornata) {
+        this.giocatore = giocatore;
+        this.giornata = giornata;
+        this.id = new GiocGiornataId(giocatore.getId(), giornata.getNumero());
+    }
+
+    public GiocGiornata() {}
 
 }

@@ -1,6 +1,7 @@
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -120,8 +121,8 @@
         <h1 style="color: darkred; font-size: 2em;">Rosa ${squadra.nome}</h1>
 
         <p style="text-align: center; margin-top: 0; margin-bottom: 5px; font-size: 1.2em;">
-        <b>Allenatore: </b>${squadra.allenatore.username}<br>
-        <b>Crediti: </b>${squadra.lega.numCrediti - squadra.creditiSpesi}
+            <b>Allenatore: </b>${squadra.allenatore.username}<br>
+            <b>Crediti: </b>${squadra.lega.numCrediti - squadra.creditiSpesi}
         </p>
 
         <c:if test="${allowMod}">
