@@ -114,14 +114,40 @@
 
                     <c:if test="${not empty genSuccess}">
                         <c:if test="${genSuccess}">
-                            <p style="color: green; text-align: center; margin-top: 0; margin-bottom: 10px;">Calendario generato con successo</p>
+                            <p style="color: green; text-align: center; margin-top: 0; margin-bottom: 10px;">Calendario
+                                generato con successo</p>
                         </c:if>
                     </c:if>
 
 
-                    <h2 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px;">Calcola giornata</h2>
+                    <h2 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px;">Calcola
+                        giornata</h2>
+
+                    <c:if test="${not empty calcSuccess}">
+                        <c:choose>
+                            <c:when test="${calcSuccess}">
+                                <p style="color: green; text-align: center; margin-top: 0; margin-bottom: 10px;">
+                                    Giornata calcolata con successo</p>
+                            </c:when>
+                            <c:otherwise>
+                                <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errMessage}</p>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+
+
                     <form action="calcGiornata" method="post">
+
                         <input type="hidden" name="idLega" value="${legaCorrente.id}">
+
+                        <label for="giornataSelector">Seleziona Giornata:</label>
+                        <select id="giornataSelector" name="numGiornata" required>
+                            <option value="" disabled selected></option>
+                            <c:forEach var="giornata" items="${giornate}">
+                                <option value="${giornata.numero}">
+                                    Giornata ${giornata.numero}</option>
+                            </c:forEach>
+                        </select>
 
                         <input type="submit" value="Calcola">
 

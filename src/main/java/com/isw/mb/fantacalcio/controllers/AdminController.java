@@ -2,9 +2,11 @@ package com.isw.mb.fantacalcio.controllers;
 
 import com.isw.mb.fantacalcio.models.Allenatore;
 import com.isw.mb.fantacalcio.models.Amministra;
+import com.isw.mb.fantacalcio.models.Giornata;
 import com.isw.mb.fantacalcio.models.Lega;
 import com.isw.mb.fantacalcio.models.combined.AllGradoAdminStarted;
 import com.isw.mb.fantacalcio.services.AmministraService;
+import com.isw.mb.fantacalcio.services.GiornataService;
 import com.isw.mb.fantacalcio.services.PartitaService;
 import com.isw.mb.fantacalcio.services.combined.AllGradoAdminStartedService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class AdminController {
 
@@ -31,16 +35,19 @@ public class AdminController {
 
     private final EmailService emailService;
 
+    private final GiornataService giornataService;
+
 
     @Autowired
     public AdminController(AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, AllGradoAdminStartedService allGradoAdminStartedService,
-                           EmailService emailService, AmministraService amministraService, PartitaService partitaService) {
+                           EmailService emailService, AmministraService amministraService, PartitaService partitaService, GiornataService giornataService) {
         this.allenatoreCookieService = allenatoreCookieService;
         this.legaCookieService = legaCookieService;
         this.allGradoAdminStartedService = allGradoAdminStartedService;
         this.emailService = emailService;
         this.amministraService = amministraService;
         this.partitaService = partitaService;
+        this.giornataService = giornataService;
     }
 
     @GetMapping("adminView")
@@ -50,6 +57,7 @@ public class AdminController {
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
         AllGradoAdminStarted allenatoriGradoAdminStarted = allGradoAdminStartedService.getAllGradoAdminStarted(legaCorrente, allenatoreLoggato);
+        List<Giornata> giornate = giornataService.findGiornate();
 
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
@@ -57,6 +65,7 @@ public class AdminController {
         model.addAttribute("allenatoriLega", allenatoriGradoAdminStarted.getAllenatori());
         model.addAttribute("gradoAdmin", allenatoriGradoAdminStarted.getGradoAdmin());
         model.addAttribute("started", allenatoriGradoAdminStarted.isSeasonStarted());
+        model.addAttribute("giornate", giornate);
 
         return "lega/adminView";
     }
@@ -113,5 +122,27 @@ public class AdminController {
 
         return "redirect:/adminView";
     }
+
+    @PostMapping("calcGiornata")
+    public String calcGiornata(RedirectAttributes redirectAttributes, @RequestParam Integer idLega, @RequestParam Integer numGiornata) {
+
+        try {
+
+            giornataService.calcolaGiornata(idLega, numGiornata);
+
+            redirectAttributes.addFlashAttribute("calcSuccess", true);
+
+        } catch (IllegalArgumentException e) {
+
+            redirectAttributes.addFlashAttribute("calcSuccess", false);
+            redirectAttributes.addFlashAttribute("errMessage", e.getMessage());
+
+        }
+
+        return "redirect:/adminView";
+
+    }
+
+
 
 }

@@ -28,14 +28,6 @@ public class Squadra {
     private Integer creditiSpesi = 0;
 
     @ColumnDefault("0")
-    @Column(name = "num_giocatori", nullable = false)
-    private Integer numGiocatori = 0;
-
-    @ColumnDefault("1")
-    @Column(name = "pos_class", nullable = false)
-    private Integer posClass = 1;
-
-    @ColumnDefault("0")
     @Column(name = "punti_class", nullable = false)
     private Integer puntiClass = 0;
 

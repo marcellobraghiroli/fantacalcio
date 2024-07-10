@@ -27,7 +27,7 @@ public class FormazioneService {
     }
 
     public Formazione findFormazioneByPartitaIdAndSquadraId(Integer idPartita, Integer idSqCasa) {
-        return formazioneRepository.findFormazioneByPartitaIdAndSquadraId(idPartita, idSqCasa);
+        return formazioneRepository.findFormazioneByPartitaIdAndSquadraIdAndDeleted(idPartita, idSqCasa, 'N');
     }
 
     public Formazione findFormazioneBySquadraAndGiornata(Squadra squadra, Giornata giornata) {
@@ -52,15 +52,6 @@ public class FormazioneService {
 
         List<Integer> idGiocatoriList = Stream.of(idGiocatori.split(",")).map(Integer::parseInt).toList();
 
-        /*
-        for(int i = 0; i < idGiocatoriList.size(); i++) {
-            System.out.println("Ordine: " + (i + 1) + " - " + idGiocatoriList.get(i));
-        }
-
-        System.out.println("" + formazione.getId() + " " + formazione.getModulo() + " " + formazione.getSquadra().getId() + " " + formazione.getPartita().getId());
-
-         */
-
         List<FormGioc> giocatori = new ArrayList<FormGioc>();
 
         for (int i = 0; i < idGiocatoriList.size(); i++) {
@@ -74,7 +65,9 @@ public class FormazioneService {
 
         formazioneRepository.save(formazione);
 
-        markFormGiocAsDeleted(idFormazione);
+        if (idFormazione != null) {
+            markFormGiocAsDeleted(idFormazione);
+        }
 
         formGiocRepository.saveAll(giocatori);
 
@@ -82,12 +75,16 @@ public class FormazioneService {
 
 
     private void markFormGiocAsDeleted(Integer idFormazione) {
+
         Formazione formazione = new Formazione();
         formazione.setId(idFormazione);
+
         List<FormGioc> giocatori = formGiocRepository.findByFormazione(formazione);
+
         for (FormGioc giocatore : giocatori) {
             giocatore.setDeleted('Y');
         }
+
         formGiocRepository.saveAll(giocatori);
     }
 

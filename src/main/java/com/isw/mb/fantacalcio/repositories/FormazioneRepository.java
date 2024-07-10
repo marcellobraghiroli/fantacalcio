@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface FormazioneRepository extends JpaRepository<Formazione, Integer> {
-    Formazione findFormazioneByPartitaIdAndSquadraId(Integer idPartita, Integer idSqCasa);
+    Formazione findFormazioneByPartitaIdAndSquadraIdAndDeleted(Integer idPartita, Integer idSqCasa, Character deleted);
 
     @Query("SELECT f FROM Formazione f JOIN Partita p ON f.partita = p WHERE f.deleted = :deleted AND f.squadra = :squadra AND p.giornata = :giornata")
     Formazione findFormazioneBySquadraAndGiornataAndDeleted(Squadra squadra, Giornata giornata, Character deleted);

@@ -45,7 +45,6 @@ public class Formazione {
     private Character deleted = 'N';
 
     @OneToMany(mappedBy = "formazione", fetch = FetchType.EAGER)
-    //@Where(clause = "deleted = 'N'")
     private Set<FormGioc> formGiocatori = new LinkedHashSet<>();
 
 }

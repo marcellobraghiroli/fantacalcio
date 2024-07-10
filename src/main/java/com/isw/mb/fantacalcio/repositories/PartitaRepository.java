@@ -14,4 +14,6 @@ public interface PartitaRepository extends JpaRepository<Partita, Integer> {
 
     @Query("SELECT p FROM Partita p WHERE (p.squadraCasa.id = :idSquadra OR p.squadraTrasf.id = :idSquadra) AND p.giornata.numero = :numGiornata AND p.deleted = 'N'")
     Partita findPartitaBySquadraAndGiornata(Integer idSquadra, Integer numGiornata);
+
+    List<Partita> findByLegaIdAndGiornataNumeroAndDeletedOrderByIdAsc(Integer idLega, Integer numGiornata, char n);
 }

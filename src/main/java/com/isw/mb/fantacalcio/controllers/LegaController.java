@@ -256,7 +256,7 @@ public class LegaController {
             redirectAttributes.addFlashAttribute("formSuccess", true);
 
         } catch (Exception e) {
-            //System.out.println("Errore");
+            System.out.println(e.getMessage());
             redirectAttributes.addFlashAttribute("formSuccess", false);
             redirectAttributes.addFlashAttribute("errorMessage", "Qualcosa è andato storto, la formazione non è stata inviata");
         }

@@ -56,6 +56,6 @@ public class SquadraService {
 
     @Transactional
     public List<Squadra> findSquadreByLegaIdOrderByPuntiClassDesc(Integer id) {
-        return squadraRepository.findSquadreByLegaIdAndDeletedOrderByPuntiClassDesc(id, 'N');
+        return squadraRepository.findSquadreByLegaIdAndDeletedOrderByPuntiClassDescFantapuntiDesc(id, 'N');
     }
 }

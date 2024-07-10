@@ -13,5 +13,5 @@ public interface SquadraRepository extends JpaRepository<Squadra, Integer> {
 
     List<Squadra> findSquadreByLegaIdAndDeletedOrderByNome(Integer id, Character deleted);
 
-    List<Squadra> findSquadreByLegaIdAndDeletedOrderByPuntiClassDesc(Integer id, char n);
+    List<Squadra> findSquadreByLegaIdAndDeletedOrderByPuntiClassDescFantapuntiDesc(Integer id, char n);
 }
