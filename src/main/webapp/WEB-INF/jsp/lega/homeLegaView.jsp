@@ -129,10 +129,10 @@
 
             function updateCountdown() {
                 const now = new Date().getTime();
-                const date = new Date(now);
-                date.setDate(date.getDate() + 2);
-                const now2 = date.getTime();
-                const distance = endTime - now2;
+                //const date = new Date(now);
+                //date.setDate(date.getDate() + 2);
+                //const now2 = date.getTime();
+                const distance = endTime - now;
                 //console.log(distance);
 
                 if (distance < 0) {
