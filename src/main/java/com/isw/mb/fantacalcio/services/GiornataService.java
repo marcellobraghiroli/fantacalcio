@@ -36,8 +36,8 @@ public class GiornataService {
 
         if (calendarioGenerato) {
 
-            LocalDateTime now = LocalDateTime.now();
-            //LocalDateTime now = LocalDateTime.of(2024, 7, 14, 11, 0, 0);
+            //LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.of(2024, 7, 16, 11, 0, 0);
             LocalDateTime nowMinus48Hours = now.minusHours(48);
 
             Giornata currentGiornata = giornataRepository.findFirstByTsInizioLessThanEqualAndTsInizioPlus48HoursGreaterThanEqual(now, nowMinus48Hours);
@@ -77,14 +77,15 @@ public class GiornataService {
             Squadra squadraCasa = p.getSquadraCasa();
             Squadra squadraTrasf = p.getSquadraTrasf();
 
-            //List<FormGioc> formCasa = formGiocRepository.findByPartitaIdAndSquadraId(p.getId(), squadraCasa.getId());
-            //List<FormGioc> formTrasf = formGiocRepository.findByPartitaIdAndSquadraId(p.getId(), squadraTrasf.getId());
+            List<GiocGiornata> votiCasa = giocGiornataRepository.findVotiPartita(p.getId(), squadraCasa.getId(), numGiornata);
+            List<GiocGiornata> votiTrasf = giocGiornataRepository.findVotiPartita(p.getId(), squadraTrasf.getId(), numGiornata);
 
-            List<GiocGiornata> votiCasa = giocGiornataRepository.findVotiPartita(p.getId(), squadraCasa.getId());
-            List<GiocGiornata> votiTrasf = giocGiornataRepository.findVotiPartita(p.getId(), squadraTrasf.getId());
+            System.out.println(squadraCasa.getNome() + " - " + squadraTrasf.getNome() + " " + votiCasa.size() + " " + votiTrasf.size());
+
 
             float puntiCasa = 0f;
             for (GiocGiornata gg : votiCasa) {
+                System.out.println(gg.getGiocatore().getNome());
                 puntiCasa += gg.getFantavoto();
             }
 
@@ -95,16 +96,25 @@ public class GiornataService {
 
             int goalCasa, goalTrasf;
 
-            if (puntiCasa < 66.0) {
+            if (puntiCasa == 0f && puntiTrasf != 0f) {
                 goalCasa = 0;
-            } else {
-                goalCasa = (int) ((puntiCasa - 66) / 6) + 1;
-            }
-
-            if (puntiTrasf < 66.0) {
+                goalTrasf = 3;
+            } else if (puntiCasa != 0f && puntiTrasf == 0f) {
+                goalCasa = 3;
                 goalTrasf = 0;
             } else {
-                goalTrasf = (int) ((puntiTrasf - 66) / 6) + 1;
+
+                if (puntiCasa < 66.0) {
+                    goalCasa = 0;
+                } else {
+                    goalCasa = (int) ((puntiCasa - 66) / 6) + 1;
+                }
+
+                if (puntiTrasf < 66.0) {
+                    goalTrasf = 0;
+                } else {
+                    goalTrasf = (int) ((puntiTrasf - 66) / 6) + 1;
+                }
             }
 
             String risultato = goalCasa + " - " + goalTrasf;

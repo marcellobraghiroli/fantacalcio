@@ -24,6 +24,8 @@ import java.util.List;
 @Controller
 public class AuthController {
 
+    //Controller per la gestione delle operazioni di autenticazione
+
     private final AllenatoreService allenatoreService;
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
 
@@ -34,6 +36,7 @@ public class AuthController {
         this.legaCookieService = legaCookieService;
         this.squadraCookieService = squadraCookieService;
     }
+
 
     //PAGINA DI LOGIN
     @GetMapping("/")

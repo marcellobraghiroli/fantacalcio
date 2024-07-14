@@ -28,6 +28,8 @@ import java.util.List;
 @Controller
 public class AdminController {
 
+    //Controller per la gestione delle operazioni di amministrazione
+
     private final CookieService allenatoreCookieService, legaCookieService;
     private final AllGradoAdminStartedService allGradoAdminStartedService;
     private final AmministraService amministraService;
@@ -50,6 +52,7 @@ public class AdminController {
         this.giornataService = giornataService;
     }
 
+    //PAGINA ADMINVIEW
     @GetMapping("adminView")
     public String adminView(HttpServletRequest request, Model model) {
 
@@ -70,6 +73,7 @@ public class AdminController {
         return "lega/adminView";
     }
 
+    //INVITA UN ALLENATORE ALLA LEGA
     @PostMapping("invitaAll")
     public String invitaAll(@RequestParam String nomeLega, @RequestParam String usernameAdmin, @RequestParam String username, RedirectAttributes redirectAttributes) {
 
@@ -90,6 +94,7 @@ public class AdminController {
 
     }
 
+    //PROMUOVE UN ALLENATORE AD ADMIN
     @PostMapping("promuoviAll")
     public String promuoviAll(@RequestParam Integer idLega, @RequestParam Integer idAll, RedirectAttributes redirectAttributes) {
 
@@ -105,6 +110,7 @@ public class AdminController {
         return "redirect:/adminView";
     }
 
+    //GENERA CALENDARIO DELLA LEGA
     @PostMapping("generaCal")
     public String generaCal(RedirectAttributes redirectAttributes, @RequestParam Integer idLega) {
 
@@ -123,6 +129,7 @@ public class AdminController {
         return "redirect:/adminView";
     }
 
+    //CALCOLA UNA GIORNATA
     @PostMapping("calcGiornata")
     public String calcGiornata(RedirectAttributes redirectAttributes, @RequestParam Integer idLega, @RequestParam Integer numGiornata) {
 

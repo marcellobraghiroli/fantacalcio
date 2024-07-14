@@ -24,6 +24,8 @@ import java.util.List;
 @Controller
 public class LegheController {
 
+    //Controller per la gestione delle operazioni relative alle leghe
+
     private final LegaService legaService;
     private final SquadraService squadraService;
     private final CookieService allenatoreCookieService, legaCookieService;
@@ -36,7 +38,8 @@ public class LegheController {
         this.legaCookieService = legaCookieService;
     }
 
-    //LEGHE
+
+    //PAGINA LEGHE ALLENATORE
     @GetMapping("/legheView")
     public String legheView(Model model, HttpServletRequest request) {
 
@@ -78,7 +81,7 @@ public class LegheController {
         return "leghe/createLegaView";
     }
 
-    //ISCRZIONE A UNA LEGA
+    //ENTRA IN UNA LEGA
     @PostMapping("joinLega")
     public String joinLega(@RequestParam String codiceInvito, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
@@ -97,7 +100,7 @@ public class LegheController {
 
     }
 
-    //CREAZIONE LEGA
+    //CREA UNA LEGA
     @PostMapping("createLega")
     public String createLega(@ModelAttribute Lega lega, @RequestParam String nomeSquadra, HttpServletRequest request, RedirectAttributes redirectAttributes, HttpServletResponse response) {
 
@@ -117,7 +120,7 @@ public class LegheController {
 
     }
 
-    //PAGINA DI HOME LEGA
+    //VAI A HOME LEGA (setta coookie)
     @PostMapping("homeLega")
     public String homeLega(@RequestParam int idLega, @RequestParam String nomeLega, HttpServletResponse response) {
 

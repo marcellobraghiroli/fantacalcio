@@ -10,6 +10,7 @@ import com.isw.mb.fantacalcio.services.cookies.impl.LegaCookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.SquadraCookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,13 @@ import java.util.stream.Collectors;
 @Controller
 public class SquadraController {
 
+    //Controller per la gestione delle operazioni relative a una squadra
+
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
     private final GiocSquadraService giocSquadraService;
     private final GiocatoreService giocatoreService;
 
+    @Autowired
     public SquadraController(AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, GiocSquadraService giocSquadraService, GiocatoreService giocatoreService, SquadraCookieService squadraCookieService) {
         this.allenatoreCookieService = allenatoreCookieService;
         this.legaCookieService = legaCookieService;
@@ -35,6 +39,7 @@ public class SquadraController {
         this.squadraCookieService = squadraCookieService;
     }
 
+    //PAGINA ROSA DI UNA SQUADRA
     @GetMapping("rosaView")
     public String rosaView(HttpServletRequest request, Model model) {
 
@@ -62,6 +67,7 @@ public class SquadraController {
         return "lega/rosa/rosaView";
     }
 
+    //RIMUOVI UN GIOCATORE DALLA SQUADRA
     @PostMapping("removeGioc")
     public String removeGioc(@RequestParam Integer idGioc, @RequestParam Integer idSquadra, HttpServletResponse response, HttpServletRequest request) {
         GiocSquadra giocSquadra = giocSquadraService.removeGiocatore(idGioc, idSquadra);
@@ -69,6 +75,7 @@ public class SquadraController {
         return "redirect:/rosaView";
     }
 
+    //PAGINA GIOCATORE
     @PostMapping("giocView")
     public String giocView(HttpServletRequest request, Model model, @RequestParam Integer idGioc) {
 
@@ -85,12 +92,14 @@ public class SquadraController {
         return "lega/rosa/giocatoreView";
     }
 
+    //TORNA ALLE ROSE (delete cookie)
     @GetMapping("backToRose")
     public String backToRose(HttpServletResponse response) {
         squadraCookieService.delete(response);
         return "redirect:/roseView";
     }
 
+    //PAGINA DI INSERIMENTO GIOCATORE
     @RequestMapping(value = "insGiocView", method = {RequestMethod.GET, RequestMethod.POST})
     public String insGiocView(Model model, HttpServletRequest request, @RequestParam(required = false, defaultValue = "POR") String ruolo) {
 
@@ -110,6 +119,7 @@ public class SquadraController {
         return "lega/rosa/insGiocView";
     }
 
+    //INSERISCI GIOCATORE
     @PostMapping("insGioc")
     public String insGioc(@RequestParam Integer idGioc, @RequestParam Integer idSquadra, @RequestParam Integer price, HttpServletResponse response, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
 

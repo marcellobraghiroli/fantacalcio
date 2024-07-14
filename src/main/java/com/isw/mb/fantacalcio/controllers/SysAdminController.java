@@ -17,6 +17,7 @@ import java.util.List;
 @Controller
 public class SysAdminController {
 
+    //Controller per la gestione delle operazioni di amministrazione di sistema
 
     private final GiornataService giornataService;
     private final MarksService marksService;
@@ -27,6 +28,8 @@ public class SysAdminController {
         this.marksService = marksService;
     }
 
+
+    //PAGINA DI AMMINISTRAZIONE DI SISTEMA
     @GetMapping("/SysAdminView")
     public String sysAdminView(Model model) {
 
@@ -39,6 +42,7 @@ public class SysAdminController {
 
     }
 
+    //CARICA VOTI PER UNA GIORNATA E AGGIORNA STATISTICHE GIOCATORI
     @PostMapping("caricaVoti")
     public String caricaVoti(RedirectAttributes redirectAttributes, @RequestParam Integer giornata, @RequestParam MultipartFile fileVoti) {
 

@@ -12,6 +12,6 @@ public interface GiocGiornataRepository extends JpaRepository<GiocGiornata, Gioc
 
     boolean existsByGiornataNumero(Integer numGiornata);
 
-    @Query("SELECT gg FROM GiocGiornata gg JOIN FormGioc fg ON gg.giocatore = fg.giocatore JOIN Formazione f ON fg.formazione = f WHERE f.partita.id = :idPartita AND f.squadra.id = :idSquadra AND gg.deleted = 'N' AND fg.deleted = 'N' AND f.deleted = 'N'")
-    List<GiocGiornata> findVotiPartita(Integer idPartita, Integer idSquadra);
+    @Query("SELECT gg FROM GiocGiornata gg JOIN FormGioc fg ON gg.giocatore = fg.giocatore JOIN Formazione f ON fg.formazione = f WHERE f.partita.id = :idPartita AND f.squadra.id = :idSquadra AND gg.deleted = 'N' AND fg.deleted = 'N' AND f.deleted = 'N' AND gg.giornata.numero = :numGiornata")
+    List<GiocGiornata> findVotiPartita(Integer idPartita, Integer idSquadra, Integer numGiornata);
 }

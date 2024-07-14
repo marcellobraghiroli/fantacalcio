@@ -37,13 +37,14 @@ import static com.oracle.wls.shaded.org.apache.xalan.lib.ExsltSets.distinct;
 @Controller
 public class LegaController {
 
+    //Controller per la gestione delle operazioni relative alla lega
+
     private final SqGioAmmService sqGioAmmService;
     private final SquadraService squadraService;
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
     private final PartitaService partitaService;
     private final GiornataService giornataService;
     private final PartFormService partFormService;
-    private final GiocSquadraService giocSquadraService;
     private final FormGiocatoriService formGiocatoriService;
     private final FormazioneService formazioneService;
 
@@ -52,7 +53,7 @@ public class LegaController {
     public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService,
                           AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService,
                           PartitaService partitaService, GiornataService giornataService,
-                          PartFormService partFormService, GiocSquadraService giocSquadraService,
+                          PartFormService partFormService,
                           FormGiocatoriService formGiocatoriService, FormazioneService formazioneService) {
         this.sqGioAmmService = sqGioAmmService;
         this.squadraService = squadraService;
@@ -62,11 +63,11 @@ public class LegaController {
         this.partitaService = partitaService;
         this.giornataService = giornataService;
         this.partFormService = partFormService;
-        this.giocSquadraService = giocSquadraService;
         this.formGiocatoriService = formGiocatoriService;
         this.formazioneService = formazioneService;
     }
 
+    //PAGINA DI HOME DELLA LEGA
     @GetMapping("/homeLegaView")
     public String homeLegaView(HttpServletRequest request, Model model) {
 
@@ -88,12 +89,14 @@ public class LegaController {
         return "/lega/homeLegaView";
     }
 
+    //TORNA ALLE LEGHE (delete cookie)
     @GetMapping("backToLeghe")
     public String backToLeghe(HttpServletResponse response) {
         legaCookieService.delete(response);
         return "redirect:/legheView";
     }
 
+    //CLASSIFICA
     @GetMapping("classificaView")
     public String classificaView(HttpServletRequest request, Model model) {
 
@@ -110,6 +113,7 @@ public class LegaController {
         return "/lega/classificaView";
     }
 
+    //ROSE
     @GetMapping("roseView")
     public String roseView(HttpServletRequest request, Model model) {
 
@@ -127,6 +131,7 @@ public class LegaController {
 
     }
 
+    //ROSA (setta cookie)
     @PostMapping("goToRosaView")
     public String goToRosaView(HttpServletResponse response, @ModelAttribute Squadra squadra, @RequestParam Integer idAllSq, @RequestParam Integer creditiLega, @RequestParam String nomeAll) {
 
@@ -135,6 +140,7 @@ public class LegaController {
         return "redirect:/rosaView";
     }
 
+    //CALENDARIO
     @GetMapping("calendarioView")
     public String calendarioView(HttpServletRequest request, Model model) {
 
@@ -160,6 +166,7 @@ public class LegaController {
         return "lega/calendarioView";
     }
 
+    //PARTITA
     @PostMapping("partitaView")
     public String partitaView(HttpServletRequest request, Model model, @RequestParam Integer idPartita, @RequestParam Integer idSqCasa, @RequestParam Integer idSqTrasf, @RequestParam Integer numGiornata) {
 
@@ -193,10 +200,10 @@ public class LegaController {
         model.addAttribute("giocatoriCasa", giocatoriCasaList);
         model.addAttribute("giocatoriTrasf", giocatoriTrasfList);
 
-
         return "lega/partitaView";
     }
 
+    //PAGINA DI INSERIMENTO FORMAZIONE
     @PostMapping("formazioneView")
     public String formazioneView(Model model, @RequestParam Integer idSquadra, @RequestParam Integer numGiornata) {
 
@@ -243,6 +250,7 @@ public class LegaController {
         return "lega/formazioneView";
     }
 
+    //INVIA FORMAZIONE
     @PostMapping("sendFormazione")
     public String sendFormazione(RedirectAttributes redirectAttributes,
                                  @RequestParam(required = false) Integer idFormazione, @RequestParam String modulo,
