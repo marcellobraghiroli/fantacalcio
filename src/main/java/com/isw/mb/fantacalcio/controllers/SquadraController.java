@@ -103,14 +103,13 @@ public class SquadraController {
     @RequestMapping(value = "insGiocView", method = {RequestMethod.GET, RequestMethod.POST})
     public String insGiocView(Model model, HttpServletRequest request, @RequestParam(required = false, defaultValue = "POR") String ruolo) {
 
-        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
-        Lega legaCorrente = (Lega) legaCookieService.get(request);
+        //Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
+        //Lega legaCorrente = (Lega) legaCookieService.get(request);
+
         Squadra squadraCorrente = (Squadra) squadraCookieService.get(request);
 
         List<Giocatore> giocatori = giocatoreService.findGiocatoriByRuoloOrderByNome(ruolo);
 
-        //model.addAttribute("allenatoreLoggato", allenatoreLoggato);
-        //model.addAttribute("legaCorrente", legaCorrente);
         model.addAttribute("squadraCorrente", squadraCorrente);
         model.addAttribute("logged", true);
         model.addAttribute("giocatori", giocatori);
@@ -121,12 +120,13 @@ public class SquadraController {
 
     //INSERISCI GIOCATORE
     @PostMapping("insGioc")
-    public String insGioc(@RequestParam Integer idGioc, @RequestParam Integer idSquadra, @RequestParam Integer price, HttpServletResponse response, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+    public String insGioc(@RequestParam Integer idGioc, @RequestParam Integer idSquadra, @RequestParam Integer price, HttpServletResponse response, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
         try {
             GiocSquadra giocSquadra = giocSquadraService.addGiocatore(idGioc, idSquadra, price);
             squadraCookieService.update(response, request, List.of(price));
             redirectAttributes.addFlashAttribute("success", true);
+            redirectAttributes.addAttribute("ruolo", giocSquadra.getGiocatore().getRuolo());
         } catch (DuplicateEntityException e) {
             redirectAttributes.addFlashAttribute("success", false);
         }
