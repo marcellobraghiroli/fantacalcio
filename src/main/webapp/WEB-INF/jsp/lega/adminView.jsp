@@ -76,29 +76,15 @@
             background-color: #45a049;
         }
 
-        #degrada, #elimina {
+        #degrada, #elimina, #espelli {
             background-color: #f35d5d;
         }
 
-        #degrada:hover, #elimina:hover {
+        #degrada:hover, #elimina:hover, #espelli:hover {
             background-color: #c86666;
         }
 
     </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var selectElement = document.getElementById('allSelect');
-            var hiddenInput = document.getElementById('idAll');
-
-            selectElement.addEventListener('change', function () {
-                var selectedOption = selectElement.options[selectElement.selectedIndex];
-                var selectedId = selectedOption.getAttribute('data-id');
-                hiddenInput.value = selectedId;
-            });
-        });
-    </script>
-
 
 </head>
 <body>
@@ -240,15 +226,11 @@
 
                 <form action="promDegrAll" method="post">
 
-                    <input type="hidden" name="idLega" value="${legaCorrente.id}">
-                    <input type="hidden" name="idAll" id="idAll">
-
-                    <label for="username">Selezione allenatore:</label>
-                    <select id="allSelect" name="username" required>
+                    <label for="allSelect">Selezione allenatore:</label>
+                    <select id="allSelect" name="idAll" required>
                         <option value="" disabled selected></option>
                         <c:forEach var="allenatore" items="${allenatoriLega}">
-                            <option value="${allenatore.username}"
-                                    data-id="${allenatore.id}">${allenatore.username}</option>
+                            <option value="${allenatore.id}">${allenatore.username}</option>
                         </c:forEach>
                     </select>
 
@@ -257,6 +239,40 @@
 
                 </form>
             </section>
+        </c:if>
+
+        <!-- Espelli allenatori -->
+
+        <c:if test="${gradoAdmin == 'super' && !started}">
+
+            <section class="box">
+
+                <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Espelli un
+                    allenatore</h2>
+
+                <c:if test="${not empty espSuccess && espSuccess}">
+                    <p style="color: green; text-align: center; margin: 0 auto 10px auto;">${succMessage}</p>
+                </c:if>
+
+                <form action="espAll" method="post">
+
+                    <label for="allSelect2">Selezione allenatore:</label>
+                    <select id="allSelect2" name="idAll" required>
+                        <option value="" disabled selected></option>
+                        <c:forEach var="allenatore" items="${allenatoriLega}">
+                            <option value="${allenatore.id}">${allenatore.username}</option>
+                        </c:forEach>
+                    </select>
+
+                    <input type="submit" id="espelli" value="Espelli"
+                           onclick="return confirm('Sei sicuro di voler espellere l\'allenatore?');">
+
+
+                </form>
+
+
+            </section>
+
         </c:if>
 
         <!-- Elimina lega -->

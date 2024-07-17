@@ -18,4 +18,6 @@ public interface PartitaRepository extends JpaRepository<Partita, Integer> {
     List<Partita> findByLegaIdAndGiornataNumeroAndDeletedOrderByIdAsc(Integer idLega, Integer numGiornata, char n);
 
     Partita findByIdAndDeleted(Integer idPartita, char n);
+
+    List<Partita> findByLega(Lega lega);
 }

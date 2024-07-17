@@ -1,5 +1,6 @@
 package com.isw.mb.fantacalcio.repositories;
 
+import com.isw.mb.fantacalcio.models.Lega;
 import com.isw.mb.fantacalcio.models.Squadra;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,4 +18,8 @@ public interface SquadraRepository extends JpaRepository<Squadra, Integer> {
     Squadra findByIdAndDeleted(Integer idSquadra, char n);
 
     boolean existsByAllenatoreUsernameAndLegaIdAndDeleted(String recUsername, Integer id, char n);
+
+    List<Squadra> findByLegaAndDeleted(Lega lega, char n);
+
+    Squadra findByAllenatoreIdAndLegaIdAndDeleted(Integer idAll, Integer idLega, char n);
 }

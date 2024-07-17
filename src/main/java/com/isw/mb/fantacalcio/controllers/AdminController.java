@@ -104,15 +104,17 @@ public class AdminController {
 
     //PROMUOVE UN ALLENATORE AD ADMIN
     @PostMapping("promDegrAll")
-    public String promDegrAll(@RequestParam Integer idLega, @RequestParam Integer idAll, RedirectAttributes redirectAttributes, @RequestParam String action) {
+    public String promDegrAll(@RequestParam Integer idAll, RedirectAttributes redirectAttributes, @RequestParam String action, HttpServletRequest request) {
+
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
 
         try {
 
             if(action.equals("Promuovi")) {
-                Amministra amministra = amministraService.promuoviAdmin(idAll, idLega);
+                Amministra amministra = amministraService.promuoviAdmin(idAll, legaCorrente.getId());
                 redirectAttributes.addFlashAttribute("succMessage", "Allenatore promosso con successo");
             } else if (action.equals("Degrada")) {
-                Amministra amministra = amministraService.degradaAdmin(idAll, idLega);
+                Amministra amministra = amministraService.degradaAdmin(idAll, legaCorrente.getId());
                 redirectAttributes.addFlashAttribute("succMessage", "Allenatore degradato con successo");
             }
 
@@ -175,6 +177,28 @@ public class AdminController {
         legaCookieService.delete(response);
 
         return "redirect:/legheView";
+    }
+
+    @PostMapping("espAll")
+    public String espAll(@RequestParam Integer idAll, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
+
+        try {
+
+            legaService.espelliAllenatore(idAll, legaCorrente.getId());
+            redirectAttributes.addFlashAttribute("espSuccess", true);
+            redirectAttributes.addFlashAttribute("succMessage", "Allenatore espulso con successo");
+
+        } catch(Exception e) {
+
+            redirectAttributes.addFlashAttribute("espSuccess", false);
+            redirectAttributes.addFlashAttribute("errMessage", e.getMessage());
+
+        }
+
+        return "redirect:adminView";
+
     }
 
 
