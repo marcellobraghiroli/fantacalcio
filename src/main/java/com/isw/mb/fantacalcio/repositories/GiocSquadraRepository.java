@@ -14,4 +14,5 @@ public interface GiocSquadraRepository extends JpaRepository<GiocSquadra, GiocSq
 
     Set<GiocSquadra> findBySquadraAndDeleted(Squadra squadra, Character deleted);
 
+    GiocSquadra findByIdAndDeleted(GiocSquadraId giocSquadraId, char n);
 }

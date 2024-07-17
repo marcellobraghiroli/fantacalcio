@@ -202,9 +202,6 @@
 
             <form action="invitaAll" method="post">
 
-                <input type="hidden" name="nomeLega" value="${legaCorrente.nome}">
-                <input type="hidden" name="usernameAdmin" value="${allenatoreLoggato.username}">
-
                 <label for="username">Username allenatore:</label>
                 <input type="text" id="username" name="username" required autocomplete="off" maxlength="45">
 

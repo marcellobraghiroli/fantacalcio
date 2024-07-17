@@ -10,7 +10,7 @@ import java.util.List;
 public interface GiocGiornataRepository extends JpaRepository<GiocGiornata, GiocGiornataId> {
     GiocGiornata findGiocGiornataByGiocatoreIdAndGiornataNumeroAndDeleted(Integer id, Integer numGiornata, Character deleted);
 
-    boolean existsByGiornataNumero(Integer numGiornata);
+    boolean existsByGiornataNumeroAndDeleted(Integer numGiornata, Character deleted);
 
     @Query("SELECT gg FROM GiocGiornata gg JOIN FormGioc fg ON gg.giocatore = fg.giocatore JOIN Formazione f ON fg.formazione = f WHERE f.partita.id = :idPartita AND f.squadra.id = :idSquadra AND gg.deleted = 'N' AND fg.deleted = 'N' AND f.deleted = 'N' AND gg.giornata.numero = :numGiornata")
     List<GiocGiornata> findVotiPartita(Integer idPartita, Integer idSquadra, Integer numGiornata);

@@ -40,16 +40,18 @@ public class AdminController {
     private final GiornataService giornataService;
 
 
+
     @Autowired
-    public AdminController(AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, AllGradoAdminStartedService allGradoAdminStartedService,
-                           EmailService emailService, AmministraService amministraService, PartitaService partitaService, GiornataService giornataService) {
+    public AdminController(AllenatoreCookieService allenatoreCookieService, AllGradoAdminStartedService allGradoAdminStartedService,
+                           EmailService emailService, AmministraService amministraService, PartitaService partitaService, GiornataService giornataService,
+                           LegaCookieService legaCookieService) {
         this.allenatoreCookieService = allenatoreCookieService;
-        this.legaCookieService = legaCookieService;
         this.allGradoAdminStartedService = allGradoAdminStartedService;
         this.emailService = emailService;
         this.amministraService = amministraService;
         this.partitaService = partitaService;
         this.giornataService = giornataService;
+        this.legaCookieService = legaCookieService;
     }
 
     //PAGINA ADMINVIEW
@@ -75,19 +77,22 @@ public class AdminController {
 
     //INVITA UN ALLENATORE ALLA LEGA
     @PostMapping("invitaAll")
-    public String invitaAll(@RequestParam String nomeLega, @RequestParam String usernameAdmin, @RequestParam String username, RedirectAttributes redirectAttributes) {
+    public String invitaAll(@RequestParam String username, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
         try {
-            emailService.sendInvitationEmail(nomeLega, usernameAdmin, username);
+            emailService.sendInvitationEmail(legaCorrente, allenatoreLoggato, username);
             redirectAttributes.addFlashAttribute("invSuccess", true);
 
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("invSuccess", false);
-            redirectAttributes.addFlashAttribute("errMessage", "Allenatore inesistente");
+            redirectAttributes.addFlashAttribute("errMessage", e.getMessage());
         } catch (MailAuthenticationException e) {
             redirectAttributes.addFlashAttribute("invSuccess", false);
             redirectAttributes.addFlashAttribute("errMessage", "Impossibile inviare l'email");
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
 
         return "redirect:/adminView";

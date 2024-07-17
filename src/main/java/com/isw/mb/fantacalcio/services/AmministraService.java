@@ -21,12 +21,12 @@ public class AmministraService {
 
     public boolean existsAmministra(int allenatoreId, int legaId) {
         AmministraId amministraId = new AmministraId(allenatoreId, legaId);
-        return amministraRepository.existsById(amministraId);
+        return amministraRepository.existsByIdAndDeleted(amministraId, 'N');
     }
 
     public Amministra findByAllenatoreIdAndLegaId(Integer idAll, Integer idLega) {
         AmministraId amministraId = new AmministraId(idAll, idLega);
-        return amministraRepository.findById(amministraId).orElse(null);
+        return amministraRepository.findByIdAndDeleted(amministraId, 'N');
     }
 
     @Transactional
@@ -34,7 +34,7 @@ public class AmministraService {
 
         AmministraId amministraId = new AmministraId(idAll, idLega);
 
-        if(amministraRepository.existsById(amministraId)) {
+        if(amministraRepository.existsByIdAndDeleted(amministraId, 'N')) {
             throw new IllegalArgumentException("L'allenatore è già admin di questa lega");
         }
 

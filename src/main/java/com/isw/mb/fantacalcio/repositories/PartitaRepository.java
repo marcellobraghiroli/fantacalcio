@@ -16,4 +16,6 @@ public interface PartitaRepository extends JpaRepository<Partita, Integer> {
     Partita findPartitaBySquadraAndGiornata(Integer idSquadra, Integer numGiornata);
 
     List<Partita> findByLegaIdAndGiornataNumeroAndDeletedOrderByIdAsc(Integer idLega, Integer numGiornata, char n);
+
+    Partita findByIdAndDeleted(Integer idPartita, char n);
 }

@@ -53,9 +53,16 @@ public class SysAdminController {
             redirectAttributes.addFlashAttribute("success", true);
 
 
+        } catch (IllegalArgumentException e) {
+
+            redirectAttributes.addFlashAttribute("success", false);
+            redirectAttributes.addFlashAttribute("errMessage", e.getMessage());
+
+
         } catch (Exception e) {
 
             redirectAttributes.addFlashAttribute("success", false);
+            redirectAttributes.addFlashAttribute("errMessage", "Caricamento voti fallito");
 
         }
 

@@ -31,6 +31,10 @@ public class MarksService {
     @Transactional
     public void caricaVoti(Integer numGiornata, MultipartFile fileVoti) throws IOException {
 
+        if(giocGiornataRepository.existsByGiornataNumeroAndDeleted(numGiornata, 'N')) {
+            throw new IllegalArgumentException("I voti della giornata " + numGiornata + " sono già stati caricati");
+        }
+
         List<GiocGiornata> voti = new ArrayList<GiocGiornata>();
 
         Giornata giornata = new Giornata();
@@ -61,7 +65,7 @@ public class MarksService {
 
             voti.add(voto);
 
-            Giocatore updateGiocatore = giocatoreRepository.findById(giocatore.getId()).get();
+            Giocatore updateGiocatore = giocatoreRepository.findByIdAndDeleted(giocatore.getId(), 'N');
 
             updateGiocatore.setMedia((updateGiocatore.getMedia() * updateGiocatore.getPresenze() + voto.getVoto()) / (updateGiocatore.getPresenze() + 1));
             updateGiocatore.setFantamedia((updateGiocatore.getFantamedia() * updateGiocatore.getPresenze() + voto.getFantavoto()) / (updateGiocatore.getPresenze() + 1));

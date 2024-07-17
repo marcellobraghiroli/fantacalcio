@@ -99,7 +99,7 @@
                         <p style="color: green">Voti caricati con successo</p>
                     </c:when>
                     <c:otherwise>
-                        <p style="color: red">Caricamento dei voti fallito</p>
+                        <p style="color: red">${errMessage}</p>
                     </c:otherwise>
                 </c:choose>
             </c:if>

@@ -29,18 +29,17 @@ public class GiocSquadraService {
     @Transactional
     public Set<GiocSquadra> findGiocatoriBySquadra(Squadra squadra) {
 
-        Set<GiocSquadra> giocatori = giocSquadraRepository.findBySquadraAndDeleted(squadra, 'N');
-        return giocatori;
+        return giocSquadraRepository.findBySquadraAndDeleted(squadra, 'N');
 
     }
 
     @Transactional
     public GiocSquadra removeGiocatore(Integer idGioc, Integer idSquadra) {
         GiocSquadraId giocSquadraId = new GiocSquadraId(idGioc, idSquadra);
-        GiocSquadra giocSquadra = giocSquadraRepository.findById(giocSquadraId).get();
+        GiocSquadra giocSquadra = giocSquadraRepository.findByIdAndDeleted(giocSquadraId, 'N');
         giocSquadra.setDeleted('Y');
 
-        Squadra squadra = squadraRepository.findById(idSquadra).get();
+        Squadra squadra = squadraRepository.findByIdAndDeleted(idSquadra, 'N');
         squadra.setCreditiSpesi(squadra.getCreditiSpesi() - giocSquadra.getPrezzo());
         squadraRepository.save(squadra);
 

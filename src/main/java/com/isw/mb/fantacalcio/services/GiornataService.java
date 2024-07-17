@@ -45,7 +45,7 @@ public class GiornataService {
             if (currentGiornata != null) {
                 return currentGiornata;
             } else {
-                return giornataRepository.findFirstByTsInizioGreaterThan(now);
+                return giornataRepository.findFirstByTsInizioGreaterThanAndDeleted(now, 'N');
             }
         }
 
@@ -54,7 +54,7 @@ public class GiornataService {
 
     @Transactional
     public List<Giornata> findGiornate() {
-        return giornataRepository.findGiornate();
+        return giornataRepository.findAllOrderByNumero();
     }
 
     @Transactional
@@ -66,7 +66,7 @@ public class GiornataService {
         Lega lega = new Lega();
         lega.setId(idLega);
 
-        if (!giocGiornataRepository.existsByGiornataNumero(numGiornata)) {
+        if (!giocGiornataRepository.existsByGiornataNumeroAndDeleted(numGiornata, 'N')) {
             throw new IllegalArgumentException("I voti per la giornata " + numGiornata + " non sono ancora stati caricati");
         }
 
@@ -80,12 +80,11 @@ public class GiornataService {
             List<GiocGiornata> votiCasa = giocGiornataRepository.findVotiPartita(p.getId(), squadraCasa.getId(), numGiornata);
             List<GiocGiornata> votiTrasf = giocGiornataRepository.findVotiPartita(p.getId(), squadraTrasf.getId(), numGiornata);
 
-            System.out.println(squadraCasa.getNome() + " - " + squadraTrasf.getNome() + " " + votiCasa.size() + " " + votiTrasf.size());
-
+            //System.out.println(squadraCasa.getNome() + " - " + squadraTrasf.getNome() + " " + votiCasa.size() + " " + votiTrasf.size());
 
             float puntiCasa = 0f;
             for (GiocGiornata gg : votiCasa) {
-                System.out.println(gg.getGiocatore().getNome());
+                //System.out.println(gg.getGiocatore().getNome());
                 puntiCasa += gg.getFantavoto();
             }
 

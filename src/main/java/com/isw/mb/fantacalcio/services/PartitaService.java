@@ -37,7 +37,7 @@ public class PartitaService {
 
          */
 
-        Lega lega = legaRepository.findById(idLega).get();
+        Lega lega = legaRepository.findByIdAndDeleted(idLega, 'N');
 
         List<Squadra> squadreLega = squadraRepository.findSquadreByLegaIdAndDeletedOrderByNome(idLega, 'N');
         Squadra[] squadre = squadreLega.toArray(new Squadra[0]);
@@ -159,6 +159,7 @@ public class PartitaService {
 
     @Transactional
     public Partita findPartitaById(Integer idPartita) {
-        return partitaRepository.findById(idPartita).get();
+        return partitaRepository.findByIdAndDeleted(idPartita, 'N');
     }
+
 }

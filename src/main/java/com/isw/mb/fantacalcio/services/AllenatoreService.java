@@ -48,6 +48,6 @@ public class AllenatoreService {
 
     @Transactional
     public List<Allenatore> findAllenatoriByLegaAndNotLogged(Lega legaCorrente, Allenatore allenatoreLoggato) {
-        return allenatoreRepository.findByLegaAndNotLogged(legaCorrente.getId(), allenatoreLoggato.getId());
+        return allenatoreRepository.findByLegaAndNotLogged(legaCorrente.getId(), allenatoreLoggato.getId()); //anche deleted
     }
 }
