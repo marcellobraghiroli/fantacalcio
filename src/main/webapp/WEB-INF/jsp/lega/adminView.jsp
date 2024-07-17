@@ -76,6 +76,14 @@
             background-color: #45a049;
         }
 
+        #degrada, #elimina {
+            background-color: #f35d5d;
+        }
+
+        #degrada:hover, #elimina:hover {
+            background-color: #c86666;
+        }
+
     </style>
 
     <script>
@@ -216,23 +224,21 @@
         <c:if test="${gradoAdmin == 'super'}">
             <section class="box">
 
-                <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Promuovi ad
+                <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Gestisci gli
                     admin</h2>
 
                 <c:if test="${not empty proSuccess}">
                     <c:choose>
                         <c:when test="${proSuccess}">
-                            <p style="color: green; text-align: center; margin: 0 auto 10px auto;">Allenatore promosso
-                                con successo</p>
+                            <p style="color: green; text-align: center; margin: 0 auto 10px auto;">${succMessage}</p>
                         </c:when>
                         <c:otherwise>
-                            <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">L'allenatore
-                                è già un admin</p>
+                            <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errMessage}</p>
                         </c:otherwise>
                     </c:choose>
                 </c:if>
 
-                <form action="promuoviAll" method="post">
+                <form action="promDegrAll" method="post">
 
                     <input type="hidden" name="idLega" value="${legaCorrente.id}">
                     <input type="hidden" name="idAll" id="idAll">
@@ -246,10 +252,30 @@
                         </c:forEach>
                     </select>
 
-                    <input type="submit" id="submitButton2" value="Promuovi">
+                    <input type="submit" id="submitButton2" name="action" value="Promuovi">
+                    <input type="submit" id="degrada" style="margin-top: 10px;" name="action" value="Degrada">
 
                 </form>
             </section>
+        </c:if>
+
+        <!-- Elimina lega -->
+
+        <c:if test="${gradoAdmin == 'super'}">
+
+            <section class="box">
+                <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Elimina lega</h2>
+
+                <form action="eliminaLega" method="post">
+
+                    <input type="hidden" name="idLega" value="${legaCorrente.id}">
+
+                    <input type="submit" id="elimina" value="Elimina"
+                           onclick="return confirm('Sei sicuro di voler eliminare la lega?\n\nL\'azione è irreversibile');">
+                </form>
+
+            </section>
+
         </c:if>
 
 

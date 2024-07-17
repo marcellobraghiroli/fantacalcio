@@ -7,6 +7,7 @@ import com.isw.mb.fantacalcio.models.Lega;
 import com.isw.mb.fantacalcio.models.combined.AllGradoAdminStarted;
 import com.isw.mb.fantacalcio.services.AmministraService;
 import com.isw.mb.fantacalcio.services.GiornataService;
+import com.isw.mb.fantacalcio.services.LegaService;
 import com.isw.mb.fantacalcio.services.PartitaService;
 import com.isw.mb.fantacalcio.services.combined.AllGradoAdminStartedService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
@@ -14,6 +15,7 @@ import com.isw.mb.fantacalcio.services.cookies.impl.AllenatoreCookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.LegaCookieService;
 import com.isw.mb.fantacalcio.services.email.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.stereotype.Controller;
@@ -39,12 +41,12 @@ public class AdminController {
 
     private final GiornataService giornataService;
 
-
+    private final LegaService legaService;
 
     @Autowired
     public AdminController(AllenatoreCookieService allenatoreCookieService, AllGradoAdminStartedService allGradoAdminStartedService,
                            EmailService emailService, AmministraService amministraService, PartitaService partitaService, GiornataService giornataService,
-                           LegaCookieService legaCookieService) {
+                           LegaCookieService legaCookieService, LegaService legaService) {
         this.allenatoreCookieService = allenatoreCookieService;
         this.allGradoAdminStartedService = allGradoAdminStartedService;
         this.emailService = emailService;
@@ -52,6 +54,7 @@ public class AdminController {
         this.partitaService = partitaService;
         this.giornataService = giornataService;
         this.legaCookieService = legaCookieService;
+        this.legaService = legaService;
     }
 
     //PAGINA ADMINVIEW
@@ -100,16 +103,24 @@ public class AdminController {
     }
 
     //PROMUOVE UN ALLENATORE AD ADMIN
-    @PostMapping("promuoviAll")
-    public String promuoviAll(@RequestParam Integer idLega, @RequestParam Integer idAll, RedirectAttributes redirectAttributes) {
+    @PostMapping("promDegrAll")
+    public String promDegrAll(@RequestParam Integer idLega, @RequestParam Integer idAll, RedirectAttributes redirectAttributes, @RequestParam String action) {
 
         try {
 
-            Amministra amministra = amministraService.promuoviAdmin(idAll, idLega);
+            if(action.equals("Promuovi")) {
+                Amministra amministra = amministraService.promuoviAdmin(idAll, idLega);
+                redirectAttributes.addFlashAttribute("succMessage", "Allenatore promosso con successo");
+            } else if (action.equals("Degrada")) {
+                Amministra amministra = amministraService.degradaAdmin(idAll, idLega);
+                redirectAttributes.addFlashAttribute("succMessage", "Allenatore degradato con successo");
+            }
+
             redirectAttributes.addFlashAttribute("proSuccess", true);
 
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("proSuccess", false);
+            redirectAttributes.addFlashAttribute("errMessage", e.getMessage());
         }
 
         return "redirect:/adminView";
@@ -155,6 +166,16 @@ public class AdminController {
 
     }
 
+    //ELIMINA LEGA
+    @PostMapping("eliminaLega")
+    public String eliminaLega(@RequestParam Integer idLega, HttpServletResponse response) {
+
+        legaService.eliminaLega(idLega);
+
+        legaCookieService.delete(response);
+
+        return "redirect:/legheView";
+    }
 
 
 }

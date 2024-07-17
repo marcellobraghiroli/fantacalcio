@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 public interface SquadraRepository extends JpaRepository<Squadra, Integer> {
-    List<Squadra> findSquadreByAllenatoreIdAndDeleted(Integer idAllenatore, Character deleted);
 
     Squadra findSquadraByAllenatoreIdAndLegaIdAndDeleted(Integer id, Integer id1, Character deleted);
 

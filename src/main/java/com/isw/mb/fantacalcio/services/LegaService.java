@@ -72,4 +72,11 @@ public class LegaService {
     }
 
 
+    @Transactional
+    public void eliminaLega(Integer idLega) {
+
+        Lega lega = legaRepository.findByIdAndDeleted(idLega, 'N');
+        lega.setDeleted('Y');
+
+    }
 }

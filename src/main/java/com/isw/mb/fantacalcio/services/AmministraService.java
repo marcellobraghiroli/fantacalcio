@@ -35,7 +35,7 @@ public class AmministraService {
         AmministraId amministraId = new AmministraId(idAll, idLega);
 
         if(amministraRepository.existsByIdAndDeleted(amministraId, 'N')) {
-            throw new IllegalArgumentException("L'allenatore è già admin di questa lega");
+            throw new IllegalArgumentException("L'allenatore è già un admin");
         }
 
         Allenatore allenatore = new Allenatore();
@@ -45,6 +45,23 @@ public class AmministraService {
 
         Amministra amministra = new Amministra(allenatore, lega);
         amministra.setGradoAdmin("base");
+
+        return amministraRepository.save(amministra);
+
+    }
+
+    @Transactional
+    public Amministra degradaAdmin(Integer idAll, Integer idLega) {
+
+        AmministraId amministraId = new AmministraId(idAll, idLega);
+
+        Amministra amministra = amministraRepository.findByIdAndDeleted(amministraId, 'N');
+
+        if(amministra == null) {
+            throw new IllegalArgumentException("L'allenatore non è un admin");
+        }
+
+        amministra.setDeleted('Y');
 
         return amministraRepository.save(amministra);
 
