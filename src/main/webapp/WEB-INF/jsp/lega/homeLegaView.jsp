@@ -11,20 +11,8 @@
     <title>La tua lega</title>
 
     <style>
-        .form-section {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-
-        }
-
-        .nav-section {
+        .box {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
@@ -107,6 +95,19 @@
             background-color: #c86666;
         }
 
+        .exitButton {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #f35d5d;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .exitButton:hover {
+            background-color: #c86666;
+        }
+
         @media (max-width: 600px) {
             nav ul {
                 flex-direction: column;
@@ -114,7 +115,7 @@
             }
 
             nav a {
-                min-width: 200px; /* Adattamento della larghezza minima per dispositivi mobili */
+                min-width: 200px;
             }
         }
 
@@ -192,7 +193,7 @@
 
 <main>
 
-    <section class="nav-section" style="margin-bottom: 40px;">
+    <section id="navigazioneLega" class="box" style="margin-bottom: 40px;">
 
         <h1>${legaCorrente.nome}</h1>
         <h2>${squadraCorrente.nome}</h2>
@@ -212,18 +213,19 @@
 
     </section>
 
-    <section class="form-section">
+    <section id="sezioneFormazione" class="box" style="margin-bottom: 40px;">
 
         <c:choose>
             <c:when test="${not empty giornata}">
-                <h3 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione -
-                    Giornata ${giornata.numero}</h3>
+                <h2 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione -
+                    Giornata ${giornata.numero}</h2>
                 <div id="countdown">00 d : 00 m : 00 h : 00 s</div>
 
                 <c:if test="${not empty formSuccess}">
                     <c:choose>
                         <c:when test="${formSuccess}">
-                            <p style="color: green; text-align: center; padding: 10px; margin: 0;">Formazione inviata con successo</p>
+                            <p style="color: green; text-align: center; padding: 10px; margin: 0;">Formazione inviata
+                                con successo</p>
                         </c:when>
                         <c:otherwise>
                             <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errorMessage}</p>
@@ -241,6 +243,27 @@
         </c:choose>
 
     </section>
+
+    <c:if test="${allowExit}">
+
+        <section id="abbandonaLega" class="box">
+
+            <h2>Abbandona lega</h2>
+
+            <c:choose>
+                <c:when test="${empty giornata}">
+                    <a href="abbandonaLega" class="exitButton"
+                       onclick="return confirm('Sei sicuro di voler abbandonare la lega?\n\nL\'azione è irreversibile')">Abbandona</a>
+                </c:when>
+                <c:otherwise>
+                    <h3 style="margin: 0; padding: 10px; color: darkred">Non puoi uscire dalla lega a campionato
+                        iniziato</h3>
+                </c:otherwise>
+            </c:choose>
+
+        </section>
+
+    </c:if>
 
     <form action="formazioneView" method="post" id="formazioneForm">
         <input type="hidden" name="idSquadra" value="${squadraCorrente.id}">

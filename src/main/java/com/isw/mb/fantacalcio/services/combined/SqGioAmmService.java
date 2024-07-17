@@ -1,9 +1,6 @@
 package com.isw.mb.fantacalcio.services.combined;
 
-import com.isw.mb.fantacalcio.models.Allenatore;
-import com.isw.mb.fantacalcio.models.Giornata;
-import com.isw.mb.fantacalcio.models.Lega;
-import com.isw.mb.fantacalcio.models.Squadra;
+import com.isw.mb.fantacalcio.models.*;
 import com.isw.mb.fantacalcio.models.combined.SqGioAmm;
 import com.isw.mb.fantacalcio.services.AmministraService;
 import com.isw.mb.fantacalcio.services.GiornataService;
@@ -30,8 +27,18 @@ public class SqGioAmmService {
     public SqGioAmm getSqGioAmm(Allenatore allenatore, Lega lega) {
         Squadra squadraCorrente = squadraService.findSquadraByAllenatoreIdAndLegaId(allenatore.getId(), lega.getId());
         Giornata giornata = giornataService.findCurrentOrNextGiornata(lega);
-        boolean isAdmin = amministraService.existsAmministra(allenatore.getId(), lega.getId());
+        boolean isAdmin;
 
-        return new SqGioAmm(squadraCorrente, giornata, isAdmin);
+        String grado = "none";
+
+        Amministra amministra = amministraService.findByAllenatoreIdAndLegaId(allenatore.getId(), lega.getId());
+        if (amministra != null) {
+            grado = amministra.getGradoAdmin();
+            isAdmin = true;
+        } else {
+            isAdmin = false;
+        }
+
+        return new SqGioAmm(squadraCorrente, giornata, isAdmin, grado);
     }
 }

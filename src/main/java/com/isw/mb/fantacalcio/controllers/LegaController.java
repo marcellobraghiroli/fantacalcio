@@ -47,13 +47,14 @@ public class LegaController {
     private final PartFormService partFormService;
     private final FormGiocatoriService formGiocatoriService;
     private final FormazioneService formazioneService;
+    private final LegaService legaService;
 
 
     @Autowired
     public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService,
                           AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService,
                           PartitaService partitaService, GiornataService giornataService,
-                          PartFormService partFormService,
+                          PartFormService partFormService, LegaService legaService,
                           FormGiocatoriService formGiocatoriService, FormazioneService formazioneService) {
         this.sqGioAmmService = sqGioAmmService;
         this.squadraService = squadraService;
@@ -65,6 +66,7 @@ public class LegaController {
         this.partFormService = partFormService;
         this.formGiocatoriService = formGiocatoriService;
         this.formazioneService = formazioneService;
+        this.legaService = legaService;
     }
 
     //PAGINA DI HOME DELLA LEGA
@@ -84,6 +86,12 @@ public class LegaController {
         model.addAttribute("squadraCorrente", sqGioAmm.getSquadraCorrente());
         model.addAttribute("logged", true);
         model.addAttribute("isAdmin", sqGioAmm.isAdmin());
+        //model.addAttribute("gradoAdmin", sqGioAmm.getGradoAdmin());
+        if(sqGioAmm.getGradoAdmin().equals("super")) {
+            model.addAttribute("allowExit", false);
+        } else {
+            model.addAttribute("allowExit", true);
+        }
 
         return "/lega/homeLegaView";
     }
@@ -270,6 +278,20 @@ public class LegaController {
 
 
         return "redirect:/homeLegaView";
+    }
+
+    //ABBANDONA LEGA
+    @GetMapping("abbandonaLega")
+    public String abbandonaLega(HttpServletResponse response, HttpServletRequest request) {
+
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
+
+        legaService.espelliAllenatore(allenatoreLoggato.getId(), legaCorrente.getId());
+
+        legaCookieService.delete(response);
+
+        return "redirect:legheView";
     }
 
 }
