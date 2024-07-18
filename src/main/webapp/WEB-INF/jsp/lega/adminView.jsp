@@ -36,6 +36,46 @@
             background-color: #c86666;
         }
 
+        .deleteButton {
+            display: block;
+            background-color: #f35d5d;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 10px auto 0 auto;
+        }
+
+        .deleteButton:hover {
+            background-color: #c86666;
+        }
+
+        .generateButton {
+            display: block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 10px auto 0 auto;
+        }
+
+        .generateButton:hover {
+            background-color: #45a049;
+        }
+
         .box {
             background-color: white;
             padding: 20px;
@@ -132,8 +172,6 @@
 
                     <form action="calcGiornata" method="post">
 
-                        <input type="hidden" name="idLega" value="${legaCorrente.id}">
-
                         <label for="giornataSelector">Seleziona Giornata:</label>
                         <select id="giornataSelector" name="numGiornata" required>
                             <option value="" disabled selected></option>
@@ -162,12 +200,7 @@
                             </c:if>
                         </c:if>
 
-                        <form action="generaCal" method="post">
-                            <input type="hidden" name="idLega" value="${legaCorrente.id}">
-
-                            <input type="submit" value="Genera">
-
-                        </form>
+                        <a href="generaCal" class="generateButton">Genera</a>
 
                     </c:if>
                 </c:otherwise>
@@ -282,13 +315,7 @@
             <section class="box">
                 <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Elimina lega</h2>
 
-                <form action="eliminaLega" method="post">
-
-                    <input type="hidden" name="idLega" value="${legaCorrente.id}">
-
-                    <input type="submit" id="elimina" value="Elimina"
-                           onclick="return confirm('Sei sicuro di voler eliminare la lega?\n\nL\'azione è irreversibile');">
-                </form>
+                <a href="eliminaLega" class="deleteButton" onclick="return confirm('Sei sicuro di voler eliminare la lega?\n\nL\'azione è irreversibile');">Elimina</a>
 
             </section>
 

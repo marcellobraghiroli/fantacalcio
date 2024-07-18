@@ -2,6 +2,7 @@ package com.isw.mb.fantacalcio.services;
 
 import com.isw.mb.fantacalcio.models.*;
 import com.isw.mb.fantacalcio.repositories.*;
+import com.isw.mb.fantacalcio.services.email.EmailService;
 import com.isw.mb.fantacalcio.utils.InvitationCodeUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,18 @@ public class LegaService {
     private final SquadraRepository squadraRepository;
     private final CodiceRepository codiceRepository;
     private final PartitaRepository partitaRepository;
+    private final EmailService emailService;
 
     @Autowired
     public LegaService(LegaRepository legaRepository, AmministraRepository amministraRepository,
                        SquadraRepository squadraRepository, CodiceRepository codiceRepository,
-                       PartitaRepository partitaRepository) {
+                       PartitaRepository partitaRepository, EmailService emailService) {
         this.legaRepository = legaRepository;
         this.amministraRepository = amministraRepository;
         this.squadraRepository = squadraRepository;
         this.codiceRepository = codiceRepository;
         this.partitaRepository = partitaRepository;
+        this.emailService = emailService;
     }
 
     public Lega findByCodiceInvito(String codiceInvito) {
@@ -78,6 +81,9 @@ public class LegaService {
     public void eliminaLega(Integer idLega) {
 
         Lega lega = legaRepository.findByIdAndDeleted(idLega, 'N');
+
+        emailService.sendDeletionEmail(lega);
+
         lega.setDeleted('Y');
 
         List<Amministra> admin = amministraRepository.findByLega(lega);

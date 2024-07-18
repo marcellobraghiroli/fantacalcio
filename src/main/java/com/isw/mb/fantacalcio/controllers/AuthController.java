@@ -7,6 +7,7 @@ import com.isw.mb.fantacalcio.services.cookies.CookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.AllenatoreCookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.LegaCookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.SquadraCookieService;
+import com.isw.mb.fantacalcio.services.email.EmailService;
 import com.isw.mb.fantacalcio.utils.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,13 +29,16 @@ public class AuthController {
 
     private final AllenatoreService allenatoreService;
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
+    private final EmailService emailService;
 
     @Autowired
-    public AuthController(AllenatoreService allenatoreService, AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService) {
+    public AuthController(AllenatoreService allenatoreService, AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService,
+                          SquadraCookieService squadraCookieService, EmailService emailService) {
         this.allenatoreService = allenatoreService;
         this.allenatoreCookieService = allenatoreCookieService;
         this.legaCookieService = legaCookieService;
         this.squadraCookieService = squadraCookieService;
+        this.emailService = emailService;
     }
 
 
@@ -98,6 +102,7 @@ public class AuthController {
             }
             Allenatore registered = allenatoreService.register(allenatoreForm);
             allenatoreCookieService.create(response, List.of(registered.getId(), registered.getUsername()));
+            emailService.sendSubscriptionEmail(registered.getUsername());
             return "redirect:/legheView";
         } catch (DuplicateEntityException e) {
 

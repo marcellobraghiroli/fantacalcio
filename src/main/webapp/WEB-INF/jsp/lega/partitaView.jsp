@@ -135,7 +135,7 @@
 <%@include file="../../include/header.inc" %>
 
 <main>
-    
+
     <section class="partita-section">
 
         <a href="calendarioView?numGiornata=${partita.giornata.numero}" class="back-button">Torna al calendario</a>

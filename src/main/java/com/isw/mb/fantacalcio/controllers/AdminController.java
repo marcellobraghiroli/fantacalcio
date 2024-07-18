@@ -107,14 +107,17 @@ public class AdminController {
     public String promDegrAll(@RequestParam Integer idAll, RedirectAttributes redirectAttributes, @RequestParam String action, HttpServletRequest request) {
 
         Lega legaCorrente = (Lega) legaCookieService.get(request);
+        Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
         try {
 
             if(action.equals("Promuovi")) {
                 Amministra amministra = amministraService.promuoviAdmin(idAll, legaCorrente.getId());
+                emailService.sendPromDemEmail(idAll, legaCorrente, allenatoreLoggato, true);
                 redirectAttributes.addFlashAttribute("succMessage", "Allenatore promosso con successo");
             } else if (action.equals("Degrada")) {
                 Amministra amministra = amministraService.degradaAdmin(idAll, legaCorrente.getId());
+                emailService.sendPromDemEmail(idAll, legaCorrente, allenatoreLoggato, false);
                 redirectAttributes.addFlashAttribute("succMessage", "Allenatore degradato con successo");
             }
 
@@ -129,12 +132,17 @@ public class AdminController {
     }
 
     //GENERA CALENDARIO DELLA LEGA
-    @PostMapping("generaCal")
-    public String generaCal(RedirectAttributes redirectAttributes, @RequestParam Integer idLega) {
+    @GetMapping("generaCal")
+    public String generaCal(RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
 
         try {
 
-            partitaService.generaCalendario(idLega);
+            partitaService.generaCalendario(legaCorrente.getId());
+
+            emailService.sendCalGeneratoEmail(legaCorrente);
+
             redirectAttributes.addFlashAttribute("genSuccess", true);
 
         } catch (IllegalArgumentException e) {
@@ -149,11 +157,15 @@ public class AdminController {
 
     //CALCOLA UNA GIORNATA
     @PostMapping("calcGiornata")
-    public String calcGiornata(RedirectAttributes redirectAttributes, @RequestParam Integer idLega, @RequestParam Integer numGiornata) {
+    public String calcGiornata(RedirectAttributes redirectAttributes, @RequestParam Integer numGiornata, HttpServletRequest request) {
+
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
 
         try {
 
-            giornataService.calcolaGiornata(idLega, numGiornata);
+            giornataService.calcolaGiornata(legaCorrente.getId(), numGiornata);
+
+            emailService.sendCalcGiornataEmail(legaCorrente, numGiornata);
 
             redirectAttributes.addFlashAttribute("calcSuccess", true);
 
@@ -169,10 +181,12 @@ public class AdminController {
     }
 
     //ELIMINA LEGA
-    @PostMapping("eliminaLega")
-    public String eliminaLega(@RequestParam Integer idLega, HttpServletResponse response) {
+    @GetMapping("eliminaLega")
+    public String eliminaLega(HttpServletResponse response, HttpServletRequest request) {
 
-        legaService.eliminaLega(idLega);
+        Lega legaCorrente = (Lega) legaCookieService.get(request);
+
+        legaService.eliminaLega(legaCorrente.getId());
 
         legaCookieService.delete(response);
 
@@ -187,6 +201,7 @@ public class AdminController {
         try {
 
             legaService.espelliAllenatore(idAll, legaCorrente.getId());
+            emailService.sendExpulsionEmail(idAll, legaCorrente);
             redirectAttributes.addFlashAttribute("espSuccess", true);
             redirectAttributes.addFlashAttribute("succMessage", "Allenatore espulso con successo");
 

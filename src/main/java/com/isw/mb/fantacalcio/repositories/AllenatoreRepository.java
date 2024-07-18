@@ -21,4 +21,9 @@ public interface AllenatoreRepository extends JpaRepository<Allenatore, Integer>
 
     @Query("SELECT a.email FROM Allenatore a WHERE a.username = :recUsername AND a.deleted = 'N'")
     String getEmailByUsername(String recUsername);
+
+    Allenatore findByIdAndDeleted(Integer recId, char n);
+
+    @Query("SELECT a FROM Lega l JOIN Squadra s ON l.id = s.lega.id JOIN Allenatore a ON s.allenatore.id = a.id WHERE l.id = :idLega AND a.deleted = 'N' AND s.deleted = 'N'")
+    List<Allenatore> findByLega(Integer idLega);
 }
