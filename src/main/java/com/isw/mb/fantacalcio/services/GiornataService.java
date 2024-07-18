@@ -164,4 +164,9 @@ public class GiornataService {
 
 
     }
+
+    @Transactional
+    public Giornata findByNumero(Integer numGiornata) {
+        return giornataRepository.findByNumeroAndDeleted(numGiornata, 'N');
+    }
 }

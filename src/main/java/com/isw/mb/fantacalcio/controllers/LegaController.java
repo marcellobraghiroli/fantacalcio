@@ -149,13 +149,19 @@ public class LegaController {
 
     //CALENDARIO
     @GetMapping("calendarioView")
-    public String calendarioView(HttpServletRequest request, Model model) {
+    public String calendarioView(HttpServletRequest request, Model model, @RequestParam(required = false) Integer numGiornata) {
 
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
         List<Partita> partite = partitaService.findPartiteByLegaId(legaCorrente.getId());
-        Giornata giornataCorrente = giornataService.findCurrentOrNextGiornata(legaCorrente);
+        Giornata giornataCorrente;
+
+        if (numGiornata == null) {
+            giornataCorrente = giornataService.findCurrentOrNextGiornata(legaCorrente);
+        } else {
+            giornataCorrente = giornataService.findByNumero(numGiornata);
+        }
 
         List<Integer> numeriGiornate = partite.stream()
                 .map(Partita::getGiornata)
