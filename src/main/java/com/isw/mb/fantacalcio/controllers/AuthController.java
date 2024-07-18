@@ -90,7 +90,7 @@ public class AuthController {
         allenatoreCookieService.delete(response);
         legaCookieService.delete(response);
         squadraCookieService.delete(response);
-        return "redirect:/?loggedOut=true"; // redirect to login page
+        return "redirect:/?loggedOut=true";
     }
 
     //REGISTRAZIONE

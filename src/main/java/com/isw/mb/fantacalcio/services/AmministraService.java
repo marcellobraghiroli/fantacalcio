@@ -19,15 +19,10 @@ public class AmministraService {
         this.amministraRepository = amministraRepository;
     }
 
-    public boolean existsAmministra(int allenatoreId, int legaId) {
-        AmministraId amministraId = new AmministraId(allenatoreId, legaId);
-        return amministraRepository.existsByIdAndDeleted(amministraId, 'N');
-    }
-
     public Amministra findByAllenatoreIdAndLegaId(Integer idAll, Integer idLega) {
         AmministraId amministraId = new AmministraId(idAll, idLega);
         return amministraRepository.findByIdAndDeleted(amministraId, 'N');
-    }
+    } //usato in transanctional
 
     @Transactional
     public Amministra promuoviAdmin(Integer idAll, Integer idLega) {

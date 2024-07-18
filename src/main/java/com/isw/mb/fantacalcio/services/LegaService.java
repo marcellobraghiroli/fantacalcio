@@ -35,7 +35,7 @@ public class LegaService {
 
     public Lega findByCodiceInvito(String codiceInvito) {
         return legaRepository.findByCodiceInvitoAndDeleted(codiceInvito, 'N');
-    }
+    } //usato da un altro service transactional
 
     @Transactional
     public Lega createLegaAndSetAdminAndCreateSquadra(Lega lega, Allenatore admin, String nomeSquadra) {

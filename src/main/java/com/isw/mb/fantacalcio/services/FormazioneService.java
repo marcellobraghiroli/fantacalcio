@@ -28,11 +28,11 @@ public class FormazioneService {
 
     public Formazione findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatori(Integer idPartita, Integer idSqCasa, Integer numGiornata) {
         return formazioneRepository.findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatoriAndDeleted(idPartita, idSqCasa, numGiornata, 'N');
-    }
+    } //usato in transactional
 
     public Formazione findFormazioneBySquadraAndGiornata(Squadra squadra, Giornata giornata) {
         return formazioneRepository.findFormazioneBySquadraAndGiornataAndDeleted(squadra, giornata, 'N');
-    }
+    } //usato in transactional
 
     @Transactional
     public void saveFormazione(Integer idFormazione, String modulo, Integer idSquadra, Integer numGiornata, String idGiocatori) {

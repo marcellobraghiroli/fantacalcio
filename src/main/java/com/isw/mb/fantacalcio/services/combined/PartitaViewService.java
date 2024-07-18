@@ -5,7 +5,6 @@ import com.isw.mb.fantacalcio.models.GiocGiornata;
 import com.isw.mb.fantacalcio.models.Partita;
 import com.isw.mb.fantacalcio.models.combined.PartitaViewModel;
 import com.isw.mb.fantacalcio.services.FormazioneService;
-import com.isw.mb.fantacalcio.services.GiocGiornataService;
 import com.isw.mb.fantacalcio.services.PartitaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,11 @@ public class PartitaViewService {
 
     private final PartitaService partitaService;
     private final FormazioneService formazioneService;
-    private final GiocGiornataService giocGiornataService;
 
     @Autowired
-    public PartitaViewService(PartitaService partitaService, FormazioneService formazioneService, GiocGiornataService giocGiornataService) {
+    public PartitaViewService(PartitaService partitaService, FormazioneService formazioneService) {
         this.partitaService = partitaService;
         this.formazioneService = formazioneService;
-        this.giocGiornataService = giocGiornataService;
     }
 
     @Transactional
@@ -41,9 +38,8 @@ public class PartitaViewService {
                     formGioc.getGiocatore().setGiocGiornata(giocGiornate.iterator().next());
                 }
             });
-        } //else {
-        //formCasa = new Formazione();
-        //}
+        }
+
         if (formTrasf != null) {
             formTrasf.getFormGiocatori().forEach(formGioc -> {
                 Set<GiocGiornata> giocGiornate = formGioc.getGiocatore().getGiocGiornate();
@@ -51,9 +47,7 @@ public class PartitaViewService {
                     formGioc.getGiocatore().setGiocGiornata(giocGiornate.iterator().next());
                 }
             });
-        } //else {
-        //formTrasf = new Formazione();
-        //}
+        }
 
         return new PartitaViewModel(partita, formCasa, formTrasf);
 

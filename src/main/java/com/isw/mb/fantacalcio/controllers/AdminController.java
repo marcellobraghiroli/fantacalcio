@@ -88,7 +88,6 @@ public class AdminController {
         } catch (MailAuthenticationException e) {
             redirectAttributes.addFlashAttribute("invSuccess", false);
             redirectAttributes.addFlashAttribute("errMessage", "Impossibile inviare l'email");
-            //System.out.println(e.getMessage());
         }
 
         return "redirect:/adminView";
