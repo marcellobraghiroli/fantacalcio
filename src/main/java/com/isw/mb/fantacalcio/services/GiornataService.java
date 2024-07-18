@@ -20,13 +20,17 @@ public class GiornataService {
     private final GiornataRepository giornataRepository;
     private final GiocGiornataRepository giocGiornataRepository;
     private final SquadraRepository squadraRepository;
+    private final GiornCalcRepository giornCalcRepository;
 
     @Autowired
-    public GiornataService(PartitaRepository partitaRepository, GiornataRepository giornataRepository, GiocGiornataRepository giocGiornataRepository, SquadraRepository squadraRepository) {
+    public GiornataService(PartitaRepository partitaRepository, GiornataRepository giornataRepository,
+                           GiocGiornataRepository giocGiornataRepository, SquadraRepository squadraRepository,
+                           GiornCalcRepository giornCalcRepository) {
         this.partitaRepository = partitaRepository;
         this.giornataRepository = giornataRepository;
         this.giocGiornataRepository = giocGiornataRepository;
         this.squadraRepository = squadraRepository;
+        this.giornCalcRepository = giornCalcRepository;
     }
 
     @Transactional
@@ -65,6 +69,14 @@ public class GiornataService {
 
         Lega lega = new Lega();
         lega.setId(idLega);
+
+        GiornCalcId giornCalcId = new GiornCalcId(numGiornata, idLega);
+
+        if(giornCalcRepository.existsByIdAndDeleted(giornCalcId, 'N')) {
+            throw new IllegalArgumentException("La giornata " + numGiornata + " è già stata calcolata");
+        }
+
+        GiornCalc giornCalc = new GiornCalc(giornata, lega);
 
         if (!giocGiornataRepository.existsByGiornataNumeroAndDeleted(numGiornata, 'N')) {
             throw new IllegalArgumentException("I voti per la giornata " + numGiornata + " non sono ancora stati caricati");
@@ -161,6 +173,8 @@ public class GiornataService {
             squadraRepository.save(squadraTrasf);
 
         }
+
+        giornCalcRepository.save(giornCalc);
 
 
     }
