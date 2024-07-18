@@ -12,6 +12,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class PartFormService {
 
@@ -30,29 +33,32 @@ public class PartFormService {
     public PartForm getPartForm(Integer idPartita, Integer idSqCasa, Integer idSqTrasf, Integer numGiornata) {
 
         Partita partita = partitaService.findPartitaById(idPartita);
-        Formazione formCasa = formazioneService.findFormazioneByPartitaIdAndSquadraId(idPartita, idSqCasa);
-        Formazione formTrasf = formazioneService.findFormazioneByPartitaIdAndSquadraId(idPartita, idSqTrasf);
+        Formazione formCasa = formazioneService.findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatori(idPartita, idSqCasa, numGiornata);
+        Formazione formTrasf = formazioneService.findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatori(idPartita, idSqTrasf, numGiornata);
 
         if (formCasa != null) {
-            formCasa.getFormGiocatori().forEach(formGioc -> enrichGiocatoreWithGiocGiornata(formGioc.getGiocatore(), numGiornata));
-        } else {
-            formCasa = new Formazione();
-        }
+            formCasa.getFormGiocatori().forEach(formGioc -> {
+                Set<GiocGiornata> giocGiornate = formGioc.getGiocatore().getGiocGiornate();
+                if (!giocGiornate.isEmpty()) {
+                    formGioc.getGiocatore().setGiocGiornata(giocGiornate.iterator().next());
+                }
+            });
+        } //else {
+            //formCasa = new Formazione();
+        //}
         if (formTrasf != null) {
-            formTrasf.getFormGiocatori().forEach(formGioc -> enrichGiocatoreWithGiocGiornata(formGioc.getGiocatore(), numGiornata));
-        }  else {
-            formTrasf = new Formazione();
-        }
+            formTrasf.getFormGiocatori().forEach(formGioc -> {
+                Set<GiocGiornata> giocGiornate = formGioc.getGiocatore().getGiocGiornate();
+                if (!giocGiornate.isEmpty()) {
+                    formGioc.getGiocatore().setGiocGiornata(giocGiornate.iterator().next());
+                }
+            });
+        } //else {
+            //formTrasf = new Formazione();
+        //}
 
         return new PartForm(partita, formCasa, formTrasf);
 
     }
-
-
-    private void enrichGiocatoreWithGiocGiornata(Giocatore giocatore, Integer numGiornata) {
-        GiocGiornata giocGiornata = giocGiornataService.findGiocGiornataByGiocatoreIdAndGiornataNumero(giocatore.getId(), numGiornata);
-        giocatore.setGiocGiornata(giocGiornata);
-    }
-
 
 }

@@ -29,6 +29,7 @@ public class FormGiocatoriService {
     public FormGiocatori getFormGiocatori(Squadra squadra, Giornata giornata) {
 
         Set<GiocSquadra> giocatori = giocSquadraService.findGiocatoriBySquadra(squadra);
+
         Formazione formazione = formazioneService.findFormazioneBySquadraAndGiornata(squadra, giornata);
 
         return new FormGiocatori(formazione, giocatori);

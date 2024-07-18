@@ -26,8 +26,8 @@ public class FormazioneService {
         this.formGiocRepository = formGiocRepository;
     }
 
-    public Formazione findFormazioneByPartitaIdAndSquadraId(Integer idPartita, Integer idSqCasa) {
-        return formazioneRepository.findFormazioneByPartitaIdAndSquadraIdAndDeleted(idPartita, idSqCasa, 'N');
+    public Formazione findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatori(Integer idPartita, Integer idSqCasa, Integer numGiornata) {
+        return formazioneRepository.findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatoriAndDeleted(idPartita, idSqCasa, numGiornata, 'N');
     }
 
     public Formazione findFormazioneBySquadraAndGiornata(Squadra squadra, Giornata giornata) {

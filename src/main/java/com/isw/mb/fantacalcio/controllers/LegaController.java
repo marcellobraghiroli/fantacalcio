@@ -87,7 +87,7 @@ public class LegaController {
         model.addAttribute("logged", true);
         model.addAttribute("isAdmin", sqGioAmm.isAdmin());
         //model.addAttribute("gradoAdmin", sqGioAmm.getGradoAdmin());
-        if(sqGioAmm.getGradoAdmin().equals("super")) {
+        if (sqGioAmm.getGradoAdmin().equals("super")) {
             model.addAttribute("allowExit", false);
         } else {
             model.addAttribute("allowExit", true);
@@ -180,32 +180,32 @@ public class LegaController {
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-
         PartForm partForm = partFormService.getPartForm(idPartita, idSqCasa, idSqTrasf, numGiornata);
 
         Partita partita = partForm.getPartita();
         Formazione formCasa = partForm.getFormCasa();
         Formazione formTrasf = partForm.getFormTrasf();
 
-        Set<FormGioc> giocatoriCasa = formCasa.getFormGiocatori().stream().filter(g -> 'N' == g.getDeleted()).collect(Collectors.toSet());
-        List<FormGioc> giocatoriCasaList = giocatoriCasa.stream()
-                .sorted(Comparator.comparing(FormGioc::getOrdine))
-                .toList();
+        if (formCasa != null) {
+            Set<FormGioc> giocatoriCasa = formCasa.getFormGiocatori();
+            List<FormGioc> giocatoriCasaList = giocatoriCasa.stream()
+                    .sorted(Comparator.comparing(FormGioc::getOrdine))
+                    .toList();
+            model.addAttribute("giocatoriCasa", giocatoriCasaList);
+        }
 
-        Set<FormGioc> giocatoriTrasf = formTrasf.getFormGiocatori().stream().filter(g -> 'N' == g.getDeleted()).collect(Collectors.toSet());
-        List<FormGioc> giocatoriTrasfList = giocatoriTrasf.stream()
-                .sorted(Comparator.comparing(FormGioc::getOrdine))
-                .toList();
+        if (formTrasf != null) {
+            Set<FormGioc> giocatoriTrasf = formTrasf.getFormGiocatori();
+            List<FormGioc> giocatoriTrasfList = giocatoriTrasf.stream()
+                    .sorted(Comparator.comparing(FormGioc::getOrdine))
+                    .toList();
+            model.addAttribute("giocatoriTrasf", giocatoriTrasfList);
+        }
 
-
-        //model.addAttribute("allenatoreLoggato", allenatoreLoggato);
-        //model.addAttribute("legaCorrente", legaCorrente);
         model.addAttribute("logged", true);
         model.addAttribute("partita", partita);
         model.addAttribute("formCasa", formCasa);
         model.addAttribute("formTrasf", formTrasf);
-        model.addAttribute("giocatoriCasa", giocatoriCasaList);
-        model.addAttribute("giocatoriTrasf", giocatoriTrasfList);
 
         return "lega/partitaView";
     }
@@ -235,8 +235,8 @@ public class LegaController {
         if (formazione != null) {
 
             String moduloForm = formazione.getModulo();
-            Set<FormGioc> giocatoriFormazione = formazione.getFormGiocatori().stream().filter(giocatore -> 'N' == giocatore.getDeleted()).collect(Collectors.toSet());
-            List<FormGioc> giocatoriForm = giocatoriFormazione.stream().sorted(Comparator.comparing(FormGioc::getOrdine)).toList();
+            //Set<FormGioc> giocatoriFormazione = formazione.getFormGiocatori().stream().filter(giocatore -> 'N' == giocatore.getDeleted()).collect(Collectors.toSet());
+            List<FormGioc> giocatoriForm = formazione.getFormGiocatori().stream().sorted(Comparator.comparing(FormGioc::getOrdine)).toList();
 
             model.addAttribute("moduloForm", moduloForm);
             model.addAttribute("giocatoriForm", giocatoriForm);
