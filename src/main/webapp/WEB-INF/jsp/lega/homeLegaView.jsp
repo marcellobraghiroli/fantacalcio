@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>La tua lega</title>
+    <title>Home Lega - FantaFoot</title>
 
     <style>
 
@@ -37,14 +37,14 @@
         }
 
         main h1 {
-            font-size: 2em; /* dimensione del font per h1 */
+            font-size: 2em;
             padding: 10px;
             margin: 0;
             color: darkred;
         }
 
         main h2 {
-            font-size: 1.5em; /* dimensione del font per h2 */
+            font-size: 1.5em;
             padding: 10px;
             margin: 0;
             color: darkred;

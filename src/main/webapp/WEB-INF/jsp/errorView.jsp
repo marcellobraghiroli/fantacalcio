@@ -10,7 +10,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="it">
 <head>
-    <title>Error</title>
+
+    <title>Error - FantaFoot</title>
 
     <style>
         body {

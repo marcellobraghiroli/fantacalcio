@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>FantaFoot - Login</title>
+    <title>Login - FantaFoot</title>
 
     <style>
 
@@ -22,7 +22,7 @@
             background-color: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
         }
 
         label {
@@ -78,6 +78,7 @@
             }
         }
     </style>
+
 </head>
 <body>
 
@@ -103,7 +104,7 @@
         </form>
 
         <div class="options">
-            <a>Password dimenticata?</a> | <a href="/registerView">Registrati</a>
+            <a>Password dimenticata?</a> | <a href="registerView">Registrati</a>
         </div>
 
     </section>

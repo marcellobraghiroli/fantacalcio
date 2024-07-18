@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>Calendario</title>
+    <title>Calendario - FantaFoot</title>
 
     <style>
         .cal-section {
@@ -118,7 +118,6 @@
         document.addEventListener('DOMContentLoaded', aggiornaPartite);
     </script>
 
-
 </head>
 <body>
 
@@ -126,7 +125,7 @@
 
 <main>
 
-    <section class="cal-section">
+    <section class="cal-section" id="calendario">
 
         <a href="homeLegaView" class="back-button">Torna alla lega</a>
 

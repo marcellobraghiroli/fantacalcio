@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>Area admin</title>
+    <title>Area admin - FantaFoot</title>
 
     <style>
         .admin-section {
@@ -116,11 +116,11 @@
             background-color: #45a049;
         }
 
-        #degrada, #elimina, #espelli {
+        #degrada, #espelli {
             background-color: #f35d5d;
         }
 
-        #degrada:hover, #elimina:hover, #espelli:hover {
+        #degrada:hover, #espelli:hover {
             background-color: #c86666;
         }
 
@@ -141,7 +141,7 @@
 
         <!-- Gestione calendario -->
 
-        <section class="box">
+        <section class="box" id="gestCalendario">
             <c:choose>
                 <c:when test="${started}">
                     <h2 style="margin-top: 10px; margin-bottom: 20px;">La stagione è iniziata</h2>
@@ -211,7 +211,7 @@
         <!-- Gestione inviti -->
 
         <c:if test="${!started}">
-            <section class="box">
+            <section class="box" id="gestInviti">
 
                 <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Invita un
                     allenatore
@@ -245,7 +245,7 @@
         <!-- Gestione gradi admin -->
 
         <c:if test="${gradoAdmin == 'super'}">
-            <section class="box">
+            <section class="box" id="gradiAdmin">
 
                 <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Gestisci gli
                     admin</h2>
@@ -281,8 +281,7 @@
         <!-- Espelli allenatori -->
 
         <c:if test="${gradoAdmin == 'super' && !started}">
-
-            <section class="box">
+            <section class="box" id="espulsioni">
 
                 <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Espelli un
                     allenatore</h2>
@@ -309,21 +308,18 @@
 
 
             </section>
-
         </c:if>
 
         <!-- Elimina lega -->
 
         <c:if test="${gradoAdmin == 'super'}">
-
-            <section class="box">
+            <section class="box" id="eliminaLega">
                 <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Elimina lega</h2>
 
                 <a href="eliminaLega" class="deleteButton"
                    onclick="return confirm('Sei sicuro di voler eliminare la lega?\n\nL\'azione è irreversibile');">Elimina</a>
 
             </section>
-
         </c:if>
 
 

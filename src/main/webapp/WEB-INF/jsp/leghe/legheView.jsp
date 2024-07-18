@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>FantaFoot</title>
+    <title>Leghe - FantaFoot</title>
 
     <style>
 
@@ -72,7 +72,7 @@
 
 <main>
 
-    <section class="main-section" style="margin-bottom: 40px; padding: 40px;">
+    <section class="main-section" id="actionSection" style="margin-bottom: 40px; padding: 40px;">
         <h1 style="color: darkred; font-size: 2em; margin-top: 0;">Benvenuto ${allenatoreLoggato.username}</h1>
 
         <section class="buttons-section">
@@ -82,7 +82,7 @@
 
     </section>
 
-    <section class="main-section">
+    <section class="main-section" id="legheSection">
         <h1 style="color: darkred; font-size: 2em;">Le tue leghe</h1>
         <c:choose>
             <c:when test="${empty leghe}">

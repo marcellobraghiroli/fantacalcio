@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>Inserisci giocatori</title>
+    <title>Inserisci giocatori - FantaFoot</title>
 
     <style>
 
@@ -110,7 +110,6 @@
             background-color: #c86666;
         }
 
-        /* Stile per il Modal */
         dialog[open] {
             display: block;
             position: fixed;
@@ -196,7 +195,6 @@
 
     </style>
 
-
     <script>
 
         function submitChangeRole(ruolo, event) {
@@ -269,7 +267,6 @@
 
     </script>
 
-
 </head>
 <body>
 
@@ -332,7 +329,7 @@
         <input type="hidden" name="ruolo">
     </form>
 
-    <!-- Modal Box -->
+
     <dialog id="myModal">
         <section class="modal-content">
             <p style="margin-top: 0; margin-bottom: 15px;"><b>Crediti:</b> ${squadraCorrente.lega.numCrediti - squadraCorrente.creditiSpesi}</p>

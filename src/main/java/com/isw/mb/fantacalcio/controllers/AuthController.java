@@ -57,7 +57,7 @@ public class AuthController {
     }
 
     //PAGINA DI REGISTRAZIONE
-    @GetMapping("/registerView")
+    @GetMapping("registerView")
     public String registerView(Model model) {
         model.addAttribute("logged", false);
         return "auth/registerView";

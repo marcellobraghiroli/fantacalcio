@@ -24,14 +24,14 @@
         }
 
         main h1 {
-            font-size: 2em; /* dimensione del font per h1 */
+            font-size: 2em;
             padding: 10px;
             margin: 0;
             color: darkred;
         }
 
         main h2 {
-            font-size: 1.5em; /* dimensione del font per h2 */
+            font-size: 1.5em;
             padding: 10px;
             margin: 0;
         }
@@ -72,13 +72,12 @@
         .votiForm {
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.4);
             margin: 20px;
         }
 
 
     </style>
-
 
 </head>
 <body>
@@ -87,7 +86,7 @@
 
 <main>
 
-    <section class="main-section">
+    <section class="main-section" id="sezioneAmministrazione">
 
         <h1>Sezione di amministrazione</h1>
         <h2>Carica i voti per la giornata</h2>
@@ -103,6 +102,7 @@
                     </c:otherwise>
                 </c:choose>
             </c:if>
+
             <form action="caricaVoti" method="post" enctype="multipart/form-data">
                 <label for="giornataSelector">Seleziona Giornata:</label>
                 <select id="giornataSelector" name="giornata" required>

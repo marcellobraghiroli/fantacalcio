@@ -8,7 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <title>Registrazione</title>
+    <title>Registrati - FantaFoot</title>
+
     <style>
 
         main {
@@ -82,6 +83,7 @@
             }
         }
     </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('submitButton').addEventListener('click', function (event) {
@@ -95,13 +97,14 @@
             });
         });
     </script>
+
 </head>
 <body>
 
 <%@include file="../../include/header.inc" %>
 
 <main>
-    <section class="register-box">
+    <section class="register-box" id="registerSection">
         <h1 style="text-align: center;">Registrati</h1>
         <c:if test="${not empty errorMessage}">
             <p style="color: red; text-align: center; margin: 0 auto 10px auto;">${errorMessage}</p>
