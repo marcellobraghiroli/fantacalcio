@@ -2,19 +2,19 @@ package com.isw.mb.fantacalcio.controllers;
 
 
 import com.isw.mb.fantacalcio.models.*;
-import com.isw.mb.fantacalcio.models.combined.FormGiocatori;
-import com.isw.mb.fantacalcio.models.combined.PartForm;
-import com.isw.mb.fantacalcio.models.combined.SqGioAmm;
-import com.isw.mb.fantacalcio.repositories.PartitaRepository;
+import com.isw.mb.fantacalcio.models.combined.CalendarioViewModel;
+import com.isw.mb.fantacalcio.models.combined.FormazioneViewModel;
+import com.isw.mb.fantacalcio.models.combined.PartitaViewModel;
+import com.isw.mb.fantacalcio.models.combined.HomeLegaViewModel;
 import com.isw.mb.fantacalcio.services.*;
-import com.isw.mb.fantacalcio.services.combined.FormGiocatoriService;
-import com.isw.mb.fantacalcio.services.combined.PartFormService;
-import com.isw.mb.fantacalcio.services.combined.SqGioAmmService;
+import com.isw.mb.fantacalcio.services.combined.CalendarioViewService;
+import com.isw.mb.fantacalcio.services.combined.FormazioneViewService;
+import com.isw.mb.fantacalcio.services.combined.PartitaViewService;
+import com.isw.mb.fantacalcio.services.combined.HomeLegaViewService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.AllenatoreCookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.LegaCookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.SquadraCookieService;
-import com.isw.mb.fantacalcio.utils.CookieUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,47 +26,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-
-import static com.oracle.wls.shaded.org.apache.xalan.lib.ExsltSets.distinct;
 
 @Controller
 public class LegaController {
 
     //Controller per la gestione delle operazioni relative alla lega
 
-    private final SqGioAmmService sqGioAmmService;
+    private final HomeLegaViewService homeLegaViewService;
     private final SquadraService squadraService;
     private final CookieService allenatoreCookieService, legaCookieService, squadraCookieService;
     private final PartitaService partitaService;
     private final GiornataService giornataService;
-    private final PartFormService partFormService;
-    private final FormGiocatoriService formGiocatoriService;
+    private final PartitaViewService partitaViewService;
+    private final FormazioneViewService formazioneViewService;
     private final FormazioneService formazioneService;
     private final LegaService legaService;
+    private final CalendarioViewService calendarioViewService;
 
 
     @Autowired
-    public LegaController(SqGioAmmService sqGioAmmService, SquadraService squadraService,
+    public LegaController(HomeLegaViewService homeLegaViewService, SquadraService squadraService,
                           AllenatoreCookieService allenatoreCookieService, LegaCookieService legaCookieService, SquadraCookieService squadraCookieService,
                           PartitaService partitaService, GiornataService giornataService,
-                          PartFormService partFormService, LegaService legaService,
-                          FormGiocatoriService formGiocatoriService, FormazioneService formazioneService) {
-        this.sqGioAmmService = sqGioAmmService;
+                          PartitaViewService partitaViewService, LegaService legaService,
+                          FormazioneViewService formazioneViewService, FormazioneService formazioneService,
+                          CalendarioViewService calendarioViewService) {
+        this.homeLegaViewService = homeLegaViewService;
         this.squadraService = squadraService;
         this.allenatoreCookieService = allenatoreCookieService;
         this.legaCookieService = legaCookieService;
         this.squadraCookieService = squadraCookieService;
         this.partitaService = partitaService;
         this.giornataService = giornataService;
-        this.partFormService = partFormService;
-        this.formGiocatoriService = formGiocatoriService;
+        this.partitaViewService = partitaViewService;
+        this.formazioneViewService = formazioneViewService;
         this.formazioneService = formazioneService;
         this.legaService = legaService;
+        this.calendarioViewService = calendarioViewService;
     }
 
     //PAGINA DI HOME DELLA LEGA
@@ -76,18 +75,19 @@ public class LegaController {
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-        SqGioAmm sqGioAmm = sqGioAmmService.getSqGioAmm(allenatoreLoggato, legaCorrente);
+        HomeLegaViewModel homeLegaViewModel = homeLegaViewService.getHomeLegaViewModel(allenatoreLoggato, legaCorrente);
 
-        if (sqGioAmm.getGiornata() != null) {
-            model.addAttribute("giornata", sqGioAmm.getGiornata());
+        if (homeLegaViewModel.getGiornata() != null) {
+            model.addAttribute("giornata", homeLegaViewModel.getGiornata());
         }
+
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
-        model.addAttribute("squadraCorrente", sqGioAmm.getSquadraCorrente());
+        model.addAttribute("squadraCorrente", homeLegaViewModel.getSquadraCorrente());
         model.addAttribute("logged", true);
-        model.addAttribute("isAdmin", sqGioAmm.isAdmin());
-        //model.addAttribute("gradoAdmin", sqGioAmm.getGradoAdmin());
-        if (sqGioAmm.getGradoAdmin().equals("super")) {
+        model.addAttribute("isAdmin", homeLegaViewModel.isAdmin());
+
+        if (homeLegaViewModel.getGradoAdmin().equals("super")) {
             model.addAttribute("allowExit", false);
         } else {
             model.addAttribute("allowExit", true);
@@ -154,14 +154,10 @@ public class LegaController {
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-        List<Partita> partite = partitaService.findPartiteByLegaId(legaCorrente.getId());
-        Giornata giornataCorrente;
+        CalendarioViewModel calendarioViewModel = calendarioViewService.getCalendarioViewModel(legaCorrente, numGiornata);
 
-        if (numGiornata == null) {
-            giornataCorrente = giornataService.findCurrentOrNextGiornata(legaCorrente);
-        } else {
-            giornataCorrente = giornataService.findByNumero(numGiornata);
-        }
+        List<Partita> partite = calendarioViewModel.getPartite();
+        Giornata giornataCorrente = calendarioViewModel.getGiornataCorrente();
 
         List<Integer> numeriGiornate = partite.stream()
                 .map(Partita::getGiornata)
@@ -186,11 +182,11 @@ public class LegaController {
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-        PartForm partForm = partFormService.getPartForm(idPartita, idSqCasa, idSqTrasf, numGiornata);
+        PartitaViewModel partitaViewModel = partitaViewService.getPartitaViewModel(idPartita, idSqCasa, idSqTrasf, numGiornata);
 
-        Partita partita = partForm.getPartita();
-        Formazione formCasa = partForm.getFormCasa();
-        Formazione formTrasf = partForm.getFormTrasf();
+        Partita partita = partitaViewModel.getPartita();
+        Formazione formCasa = partitaViewModel.getFormCasa();
+        Formazione formTrasf = partitaViewModel.getFormTrasf();
 
         if (formCasa != null) {
             Set<FormGioc> giocatoriCasa = formCasa.getFormGiocatori();
@@ -229,9 +225,10 @@ public class LegaController {
         Squadra squadra = new Squadra();
         squadra.setId(idSquadra);
 
-        FormGiocatori formGiocatori = formGiocatoriService.getFormGiocatori(squadra, prossGiornata);
-        Set<GiocSquadra> giocatori = formGiocatori.getGiocatori();
-        Formazione formazione = formGiocatori.getFormazione();
+        FormazioneViewModel formazioneViewModel = formazioneViewService.getFormazioneViewModel(squadra, prossGiornata);
+
+        Set<GiocSquadra> giocatori = formazioneViewModel.getGiocatori();
+        Formazione formazione = formazioneViewModel.getFormazione();
 
         List<GiocSquadra> portieri = giocatori.stream().filter(g -> g.getGiocatore().getRuolo().equals("POR")).sorted(Comparator.comparing(g -> g.getGiocatore().getNome())).toList();
         List<GiocSquadra> difensori = giocatori.stream().filter(g -> g.getGiocatore().getRuolo().equals("DIF")).sorted(Comparator.comparing(g -> g.getGiocatore().getNome())).toList();

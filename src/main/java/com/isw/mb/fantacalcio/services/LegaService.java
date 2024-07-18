@@ -63,6 +63,10 @@ public class LegaService {
         squadra.setAllenatore(admin);
         squadra.setLega(lega);
 
+        if (lega.getDescrizione().equals("")) {
+            lega.setDescrizione(null);
+        }
+
         legaRepository.save(lega);
         amministraRepository.save(amministra);
         squadraRepository.save(squadra);
@@ -75,7 +79,6 @@ public class LegaService {
     public List<Lega> findLegheByAllenatoreId(Integer idAll) {
         return legaRepository.findLegheByAllenatoreId(idAll);
     }
-
 
     @Transactional
     public void eliminaLega(Integer idLega) {

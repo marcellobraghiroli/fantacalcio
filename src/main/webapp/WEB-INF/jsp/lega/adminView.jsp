@@ -210,33 +210,37 @@
 
         <!-- Gestione inviti -->
 
-        <section class="box">
+        <c:if test="${!started}">
+            <section class="box">
 
-            <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Invita un allenatore
-                nella lega</h2>
+                <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Invita un
+                    allenatore
+                    nella lega</h2>
 
-            <c:if test="${not empty invSuccess}">
-                <c:choose>
-                    <c:when test="${invSuccess}">
-                        <p style="color: green; text-align: center; margin: 0 auto 10px auto;">Allenatore invitato con
-                            successo</p>
-                    </c:when>
-                    <c:otherwise>
-                        <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errMessage}</p>
-                    </c:otherwise>
-                </c:choose>
-            </c:if>
+                <c:if test="${not empty invSuccess}">
+                    <c:choose>
+                        <c:when test="${invSuccess}">
+                            <p style="color: green; text-align: center; margin: 0 auto 10px auto;">Allenatore invitato
+                                con
+                                successo</p>
+                        </c:when>
+                        <c:otherwise>
+                            <p style="color: red; text-align: center; margin-top: 0; margin-bottom: 10px;">${errMessage}</p>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
 
-            <form action="invitaAll" method="post">
+                <form action="invitaAll" method="post">
 
-                <label for="username">Username allenatore:</label>
-                <input type="text" id="username" name="username" required autocomplete="off" maxlength="45">
+                    <label for="username">Username allenatore:</label>
+                    <input type="text" id="username" name="username" required autocomplete="off" maxlength="45">
 
-                <input type="submit" id="submitButton" value="Invita">
+                    <input type="submit" id="submitButton" value="Invita">
 
-            </form>
+                </form>
 
-        </section>
+            </section>
+        </c:if>
 
         <!-- Gestione gradi admin -->
 
@@ -315,7 +319,8 @@
             <section class="box">
                 <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Elimina lega</h2>
 
-                <a href="eliminaLega" class="deleteButton" onclick="return confirm('Sei sicuro di voler eliminare la lega?\n\nL\'azione è irreversibile');">Elimina</a>
+                <a href="eliminaLega" class="deleteButton"
+                   onclick="return confirm('Sei sicuro di voler eliminare la lega?\n\nL\'azione è irreversibile');">Elimina</a>
 
             </section>
 

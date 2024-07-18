@@ -7,13 +7,13 @@ import lombok.Getter;
 import java.util.Set;
 
 @Getter
-public class FormGiocatori {
+public class FormazioneViewModel {
 
     private final Formazione formazione;
     private final Set<GiocSquadra> giocatori;
 
 
-    public FormGiocatori(Formazione formazione, Set<GiocSquadra> giocatori) {
+    public FormazioneViewModel(Formazione formazione, Set<GiocSquadra> giocatori) {
         this.formazione = formazione;
         this.giocatori = giocatori;
     }

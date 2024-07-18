@@ -2,14 +2,13 @@ package com.isw.mb.fantacalcio.controllers;
 
 import com.isw.mb.fantacalcio.models.Allenatore;
 import com.isw.mb.fantacalcio.models.Amministra;
-import com.isw.mb.fantacalcio.models.Giornata;
 import com.isw.mb.fantacalcio.models.Lega;
-import com.isw.mb.fantacalcio.models.combined.AllGradoAdminStarted;
+import com.isw.mb.fantacalcio.models.combined.AdminViewModel;
 import com.isw.mb.fantacalcio.services.AmministraService;
 import com.isw.mb.fantacalcio.services.GiornataService;
 import com.isw.mb.fantacalcio.services.LegaService;
 import com.isw.mb.fantacalcio.services.PartitaService;
-import com.isw.mb.fantacalcio.services.combined.AllGradoAdminStartedService;
+import com.isw.mb.fantacalcio.services.combined.AdminViewService;
 import com.isw.mb.fantacalcio.services.cookies.CookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.AllenatoreCookieService;
 import com.isw.mb.fantacalcio.services.cookies.impl.LegaCookieService;
@@ -25,30 +24,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 @Controller
 public class AdminController {
 
     //Controller per la gestione delle operazioni di amministrazione
 
     private final CookieService allenatoreCookieService, legaCookieService;
-    private final AllGradoAdminStartedService allGradoAdminStartedService;
+    private final AdminViewService adminViewService;
     private final AmministraService amministraService;
     private final PartitaService partitaService;
-
     private final EmailService emailService;
-
     private final GiornataService giornataService;
-
     private final LegaService legaService;
 
     @Autowired
-    public AdminController(AllenatoreCookieService allenatoreCookieService, AllGradoAdminStartedService allGradoAdminStartedService,
+    public AdminController(AllenatoreCookieService allenatoreCookieService, AdminViewService adminViewService,
                            EmailService emailService, AmministraService amministraService, PartitaService partitaService, GiornataService giornataService,
                            LegaCookieService legaCookieService, LegaService legaService) {
         this.allenatoreCookieService = allenatoreCookieService;
-        this.allGradoAdminStartedService = allGradoAdminStartedService;
+        this.adminViewService = adminViewService;
         this.emailService = emailService;
         this.amministraService = amministraService;
         this.partitaService = partitaService;
@@ -64,16 +58,15 @@ public class AdminController {
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
         Lega legaCorrente = (Lega) legaCookieService.get(request);
 
-        AllGradoAdminStarted allenatoriGradoAdminStarted = allGradoAdminStartedService.getAllGradoAdminStarted(legaCorrente, allenatoreLoggato);
-        List<Giornata> giornate = giornataService.findGiornate();
+        AdminViewModel adminViewModel = adminViewService.getAdminViewModel(legaCorrente, allenatoreLoggato);
 
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);
         model.addAttribute("legaCorrente", legaCorrente);
         model.addAttribute("logged", true);
-        model.addAttribute("allenatoriLega", allenatoriGradoAdminStarted.getAllenatori());
-        model.addAttribute("gradoAdmin", allenatoriGradoAdminStarted.getGradoAdmin());
-        model.addAttribute("started", allenatoriGradoAdminStarted.isSeasonStarted());
-        model.addAttribute("giornate", giornate);
+        model.addAttribute("allenatoriLega", adminViewModel.getAllenatori());
+        model.addAttribute("gradoAdmin", adminViewModel.getGradoAdmin());
+        model.addAttribute("started", adminViewModel.isSeasonStarted());
+        model.addAttribute("giornate", adminViewModel.getGiornate());
 
         return "lega/adminView";
     }

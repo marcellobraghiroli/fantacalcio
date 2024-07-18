@@ -45,9 +45,6 @@ public class LegheController {
 
         Allenatore allenatoreLoggato = (Allenatore) allenatoreCookieService.get(request);
 
-        //List<Squadra> squadre = squadraService.findSquadreByAllenatoreId(allenatoreLoggato.getId());
-        //List<Lega> leghe = squadre.stream().map(Squadra::getLega).toList();
-
         List<Lega> leghe = legaService.findLegheByAllenatoreId(allenatoreLoggato.getId());
 
         model.addAttribute("allenatoreLoggato", allenatoreLoggato);

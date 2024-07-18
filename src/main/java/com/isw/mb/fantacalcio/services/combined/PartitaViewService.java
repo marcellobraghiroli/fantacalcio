@@ -2,9 +2,8 @@ package com.isw.mb.fantacalcio.services.combined;
 
 import com.isw.mb.fantacalcio.models.Formazione;
 import com.isw.mb.fantacalcio.models.GiocGiornata;
-import com.isw.mb.fantacalcio.models.Giocatore;
 import com.isw.mb.fantacalcio.models.Partita;
-import com.isw.mb.fantacalcio.models.combined.PartForm;
+import com.isw.mb.fantacalcio.models.combined.PartitaViewModel;
 import com.isw.mb.fantacalcio.services.FormazioneService;
 import com.isw.mb.fantacalcio.services.GiocGiornataService;
 import com.isw.mb.fantacalcio.services.PartitaService;
@@ -13,24 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
-public class PartFormService {
+public class PartitaViewService {
 
     private final PartitaService partitaService;
     private final FormazioneService formazioneService;
     private final GiocGiornataService giocGiornataService;
 
     @Autowired
-    public PartFormService(PartitaService partitaService, FormazioneService formazioneService, GiocGiornataService giocGiornataService) {
+    public PartitaViewService(PartitaService partitaService, FormazioneService formazioneService, GiocGiornataService giocGiornataService) {
         this.partitaService = partitaService;
         this.formazioneService = formazioneService;
         this.giocGiornataService = giocGiornataService;
     }
 
     @Transactional
-    public PartForm getPartForm(Integer idPartita, Integer idSqCasa, Integer idSqTrasf, Integer numGiornata) {
+    public PartitaViewModel getPartitaViewModel(Integer idPartita, Integer idSqCasa, Integer idSqTrasf, Integer numGiornata) {
 
         Partita partita = partitaService.findPartitaById(idPartita);
         Formazione formCasa = formazioneService.findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatori(idPartita, idSqCasa, numGiornata);
@@ -44,7 +42,7 @@ public class PartFormService {
                 }
             });
         } //else {
-            //formCasa = new Formazione();
+        //formCasa = new Formazione();
         //}
         if (formTrasf != null) {
             formTrasf.getFormGiocatori().forEach(formGioc -> {
@@ -54,10 +52,10 @@ public class PartFormService {
                 }
             });
         } //else {
-            //formTrasf = new Formazione();
+        //formTrasf = new Formazione();
         //}
 
-        return new PartForm(partita, formCasa, formTrasf);
+        return new PartitaViewModel(partita, formCasa, formTrasf);
 
     }
 

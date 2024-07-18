@@ -1,7 +1,7 @@
 package com.isw.mb.fantacalcio.services.combined;
 
 import com.isw.mb.fantacalcio.models.*;
-import com.isw.mb.fantacalcio.models.combined.SqGioAmm;
+import com.isw.mb.fantacalcio.models.combined.HomeLegaViewModel;
 import com.isw.mb.fantacalcio.services.AmministraService;
 import com.isw.mb.fantacalcio.services.GiornataService;
 import com.isw.mb.fantacalcio.services.SquadraService;
@@ -10,21 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SqGioAmmService {
+public class HomeLegaViewService {
 
     private final SquadraService squadraService;
     private final GiornataService giornataService;
     private final AmministraService amministraService;
 
     @Autowired
-    public SqGioAmmService(SquadraService squadraService, GiornataService giornataService, AmministraService amministraService) {
+    public HomeLegaViewService(SquadraService squadraService, GiornataService giornataService, AmministraService amministraService) {
         this.squadraService = squadraService;
         this.giornataService = giornataService;
         this.amministraService = amministraService;
     }
 
     @Transactional
-    public SqGioAmm getSqGioAmm(Allenatore allenatore, Lega lega) {
+    public HomeLegaViewModel getHomeLegaViewModel(Allenatore allenatore, Lega lega) {
         Squadra squadraCorrente = squadraService.findSquadraByAllenatoreIdAndLegaId(allenatore.getId(), lega.getId());
         Giornata giornata = giornataService.findCurrentOrNextGiornata(lega);
         boolean isAdmin;
@@ -39,6 +39,6 @@ public class SqGioAmmService {
             isAdmin = false;
         }
 
-        return new SqGioAmm(squadraCorrente, giornata, isAdmin, grado);
+        return new HomeLegaViewModel(squadraCorrente, giornata, isAdmin, grado);
     }
 }
