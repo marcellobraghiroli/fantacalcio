@@ -12,7 +12,7 @@
 
     <style>
         .cal-section {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
@@ -44,19 +44,25 @@
         }
 
         select {
-            width: 100%;
+            width: 50%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 15px;
+            text-align: center;
         }
 
         .sel-giornata {
-            padding: 5px 10px 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+            width: 75%;
         }
 
         .partite {
+            background-color: white;
             display: flex;
             flex-direction: column;
             align-items: center;

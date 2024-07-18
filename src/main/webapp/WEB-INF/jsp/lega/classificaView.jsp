@@ -13,7 +13,7 @@
     <style>
 
         .class-section {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
@@ -22,6 +22,7 @@
             align-items: center;
             text-align: center;
             flex-direction: column;
+            overflow: auto;
         }
 
         table {
@@ -45,9 +46,10 @@
             padding: 30px;
         }
 
-        thead {
+        thead th {
             background-color: lightgreen;
         }
+
 
         .clickable {
             cursor: pointer;
@@ -153,8 +155,16 @@
             </thead>
             <tbody>
             <c:forEach var="squadra" items="${squadre}" varStatus="status">
-                <tr <c:if
-                        test="${squadra.allenatore.id == allenatoreLoggato.id}"> style="background-color: lightgrey;" </c:if>>
+                <tr
+                        <c:choose>
+                            <c:when test="${squadra.allenatore.id == allenatoreLoggato.id}">
+                                style="background-color: lightblue;"
+                            </c:when>
+                            <c:otherwise>
+                                style="background-color: white;"
+                            </c:otherwise>
+                        </c:choose>
+                >
                     <td style="background-color: lightyellow;"><b>${status.index + 1}</b></td>
                     <td><b>${squadra.nome}</b><br><span
                             style="font-style: italic;">${squadra.allenatore.username}</span></td>

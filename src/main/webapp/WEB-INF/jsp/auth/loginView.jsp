@@ -23,6 +23,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+            width: 35%;
         }
 
         label {
@@ -86,7 +87,7 @@
 
 <main>
     <section class="login-box">
-        <h1 style="text-align: center;">Login</h1>
+        <h1 style="text-align: center; color: darkred;">Login</h1>
 
         <c:if test="${not empty errorMessage}">
             <p style="color: red; text-align: center">${errorMessage}</p>

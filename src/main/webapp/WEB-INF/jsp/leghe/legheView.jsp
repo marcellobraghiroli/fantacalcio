@@ -17,7 +17,7 @@
         }
 
         .main-section {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
@@ -32,7 +32,8 @@
             justify-content: space-evenly;
             align-items: center;
             flex-direction: row;
-            width: 50%;
+            gap: 20px;
+            width: 80%;
         }
 
         .buttons-section a {
@@ -55,7 +56,7 @@
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
             padding: 10px;
             margin: 10px;
-            width: 50%;
+            width: 60%;
         }
 
         .lega-box:hover {
@@ -72,7 +73,7 @@
 
 <main>
 
-    <section class="main-section" id="actionSection" style="margin-bottom: 40px; padding: 40px;">
+    <section class="main-section" id="actionSection" style="margin-bottom: 40px;">
         <h1 style="color: darkred; font-size: 2em; margin-top: 0;">Benvenuto ${allenatoreLoggato.username}</h1>
 
         <section class="buttons-section">

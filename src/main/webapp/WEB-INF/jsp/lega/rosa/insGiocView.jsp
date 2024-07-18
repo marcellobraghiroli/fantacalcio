@@ -13,7 +13,7 @@
     <style>
 
         .ins-player {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
@@ -30,6 +30,7 @@
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 1em;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
         }
 
         nav {
@@ -37,6 +38,7 @@
             background-color: #f8f8f8;
             margin: 20px;
             padding: 10px;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
         }
 
         nav ul {
@@ -89,12 +91,14 @@
         }
 
         .players {
-            border-radius: 4px;
+            border-radius: 8px;
             border: 1px solid #ddd;
             max-height: 400px;
             padding: 20px;
             width: 50%;
             overflow: auto;
+            background-color: white;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
         }
 
         .back-button {

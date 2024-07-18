@@ -1,29 +1,41 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Trebuchet MS", sans-serif;
     margin: 0;
     padding: 0;
 }
 
 main {
-    background: linear-gradient(to bottom, #fff, #658ff1, #658ff1, #658ff1, #fff);
-    /*background-color: #007BFF;*/
+    /*background: linear-gradient(to bottom, #fff, #658ff1, #658ff1, #658ff1, #fff);*/
+    /*background-color: #78c0cf;*/
+    background-image: url(../images/sfondo.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
     padding: 50px;
 }
 
 header {
-    font-family: Arial, sans-serif;
-    /*background-color: #fff;*/
-    background: linear-gradient(to bottom, #c5c5c5, #fff, #fff, #fff);
+    background-color: #1c3344;
+    /*background: linear-gradient(to bottom, #c5c5c5, #fff, #fff, #fff);*/
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 2px 4px 0 rgba(255,255,255,1);
     position: relative;
+    color: white;
+    border-bottom: 6px solid darkred;
 }
 
 header hgroup {
     text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
 }
 
 header h2 {
@@ -36,6 +48,7 @@ header h2 {
     color: #fff;
     border-radius: 4px;
     text-decoration: none;
+    box-shadow: 0 0 10px 0px rgba(255, 255, 255, 0.2);
 }
 
 #login-section a:hover {
@@ -49,14 +62,16 @@ header h2 {
 }
 
 footer {
-    /*background-color: #fff;*/
-    background: linear-gradient(to top, #c5c5c5, #fff, #fff, #fff);
+    background-color: #1c3144;
+    /*background: linear-gradient(to top, #c5c5c5, #fff, #fff, #fff)*/
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 -2px 4px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 -2px 4px 0 rgba(255,255,255,1);
     text-align: center;
+    color: white;
+    border-top: 6px solid darkred;
 }
 
 footer h4 {
@@ -64,7 +79,7 @@ footer h4 {
 }
 
 #social a, #info a {
-    color: black;
+    color: white;
     text-decoration: none;
 }
 

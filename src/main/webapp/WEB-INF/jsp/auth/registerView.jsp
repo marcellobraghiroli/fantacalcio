@@ -23,6 +23,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+            width: 35%;
         }
 
         label {
@@ -105,7 +106,7 @@
 
 <main>
     <section class="register-box" id="registerSection">
-        <h1 style="text-align: center;">Registrati</h1>
+        <h1 style="text-align: center; color: darkred;">Registrati</h1>
         <c:if test="${not empty errorMessage}">
             <p style="color: red; text-align: center; margin: 0 auto 10px auto;">${errorMessage}</p>
         </c:if>
