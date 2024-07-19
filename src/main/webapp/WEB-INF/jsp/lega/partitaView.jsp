@@ -239,7 +239,7 @@
 
                                 <c:choose>
                                     <c:when test="${status.index == 0}">
-                                        <p style="font-weight: bold; font-size: 1.2em; width: 50%; height: 100%; text-align: center;">
+                                        <p style="color: white; font-weight: bold; font-size: 1.2em; width: 50%; height: 100%; text-align: center;">
                                             Formazione non schierata</p>
                                     </c:when>
                                     <c:otherwise>
@@ -310,7 +310,7 @@
 
                                 <c:choose>
                                     <c:when test="${status.index == 0}">
-                                        <p style="font-weight: bold; font-size: 1.2em; width: 50%; height: 100%; text-align: center;">
+                                        <p style="color: white; font-weight: bold; font-size: 1.2em; width: 50%; height: 100%; text-align: center;">
                                             Formazione non schierata</p>
                                     </c:when>
                                     <c:otherwise>
@@ -329,7 +329,7 @@
             </c:if>
 
             <c:if test="${empty giocatoriCasa && empty giocatoriTrasf}">
-                <p style="font-weight: bold; font-size: 1.2em;">Formazioni non schierate</p>
+                <p style="font-weight: bold; font-size: 1.2em; color: white;">Formazioni non schierate</p>
             </c:if>
 
         </section>

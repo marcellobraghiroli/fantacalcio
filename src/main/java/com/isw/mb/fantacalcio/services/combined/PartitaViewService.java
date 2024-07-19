@@ -27,30 +27,31 @@ public class PartitaViewService {
     @Transactional
     public PartitaViewModel getPartitaViewModel(Integer idPartita, Integer idSqCasa, Integer idSqTrasf, Integer numGiornata) {
 
+
         Partita partita = partitaService.findPartitaById(idPartita);
         Formazione formCasa = formazioneService.findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatori(idPartita, idSqCasa, numGiornata);
         Formazione formTrasf = formazioneService.findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatori(idPartita, idSqTrasf, numGiornata);
 
-        if (formCasa != null) {
-            formCasa.getFormGiocatori().forEach(formGioc -> {
-                Set<GiocGiornata> giocGiornate = formGioc.getGiocatore().getGiocGiornate();
-                if (!giocGiornate.isEmpty()) {
-                    formGioc.getGiocatore().setGiocGiornata(giocGiornate.iterator().next());
-                }
-            });
-        }
+        setStatisticheGiocatori(numGiornata, formCasa);
 
-        if (formTrasf != null) {
-            formTrasf.getFormGiocatori().forEach(formGioc -> {
-                Set<GiocGiornata> giocGiornate = formGioc.getGiocatore().getGiocGiornate();
-                if (!giocGiornate.isEmpty()) {
-                    formGioc.getGiocatore().setGiocGiornata(giocGiornate.iterator().next());
-                }
-            });
-        }
+        setStatisticheGiocatori(numGiornata, formTrasf);
 
         return new PartitaViewModel(partita, formCasa, formTrasf);
 
+    }
+
+    private void setStatisticheGiocatori(Integer numGiornata, Formazione formazione) {
+        if (formazione != null) {
+            formazione.getFormGiocatori().forEach(formGioc -> {
+                Set<GiocGiornata> giocGiornate = formGioc.getGiocatore().getGiocGiornate();
+                for(GiocGiornata giocGiornata : giocGiornate) {
+                    if(giocGiornata.getGiornata().getNumero().equals(numGiornata)) {
+                        formGioc.getGiocatore().setGiocGiornata(giocGiornata);
+                        break;
+                    }
+                }
+            });
+        }
     }
 
 }
