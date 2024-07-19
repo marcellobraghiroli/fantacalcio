@@ -74,8 +74,9 @@ footer {
     border-top: 6px solid darkred;
 }
 
-footer h4 {
+footer h1 {
     margin-bottom: 5px;
+    font-size: 1.1em;
 }
 
 #social a, #info a {

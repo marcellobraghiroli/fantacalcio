@@ -149,25 +149,25 @@
 
         <section class="giocatori">
 
-            <h2 class="ruolo">Portieri</h2>
+            <h1 class="ruolo">Portieri</h1>
 
             <c:forEach var="gioc" items="${portieri}">
                 <%@include file="../../../include/box_giocatore.inc" %>
             </c:forEach>
 
-            <h2 class="ruolo">Difensori</h2>
+            <h1 class="ruolo">Difensori</h1>
 
             <c:forEach var="gioc" items="${difensori}">
                 <%@include file="../../../include/box_giocatore.inc" %>
             </c:forEach>
 
-            <h2 class="ruolo">Centrocampisti</h2>
+            <h1 class="ruolo">Centrocampisti</h1>
 
             <c:forEach var="gioc" items="${centrocampisti}">
                 <%@include file="../../../include/box_giocatore.inc" %>
             </c:forEach>
 
-            <h2 class="ruolo">Attaccanti</h2>
+            <h1 class="ruolo">Attaccanti</h1>
 
             <c:forEach var="gioc" items="${attaccanti}">
                 <%@include file="../../../include/box_giocatore.inc" %>

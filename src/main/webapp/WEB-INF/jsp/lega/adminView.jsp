@@ -171,8 +171,8 @@
                         </c:if>
 
 
-                        <h2 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px;">Calcola
-                            giornata</h2>
+                        <h1 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px; font-size: 1.6em;">Calcola
+                            giornata</h1>
 
                         <c:if test="${not empty calcSuccess}">
                             <c:choose>
@@ -208,9 +208,9 @@
                             iniziata</h2>
                         <c:if test="${gradoAdmin == 'super'}">
 
-                            <h2 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px;">
+                            <h1 style="color: darkred; text-align: center; margin-top: 10px; margin-bottom: 10px; font-size: 1.6em;">
                                 Genera
-                                calendario</h2>
+                                calendario</h1>
 
                             <c:if test="${not empty genSuccess}">
                                 <c:if test="${!genSuccess}">
@@ -231,9 +231,9 @@
             <c:if test="${!started}">
                 <section class="box" id="gestInviti">
 
-                    <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Invita un
+                    <h1 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px; font-size: 1.6em;">Invita un
                         allenatore
-                        nella lega</h2>
+                        nella lega</h1>
 
                     <c:if test="${not empty invSuccess}">
                         <c:choose>
@@ -266,8 +266,8 @@
             <c:if test="${gradoAdmin == 'super'}">
                 <section class="box" id="gradiAdmin">
 
-                    <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Gestisci gli
-                        admin</h2>
+                    <h1 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px; font-size: 1.6em;">Gestisci gli
+                        admin</h1>
 
                     <c:if test="${not empty proSuccess}">
                         <c:choose>
@@ -302,8 +302,8 @@
             <c:if test="${gradoAdmin == 'super' && !started}">
                 <section class="box" id="espulsioni">
 
-                    <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Espelli un
-                        allenatore</h2>
+                    <h1 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px; font-size: 1.6em;">Espelli un
+                        allenatore</h1>
 
                     <c:if test="${not empty espSuccess && espSuccess}">
                         <p style="color: green; text-align: center; margin: 0 auto 10px auto;">${succMessage}</p>
@@ -333,8 +333,8 @@
 
             <c:if test="${gradoAdmin == 'super'}">
                 <section class="box" id="eliminaLega">
-                    <h2 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px;">Elimina
-                        lega</h2>
+                    <h1 style="text-align: center; color: darkred; margin-top: 10px; margin-bottom: 10px; font-size: 1.6em;">Elimina
+                        lega</h1>
 
                     <a href="eliminaLega" class="deleteButton"
                        onclick="return confirm('Sei sicuro di voler eliminare la lega?\n\nL\'azione è irreversibile');">Elimina</a>

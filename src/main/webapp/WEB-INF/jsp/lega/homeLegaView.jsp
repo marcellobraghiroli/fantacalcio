@@ -217,8 +217,8 @@
 
         <c:choose>
             <c:when test="${not empty giornata}">
-                <h2 style="margin: 0; padding: 10px; color: darkred">Scadenza invio formazione -
-                    Giornata ${giornata.numero}</h2>
+                <h1 style="margin: 0; padding: 10px; color: darkred; font-size: 1.5em;">Scadenza invio formazione -
+                    Giornata ${giornata.numero}</h1>
                 <div id="countdown">00 d : 00 m : 00 h : 00 s</div>
 
                 <c:if test="${not empty formSuccess}">
@@ -238,7 +238,7 @@
                     formazione</a>
             </c:when>
             <c:otherwise>
-                <h3 style="margin: 0; padding: 10px; color: darkred">Il calendario non è ancora stato generato</h3>
+                <h2 style="margin: 0; padding: 10px; color: darkred; font-size: 1.2em;">Il calendario non è ancora stato generato</h2>
             </c:otherwise>
         </c:choose>
 

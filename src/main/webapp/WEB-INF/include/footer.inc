@@ -1,6 +1,6 @@
 <footer>
   <section id="contatti">
-    <h4>Contatti</h4>
+    <h1>Contatti</h1>
     <p style="margin: 0;">
        Email: support@fantafoot.com<br>
        Telefono: +39 800 800 8080<br>
@@ -8,7 +8,7 @@
     </p>
   </section>
   <section id="social">
-    <h4>Social</h4>
+    <h1>Social</h1>
     <article>
       <a>Facebook</a> |
       <a>Twitter</a> |
@@ -17,7 +17,7 @@
     </article>
   </section>
   <section id="info">
-    <h4>Informazioni</h4>
+    <h1>Informazioni</h1>
     <article>
       <a>Accessibility</a> |
       <a>Privacy Policy</a> |
@@ -26,6 +26,6 @@
     </article>
   </section>
   <section id="copyright">
-    <p>&copy; 2021 FantaFoot. Tutti i diritti riservati.</p>
+    <p>&copy; 2024 FantaFoot. Tutti i diritti riservati.</p>
   </section>
 </footer>
