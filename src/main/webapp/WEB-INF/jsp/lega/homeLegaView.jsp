@@ -248,7 +248,7 @@
 
         <section id="abbandonaLega" class="box">
 
-            <h2>Abbandona lega</h2>
+            <h1 style="font-size: 1.5em;">Abbandona lega</h1>
 
             <c:choose>
                 <c:when test="${empty giornata}">
@@ -256,8 +256,8 @@
                        onclick="return confirm('Sei sicuro di voler abbandonare la lega?\n\nL\'azione è irreversibile')">Abbandona</a>
                 </c:when>
                 <c:otherwise>
-                    <h3 style="margin: 0; padding: 10px; color: darkred">Non puoi uscire dalla lega a campionato
-                        iniziato</h3>
+                    <h2 style="margin: 0; padding: 10px; color: darkred; font-size: 1.2em;">Non puoi uscire dalla lega a campionato
+                        iniziato</h2>
                 </c:otherwise>
             </c:choose>
 

@@ -160,9 +160,7 @@ public class EmailService {
     }
 
     @Transactional
-    public void sendDeletionEmail(Lega lega) {
-
-        List<Allenatore> allenatori = allenatoreRepository.findByLega(lega.getId());
+    public void sendDeletionEmail(Lega lega, List<Allenatore> allenatori) {
 
         for (Allenatore allenatore : allenatori) {
 

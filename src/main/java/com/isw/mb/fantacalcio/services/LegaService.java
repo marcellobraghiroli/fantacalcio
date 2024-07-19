@@ -20,17 +20,20 @@ public class LegaService {
     private final CodiceRepository codiceRepository;
     private final PartitaRepository partitaRepository;
     private final EmailService emailService;
+    private final AllenatoreRepository allenatoreRepository;
 
     @Autowired
     public LegaService(LegaRepository legaRepository, AmministraRepository amministraRepository,
                        SquadraRepository squadraRepository, CodiceRepository codiceRepository,
-                       PartitaRepository partitaRepository, EmailService emailService) {
+                       PartitaRepository partitaRepository, EmailService emailService,
+                       AllenatoreRepository allenatoreRepository) {
         this.legaRepository = legaRepository;
         this.amministraRepository = amministraRepository;
         this.squadraRepository = squadraRepository;
         this.codiceRepository = codiceRepository;
         this.partitaRepository = partitaRepository;
         this.emailService = emailService;
+        this.allenatoreRepository = allenatoreRepository;
     }
 
     public Lega findByCodiceInvito(String codiceInvito) {
@@ -85,7 +88,7 @@ public class LegaService {
 
         Lega lega = legaRepository.findByIdAndDeleted(idLega, 'N');
 
-        emailService.sendDeletionEmail(lega);
+        List<Allenatore> allenatori = allenatoreRepository.findByLega(lega.getId());
 
         lega.setDeleted('Y');
 
@@ -114,6 +117,8 @@ public class LegaService {
         partitaRepository.saveAll(partite);
         squadraRepository.saveAll(squadre);
 
+        emailService.sendDeletionEmail(lega, allenatori);
+
     }
 
     @Transactional
@@ -130,7 +135,6 @@ public class LegaService {
         }
 
         squadraRepository.save(squadra);
-
 
     }
 

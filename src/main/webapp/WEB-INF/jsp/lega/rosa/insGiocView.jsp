@@ -250,7 +250,7 @@
             }
 
             window.onclick = function (event) {
-                if (event.target == modal) {
+                if (event.target == modal) {            //il modal occupa tutta la finestra, se clicco fuori dal suo contenuto lo chiudo
                     modal.close();
                 }
             }
@@ -286,6 +286,7 @@
 
         <h1 style="font-size: 2em; margin: 0; padding: 20px; color: darkred;">Inserisci giocatori</h1>
 
+        <label for="searchBar" style="font-weight: bold; font-size: 1.2em;">Cerca giocatore o squadra:</label>
         <input type="search" id="searchBar" placeholder="Giocatore o squadra...">
 
 
