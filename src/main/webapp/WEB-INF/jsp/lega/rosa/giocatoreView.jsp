@@ -38,7 +38,7 @@
         }
 
         .player-card {
-            background-color: white;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
             border-radius: 8px;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
             padding: 10px;
@@ -49,13 +49,14 @@
             align-items: center;
             flex-direction: column;
             overflow: auto;
+            color: white;
         }
 
         article h1 {
             font-size: 1.5em;
             padding: 10px;
             margin: 0;
-            color: darkred;
+            color: white;
         }
 
         article h2 {
@@ -70,12 +71,14 @@
             text-align: center;
             padding: 20px 20px 0;
             box-sizing: border-box;
+            color: black;
         }
 
         tbody td {
             padding: 10px;
             border: 1px solid #ddd;
             width: 80px;
+            background-color: white;
         }
 
         td h1 {
@@ -93,6 +96,7 @@
 
         .hide {
             border: none;
+            background-color: transparent;
         }
 
     </style>
@@ -113,7 +117,7 @@
 
         <article class="player-card">
 
-            <h1>${giocatore.nome}</h1>
+            <h1 style="text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">${giocatore.nome}</h1>
             <h2>${giocatore.ruolo} - ${giocatore.squadraReale}</h2>
 
             <table>

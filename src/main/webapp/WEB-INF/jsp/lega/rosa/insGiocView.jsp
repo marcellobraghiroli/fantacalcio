@@ -83,6 +83,9 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             text-align: center;
+            background-color: white;
+            margin-bottom: 5px;
+            margin-top: 5px;
         }
 
         .player:hover {
@@ -92,12 +95,11 @@
 
         .players {
             border-radius: 8px;
-            border: 1px solid #ddd;
             max-height: 400px;
             padding: 20px;
             width: 50%;
             overflow: auto;
-            background-color: white;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
             box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
         }
 

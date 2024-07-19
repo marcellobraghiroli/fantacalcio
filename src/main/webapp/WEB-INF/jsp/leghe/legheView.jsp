@@ -56,12 +56,24 @@
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
             padding: 10px;
             margin: 10px;
-            width: 60%;
+            width: 75%;
         }
 
         .lega-box:hover {
             background-color: #e8e8e8;
             cursor: pointer;
+        }
+
+        .leghe-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
+            width: 80%;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
         }
 
     </style>
@@ -90,24 +102,26 @@
                 <p>Non sei ancora iscritto a nessuna lega</p>
             </c:when>
             <c:otherwise>
-                <c:forEach var="lega" items="${leghe}">
+                <section class="leghe-section">
+                    <c:forEach var="lega" items="${leghe}">
 
-                    <form action="homeLega" method="post" style="display: contents;">
+                        <form action="homeLega" method="post" style="display: contents;">
 
-                        <input type="hidden" name="idLega" value="${lega.id}">
-                        <input type="hidden" name="nomeLega" value="${lega.nome}">
+                            <input type="hidden" name="idLega" value="${lega.id}">
+                            <input type="hidden" name="nomeLega" value="${lega.nome}">
 
-                        <article class="lega-box" onclick="this.parentNode.submit();">
+                            <article class="lega-box" onclick="this.parentNode.submit();">
 
-                            <h1 style="color: darkred; font-size: 1.5em;">${lega.nome}</h1>
-                            <p><b>Numero partecipanti:</b> ${lega.numSquadre}<br><b>Crediti
-                                inziali:</b> ${lega.numCrediti}</p>
-                            <p style="font-style: italic; margin: 16px;">${lega.descrizione}</p>
+                                <h1 style="color: darkred; font-size: 1.5em; margin-top: 16px; margin-bottom: 10px;">${lega.nome}</h1>
+                                <p><b>Numero partecipanti:</b> ${lega.numSquadre}<br><b>Crediti
+                                    inziali:</b> ${lega.numCrediti}</p>
+                                <p style="font-style: italic; margin: 16px;">${lega.descrizione}</p>
 
-                        </article>
-                    </form>
+                            </article>
+                        </form>
 
-                </c:forEach>
+                    </c:forEach>
+                </section>
             </c:otherwise>
         </c:choose>
     </section>

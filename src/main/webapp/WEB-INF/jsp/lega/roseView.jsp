@@ -29,7 +29,7 @@
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5), 0px -2px 4px rgba(0, 0, 0, 0.5);
             padding: 10px;
             margin: 10px;
-            width: 60%;
+            width: 75%;
             text-align: center;
         }
 
@@ -63,6 +63,18 @@
             background-color: #c86666;
         }
 
+        .squadre {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
+            width: 60%;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
+        }
+
     </style>
 
 </head>
@@ -78,31 +90,34 @@
 
         <h1 style="color: darkred; font-size: 2em;">Rose ${legaCorrente.nome}</h1>
 
-        <c:forEach var="squadra" items="${squadre}">
+        <section class="squadre">
 
-            <form action="goToRosaView" method="post" style="display: contents;">
+            <c:forEach var="squadra" items="${squadre}">
 
-                <input type="hidden" name="id" value="${squadra.id}">
-                <input type="hidden" name="nome" value="${squadra.nome}">
-                <input type="hidden" name="creditiSpesi" value="${squadra.creditiSpesi}">
+                <form action="goToRosaView" method="post" style="display: contents;">
 
-                <input type="hidden" name="creditiLega" value="${squadra.lega.numCrediti}">
-                <input type="hidden" name="nomeAll" value="${squadra.allenatore.username}">
+                    <input type="hidden" name="id" value="${squadra.id}">
+                    <input type="hidden" name="nome" value="${squadra.nome}">
+                    <input type="hidden" name="creditiSpesi" value="${squadra.creditiSpesi}">
 
-                <input type="hidden" name="idAllSq" value="${squadra.allenatore.id}">
+                    <input type="hidden" name="creditiLega" value="${squadra.lega.numCrediti}">
+                    <input type="hidden" name="nomeAll" value="${squadra.allenatore.username}">
 
-                <article class="squadra-box" onclick="this.parentNode.submit();" <c:if
-                        test="${squadra.allenatore.id == allenatoreLoggato.id}"> style="background-color: #d3d3d3;" onmouseout="this.style.backgroundColor='#d3d3d3';" onmouseover="this.style.backgroundColor='#bcbcbc';" </c:if>>
+                    <input type="hidden" name="idAllSq" value="${squadra.allenatore.id}">
 
-                    <h1>${squadra.nome}</h1>
+                    <article class="squadra-box" onclick="this.parentNode.submit();" <c:if
+                            test="${squadra.allenatore.id == allenatoreLoggato.id}"> style="background-color: #d3d3d3;" onmouseout="this.style.backgroundColor='#d3d3d3';" onmouseover="this.style.backgroundColor='#bcbcbc';" </c:if>>
 
-                    <p><b>Allenatore: </b>${squadra.allenatore.username}&nbsp;&nbsp;&nbsp;&nbsp;
-                        <b>Crediti: </b>${squadra.lega.numCrediti - squadra.creditiSpesi}</p>
+                        <h1>${squadra.nome}</h1>
 
-                </article>
-            </form>
+                        <p><b>Allenatore: </b>${squadra.allenatore.username}&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>Crediti: </b>${squadra.lega.numCrediti - squadra.creditiSpesi}</p>
 
-        </c:forEach>
+                    </article>
+                </form>
+
+            </c:forEach>
+        </section>
 
     </section>
 

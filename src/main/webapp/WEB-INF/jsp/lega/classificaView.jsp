@@ -47,7 +47,8 @@
         }
 
         thead th {
-            background-color: lightgreen;
+            background-image: linear-gradient(120deg, #265e93 0%, #203b6b 100%);
+            color: white;
         }
 
 
@@ -56,7 +57,7 @@
         }
 
         .clickable:hover {
-            background-color: #81d581;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
         }
 
         .back-button {
@@ -158,14 +159,14 @@
                 <tr
                         <c:choose>
                             <c:when test="${squadra.allenatore.id == allenatoreLoggato.id}">
-                                style="background-color: lightblue;"
+                                style="background-color: #b0c3da;"
                             </c:when>
                             <c:otherwise>
                                 style="background-color: white;"
                             </c:otherwise>
                         </c:choose>
                 >
-                    <td style="background-color: lightyellow;"><b>${status.index + 1}</b></td>
+                    <td style="background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%); color: white;"><b>${status.index + 1}</b></td>
                     <td><b>${squadra.nome}</b><br><span
                             style="font-style: italic;">${squadra.allenatore.username}</span></td>
                     <td>${squadra.puntiClass}</td>

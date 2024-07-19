@@ -43,7 +43,7 @@
             color: #fff;
             border-radius: 4px;
             text-decoration: none;
-            box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
         }
 
         .insert-button:hover {
@@ -72,6 +72,7 @@
             justify-content: space-evenly;
             align-items: center;
             flex-direction: row;
+            color: black;
         }
 
         .gioc-box:hover {
@@ -80,11 +81,12 @@
         }
 
         .ruolo {
-            color: darkred;
-            font-size: 1.5em;
+            font-size: 1.7em;
             margin: 0;
             padding-top: 10px;
             padding-bottom: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            color: white;
         }
 
         img {
@@ -96,6 +98,21 @@
         img:hover {
             cursor: pointer;
             background-color: #ff6c6c;
+        }
+
+        .giocatori {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            color: white;
+            width: 80%;
+            padding: 20px;
+            margin-top: 15px;
+            margin-bottom: 10px;
         }
 
     </style>
@@ -130,29 +147,33 @@
             <a href="insGiocView" class="insert-button">Inserisci giocatori</a>
         </c:if>
 
-        <h2 class="ruolo" style="color: #f09837;">Portieri</h2>
+        <section class="giocatori">
 
-        <c:forEach var="gioc" items="${portieri}">
-            <%@include file="../../../include/box_giocatore.inc" %>
-        </c:forEach>
+            <h2 class="ruolo">Portieri</h2>
 
-        <h2 class="ruolo" style="color: #357a23;">Difensori</h2>
+            <c:forEach var="gioc" items="${portieri}">
+                <%@include file="../../../include/box_giocatore.inc" %>
+            </c:forEach>
 
-        <c:forEach var="gioc" items="${difensori}">
-            <%@include file="../../../include/box_giocatore.inc" %>
-        </c:forEach>
+            <h2 class="ruolo">Difensori</h2>
 
-        <h2 class="ruolo" style="color: #448bbb;">Centrocampisti</h2>
+            <c:forEach var="gioc" items="${difensori}">
+                <%@include file="../../../include/box_giocatore.inc" %>
+            </c:forEach>
 
-        <c:forEach var="gioc" items="${centrocampisti}">
-            <%@include file="../../../include/box_giocatore.inc" %>
-        </c:forEach>
+            <h2 class="ruolo">Centrocampisti</h2>
 
-        <h2 class="ruolo" style="color: #9c2224;">Attaccanti</h2>
+            <c:forEach var="gioc" items="${centrocampisti}">
+                <%@include file="../../../include/box_giocatore.inc" %>
+            </c:forEach>
 
-        <c:forEach var="gioc" items="${attaccanti}">
-            <%@include file="../../../include/box_giocatore.inc" %>
-        </c:forEach>
+            <h2 class="ruolo">Attaccanti</h2>
+
+            <c:forEach var="gioc" items="${attaccanti}">
+                <%@include file="../../../include/box_giocatore.inc" %>
+            </c:forEach>
+
+        </section>
 
     </section>
 

@@ -61,7 +61,7 @@
         }
 
         select {
-            width: 100%;
+            width: 50%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -73,9 +73,10 @@
             padding: 20px;
             margin: 20px;
             box-shadow: 0 0 10px 0 rgba(0,0,0,0.4);
-            background-color: white;
+            background-image: linear-gradient(120deg, #265e93 0%, #203b6b 100%);
+            color: white;
             border-radius: 8px;
-            width: 30%;
+            width: 40%;
         }
 
         .sel-giocatori {
@@ -84,11 +85,14 @@
             align-items: center;
             flex-direction: column;
             width: 80%;
-            gap: 80px;
+            gap: 95px;
             padding: 60px 40px;
             border-radius: 8px;
             box-shadow: 0 0 10px 0 rgba(0,0,0,0.8);
-            background-color: #3f8e47;
+            background-image: url(images/field2.jpg);
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
             margin: 10px;
             border: 4px solid white;
         }

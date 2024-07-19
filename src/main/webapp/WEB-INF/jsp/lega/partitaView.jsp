@@ -37,7 +37,7 @@
         }
 
         .partita {
-            background-color: white;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -57,8 +57,10 @@
             align-items: center;
             width: 100%;
             border-radius: 8px;
-            border: 2px solid #ddd;
             font-size: 1.5em;
+            background-image: linear-gradient(120deg, #265e93 0%, #203b6b 100%);
+            color: white;
+            box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
         }
 
         .casa, .trasferta, .risultato {
@@ -95,6 +97,7 @@
             justify-content: space-between;
             align-items: center;
 
+            background-color: white;
 
         }
 
@@ -111,6 +114,8 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+
+            background-color: white;
 
         }
 

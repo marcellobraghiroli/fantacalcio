@@ -44,7 +44,7 @@
         }
 
         select {
-            width: 50%;
+            width: 40%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -55,14 +55,15 @@
 
         .sel-giornata {
             padding: 20px;
-            background-color: white;
+            background-image: linear-gradient(120deg, #265e93 0%, #203b6b 100%);
             border-radius: 8px;
             box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
             width: 75%;
+            color: white;
         }
 
         .partite {
-            background-color: white;
+            background-image: linear-gradient(120deg, #9db1c9 0%, #203b6b 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -84,6 +85,7 @@
             border-radius: 8px;
             border: 1px solid #ddd;
             font-size: 1.2em;
+            background-color: white;
         }
 
         .casa, .trasferta, .risultato {
