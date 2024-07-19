@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface FormazioneRepository extends JpaRepository<Formazione, Integer> {
 
-
     @Query("SELECT f FROM Formazione f LEFT JOIN FETCH f.formGiocatori fg LEFT JOIN FETCH fg.giocatore g LEFT JOIN g.giocGiornate gg WITH gg.giornata.numero = :numGiornata AND gg.deleted = 'N' WHERE f.partita.id = :idPartita AND f.squadra.id = :idSquadra AND f.deleted = :deleted AND fg.deleted = 'N' AND g.deleted = 'N'")
     Formazione findFormazioneByPartitaIdAndSquadraIdAndStatsGiocatoriAndDeleted(Integer idPartita, Integer idSquadra, Integer numGiornata, Character deleted);
 

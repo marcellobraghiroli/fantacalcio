@@ -90,7 +90,7 @@
 
         <h1 style="color: darkred; font-size: 2em;">Rose ${legaCorrente.nome}</h1>
 
-        <section class="squadre">
+        <article class="squadre">
 
             <c:forEach var="squadra" items="${squadre}">
 
@@ -117,7 +117,7 @@
                 </form>
 
             </c:forEach>
-        </section>
+        </article>
 
     </section>
 

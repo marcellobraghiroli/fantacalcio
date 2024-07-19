@@ -148,7 +148,7 @@
         <h1 style="color: darkred; font-size: 2em;">Dettaglio Partita</h1>
 
 
-        <section class="partita">
+        <article class="partita">
 
             <article class="info-partita">
                 <p class="casa">
@@ -332,7 +332,7 @@
                 <p style="font-weight: bold; font-size: 1.2em; color: white;">Formazioni non schierate</p>
             </c:if>
 
-        </section>
+        </article>
 
 
     </section>

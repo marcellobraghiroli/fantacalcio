@@ -92,7 +92,7 @@
         <h1>Sezione di amministrazione</h1>
         <h2>Carica i voti per la giornata</h2>
 
-        <section class="votiForm">
+        <article class="votiForm">
             <c:if test="${not empty success}">
                 <c:choose>
                     <c:when test="${success}">
@@ -119,7 +119,7 @@
 
                 <input type="submit" value="Carica">
             </form>
-        </section>
+        </article>
 
 
     </section>

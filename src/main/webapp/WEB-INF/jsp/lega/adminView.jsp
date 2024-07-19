@@ -153,7 +153,7 @@
 
         <h1 style="color: darkred; font-size: 2em; margin-top: 20px; margin-bottom: 10px;">Area Admin</h1>
 
-        <section class="azioniAdmin">
+        <article class="azioniAdmin">
 
             <!-- Gestione calendario -->
 
@@ -342,7 +342,7 @@
                 </section>
             </c:if>
 
-        </section>
+        </article>
 
 
     </section>

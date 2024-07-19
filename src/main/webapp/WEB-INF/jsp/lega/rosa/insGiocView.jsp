@@ -286,7 +286,7 @@
 
         <h1 style="font-size: 2em; margin: 0; padding: 20px; color: darkred;">Inserisci giocatori</h1>
 
-        <input type="text" id="searchBar" placeholder="Giocatore o squadra...">
+        <input type="search" id="searchBar" placeholder="Giocatore o squadra...">
 
 
         <c:if test="${not empty success}">

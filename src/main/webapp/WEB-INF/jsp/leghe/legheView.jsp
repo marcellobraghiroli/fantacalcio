@@ -102,7 +102,7 @@
                 <p>Non sei ancora iscritto a nessuna lega</p>
             </c:when>
             <c:otherwise>
-                <section class="leghe-section">
+                <article class="leghe-section">
                     <c:forEach var="lega" items="${leghe}">
 
                         <form action="homeLega" method="post" style="display: contents;">
@@ -121,7 +121,7 @@
                         </form>
 
                     </c:forEach>
-                </section>
+                </article>
             </c:otherwise>
         </c:choose>
     </section>
